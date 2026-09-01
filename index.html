@@ -49,6 +49,8 @@
     }
 
     .hero {
+      width: min(1180px, 100%);
+      margin: 0 auto;
       overflow: hidden;
       background: #cab188
     }
@@ -97,31 +99,8 @@
       margin-bottom: 4px
     }
 
-    .year-badge {
-      flex: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 12px;
-      border: 1px solid rgba(141, 47, 29, .34);
-      border-radius: 999px;
-      color: var(--cinnabar);
-      background: #fff8e8;
-      font-weight: 700;
-      white-space: nowrap
-    }
-
-    .year-badge::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor
-    }
-
     .time-panel {
-      position: sticky;
-      top: 10px;
+      position: relative;
       z-index: 20;
       background: rgba(247, 236, 214, .94);
       backdrop-filter: blur(12px)
@@ -224,8 +203,8 @@
     .lifeline {
       --tone: #6f604c;
       display: grid;
-      grid-template-columns: 142px 1fr;
-      gap: 16px;
+      grid-template-columns: minmax(92px, 128px) 52px minmax(180px, 1fr) 52px minmax(82px, auto);
+      gap: 12px;
       align-items: center;
       padding: 12px;
       border-radius: 12px;
@@ -248,19 +227,25 @@
       background: rgba(154, 122, 114, .1)
     }
 
+    .life-name {
+      min-width: 0
+    }
+
     .life-name strong {
       display: block;
       font-size: 1.05rem
     }
 
-    .life-years {
+    .life-boundary {
       color: var(--muted);
-      font-size: .8rem
+      font-size: .88rem;
+      font-weight: 700;
+      text-align: center;
+      font-variant-numeric: tabular-nums
     }
 
     .status-tag {
       display: inline-block;
-      margin-top: 3px;
       padding: 2px 8px;
       border-radius: 999px;
       background: var(--tone);
@@ -285,119 +270,18 @@
       opacity: .8
     }
 
-    .now-line {
-      position: absolute;
-      top: -7px;
-      bottom: -7px;
-      width: 2px;
-      background: var(--cinnabar);
-      z-index: 3
-    }
-
-    .now-line::before {
-      content: "";
-      position: absolute;
-      top: -4px;
-      left: -4px;
-      width: 10px;
-      height: 10px;
-      background: var(--cinnabar);
-      transform: rotate(45deg)
-    }
-
-    .event-marker {
+    .now-marker {
       position: absolute;
       top: 50%;
-      width: 11px;
-      height: 28px;
-      padding: 0;
-      transform: translate(-50%, -50%);
-      border: 0;
-      border-left: 2px solid #39291e;
-      background: transparent;
-      cursor: pointer;
-      z-index: 4
-    }
-
-    .event-marker::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -5px;
-      width: 8px;
-      height: 8px;
+      width: 12px;
+      height: 12px;
+      border: 3px solid #fff4dc;
       border-radius: 50%;
-      background: #fff5df;
-      border: 2px solid #39291e
-    }
-
-    .event-marker:hover::before,
-    .event-marker:focus-visible::before {
-      content: attr(aria-label);
-      position: absolute;
-      bottom: 31px;
-      left: 0;
-      transform: translateX(-50%);
-      width: max-content;
-      max-width: 220px;
-      padding: 5px 8px;
-      border-radius: 6px;
-      background: #2f241c;
-      color: #fff;
-      font-size: .75rem;
-      line-height: 1.4;
-      white-space: normal;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, .22)
-    }
-
-    .marker-note {
-      grid-column: 2;
-      color: var(--cinnabar);
-      font-size: .84rem;
-      min-height: 1.5em
-    }
-
-    .power-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px
-    }
-
-    .power-card {
-      border: 1px solid var(--line);
-      border-top: 4px solid var(--tone, #7b6448);
-      border-radius: 12px;
-      padding: 16px;
-      background: #fffaf0
-    }
-
-    .power-card h3 {
-      margin: 0 0 3px
-    }
-
-    .power-meta {
-      color: var(--muted);
-      font-size: .82rem
-    }
-
-    .power-card .state {
-      display: inline-block;
-      margin: 8px 0;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--tone, #7b6448);
-      color: white;
-      font-size: .75rem
-    }
-
-    .power-card ul {
-      margin: 6px 0 0;
-      padding-left: 1.2em
-    }
-
-    .power-card li {
-      margin: 5px 0;
-      font-size: .9rem
+      background: var(--cinnabar);
+      box-shadow: 0 2px 5px rgba(61, 39, 19, .22);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 3
     }
 
     .empty {
@@ -451,7 +335,7 @@
 
     .chronicle {
       display: grid;
-      gap: 10px
+      gap: var(--chronicle-gap, 10px)
     }
 
     .chronicle-item {
@@ -459,8 +343,12 @@
       grid-template-columns: 74px 1fr;
       gap: 14px;
       padding: 12px 14px;
+      height: var(--chronicle-row-height, 116px);
+      overflow: hidden;
       border-left: 3px solid var(--gold);
-      background: rgba(255, 255, 255, .44)
+      background: rgba(255, 255, 255, .44);
+      scroll-snap-align: start;
+      scroll-snap-stop: always
     }
 
     .chronicle-year {
@@ -471,13 +359,22 @@
 
     .chronicle-item h3 {
       margin: 0;
-      font-size: 1rem
+      overflow: hidden;
+      font-size: 1rem;
+      line-height: 1.4;
+      text-overflow: ellipsis;
+      white-space: nowrap
     }
 
     .chronicle-item p {
       margin: 3px 0 0;
       color: var(--muted);
-      font-size: .88rem
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: .88rem;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2
     }
 
     .archive-tabs {
@@ -557,10 +454,6 @@
         display: block
       }
 
-      .year-badge {
-        margin-top: 10px
-      }
-
       .time-panel {
         top: 4px
       }
@@ -575,21 +468,14 @@
       }
 
       .lifeline {
-        grid-template-columns: 1fr;
-        gap: 9px;
-        border-left: 5px solid var(--tone)
-      }
-
-      .marker-note {
-        grid-column: 1
+        grid-template-columns: 64px 40px minmax(70px, 1fr) 40px 54px;
+        gap: 5px;
+        padding: 9px 8px;
+        border-left: 4px solid var(--tone)
       }
 
       .track {
-        height: 22px
-      }
-
-      .event-marker {
-        height: 32px
+        height: 14px
       }
 
       .map-stage {
@@ -610,8 +496,16 @@
       }
 
       .status-tag {
-        font-size: .8rem;
-        font-weight: 700
+        width: 100%;
+        padding: 2px 4px;
+        font-size: 0;
+        font-weight: 700;
+        text-align: center
+      }
+
+      .status-tag::after {
+        content: attr(data-short);
+        font-size: .72rem
       }
 
       .section-title {
@@ -695,25 +589,14 @@
       font-size: .84rem
     }
 
-    .life-years,
-    .power-meta {
-      font-size: .9rem
-    }
-
     .legend,
-    .marker-note,
     .sources,
     footer {
       font-size: .95rem
     }
 
-    .power-card li,
     .chronicle-item p {
       font-size: .98rem
-    }
-
-    .year-badge {
-      font-size: 1rem
     }
 
     .quick-years button {
@@ -828,11 +711,64 @@
       gap: 8px
     }
 
-    .archive-date-list span {
+    .archive-date-list button {
       padding: 5px 9px;
+      border: 1px solid transparent;
       border-radius: 6px;
       background: #f2e4c9;
-      font-size: .92rem
+      color: var(--ink);
+      font-size: .92rem;
+      cursor: pointer
+    }
+
+    .archive-date-list button:hover,
+    .archive-date-list button:focus-visible,
+    .archive-date-list button[aria-expanded="true"] {
+      border-color: rgba(141, 47, 29, .38);
+      color: var(--cinnabar);
+      outline: none
+    }
+
+    .archive-event-detail {
+      margin-top: 12px;
+      padding: 16px;
+      border: 1px solid rgba(141, 47, 29, .28);
+      border-radius: 10px;
+      background: #fff8e8
+    }
+
+    .archive-event-detail h5 {
+      margin: 0 0 12px;
+      color: var(--cinnabar);
+      font-size: 1.05rem
+    }
+
+    .archive-event-section {
+      margin-bottom: 10px
+    }
+
+    .archive-event-section h6 {
+      margin: 0 0 3px;
+      color: #66452f;
+      font-size: .86rem;
+      letter-spacing: .08em
+    }
+
+    .archive-event-detail p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7
+    }
+
+    .archive-event-detail button {
+      display: block;
+      margin-left: auto;
+      padding: 6px 11px;
+      border: 1px solid var(--cinnabar);
+      border-radius: 6px;
+      background: var(--cinnabar);
+      color: #fff;
+      cursor: pointer
     }
 
     @media(max-width:720px) {
@@ -848,7 +784,6 @@
         padding: 18px !important
       }
 
-      .power-card li,
       .chronicle-item p {
         font-size: 1rem
       }
@@ -867,38 +802,17 @@
       line-height: 1.35
     }
 
-    .life-years {
-      font-size: 1.16rem;
-      font-weight: 700;
-      letter-spacing: .02em
-    }
-
-    .marker-note {
-      font-size: 1.28rem;
-      font-weight: 700;
-      line-height: 1.65;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #f3e5ca;
-      color: var(--cinnabar);
-      min-height: 2.4em
-    }
-
     @media(max-width:720px) {
       .section-kicker {
         font-size: 1.05rem
       }
 
       .life-name strong {
-        font-size: 1.32rem
-      }
-
-      .life-years {
-        font-size: 1.12rem
-      }
-
-      .marker-note {
-        font-size: 1.2rem
+        overflow: hidden;
+        font-size: .88rem;
+        line-height: 1.2;
+        text-overflow: ellipsis;
+        white-space: nowrap
       }
     }
 
@@ -934,19 +848,17 @@
       color: #fff
     }
 
-    .event-scroll-hint {
-      color: var(--muted);
-      font-size: .94rem;
-      white-space: nowrap
-    }
-
     .chronicle-scroll {
-      max-height: 720px;
+      --chronicle-row-height: 116px;
+      --chronicle-gap: 10px;
+      height: var(--chronicle-window-height, 620px);
       overflow-y: scroll;
       padding-right: 10px;
       scrollbar-color: var(--cinnabar) #eadcc2;
       scrollbar-width: auto;
-      overscroll-behavior: contain
+      scrollbar-gutter: stable;
+      overscroll-behavior: contain;
+      scroll-snap-type: y mandatory
     }
 
     .chronicle-scroll::-webkit-scrollbar {
@@ -981,8 +893,9 @@
     .event-tags {
       display: flex;
       gap: 5px;
-      flex-wrap: wrap;
-      margin-top: 6px
+      flex-wrap: nowrap;
+      margin-top: 6px;
+      overflow: hidden
     }
 
     .event-tags span {
@@ -995,33 +908,13 @@
 
     @media(max-width:720px) {
       .chronicle-scroll {
-        max-height: 620px;
+        --chronicle-row-height: 98px;
+        --chronicle-gap: 7px;
         padding-right: 6px
-      }
-
-      .event-scroll-hint {
-        width: 100%
       }
 
       .event-filter-buttons button {
         padding: 6px 11px
-      }
-    }
-
-    /* V6：关键事件说明进一步放大，未点击时不占位 */
-    .marker-note {
-      font-size: 1.55rem;
-      line-height: 1.7;
-      padding: 10px 14px
-    }
-
-    .marker-note:empty {
-      display: none
-    }
-
-    @media(max-width:720px) {
-      .marker-note {
-        font-size: 1.46rem
       }
     }
 
@@ -1043,14 +936,61 @@
     /* V2 交互优化：首图、紧凑时间控制器与上下文大事记 */
     .hero-caption {
       width: min(860px, calc(100% - 40px));
-      margin: 22px auto 0;
+      margin: 24px auto 0;
       text-align: center;
-      color: var(--muted);
-      font-size: clamp(.96rem, 2vw, 1.08rem)
+      color: #713727;
+      font-size: clamp(1.25rem, 2vw, 1.35rem);
+      font-weight: 600;
+      line-height: 1.65
+    }
+
+    .timeline-sentinels {
+      position: relative;
+      width: 100%;
+      height: 16px;
+      margin-bottom: -16px;
+      pointer-events: none
+    }
+
+    .timeline-sentinel {
+      position: absolute;
+      left: 0;
+      width: 1px;
+      height: 1px
+    }
+
+    .timeline-sentinel-enter {
+      top: 16px
+    }
+
+    .timeline-sentinel-exit {
+      top: 0
+    }
+
+    .timeline-slot {
+      position: relative;
+      z-index: 20;
+      margin: 26px 0
+    }
+
+    .timeline-slot .time-panel {
+      margin: 0
+    }
+
+    .timeline-slot.is-stuck .time-panel {
+      position: fixed;
+      top: 0;
+      left: var(--timeline-left);
+      width: var(--timeline-width)
+    }
+
+    .timeline-slot.is-measuring .time-panel {
+      visibility: hidden !important;
+      transition: none !important
     }
 
     .time-panel {
-      transition: padding .16s ease, border-radius .16s ease, box-shadow .16s ease;
+      transition: padding .2s ease, border-radius .2s ease, box-shadow .2s ease, gap .2s ease;
       isolation: isolate;
       scroll-margin-top: 96px
     }
@@ -1070,9 +1010,9 @@
       display: grid;
       grid-template-columns: auto minmax(260px, 1fr);
       align-items: center;
-      gap: 24px;
-      min-height: 78px;
-      padding: 10px 22px;
+      gap: 22px;
+      min-height: 72px;
+      padding: 9px 22px;
       border-radius: 0 0 14px 14px;
       box-shadow: 0 10px 28px rgba(61, 39, 19, .18)
     }
@@ -1085,7 +1025,36 @@
     .time-panel.is-stuck .phase,
     .time-panel.is-stuck .range-labels,
     .time-panel.is-stuck .quick-years {
-      display: none
+      max-height: 0;
+      margin: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(-5px);
+      visibility: hidden
+    }
+
+    .time-panel.is-stuck .section-kicker,
+    .time-panel.is-stuck .phase {
+      width: 0;
+      max-width: 0
+    }
+
+    .time-panel .section-kicker,
+    .time-panel .phase,
+    .time-panel .range-labels,
+    .time-panel .quick-years {
+      max-height: 96px;
+      transition: max-height .2s ease, margin .2s ease, opacity .18s ease, transform .2s ease, visibility 0s linear .2s
+    }
+
+    .time-panel:not(.is-stuck) .section-kicker,
+    .time-panel:not(.is-stuck) .phase,
+    .time-panel:not(.is-stuck) .range-labels,
+    .time-panel:not(.is-stuck) .quick-years {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+      transition-delay: 0s
     }
 
     .time-panel.is-stuck .big-year {
@@ -1108,7 +1077,8 @@
       padding: 0;
       background: transparent;
       pointer-events: auto;
-      touch-action: pan-y;
+      touch-action: none;
+      user-select: none;
       -webkit-appearance: none;
       appearance: none;
       -webkit-tap-highlight-color: transparent
@@ -1147,56 +1117,6 @@
       box-shadow: 0 0 0 2px rgba(141, 47, 29, .48), 0 3px 8px rgba(61, 39, 19, .22)
     }
 
-    .now-line {
-      top: -10px;
-      bottom: -10px;
-      width: 1px;
-      background: rgba(141, 47, 29, .55);
-      transform: translateX(-50%);
-      pointer-events: none
-    }
-
-    .now-line::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 10px;
-      height: 10px;
-      border: 3px solid #fff4dc;
-      border-radius: 50%;
-      background: var(--cinnabar);
-      box-shadow: 0 0 0 2px rgba(141, 47, 29, .38), 0 2px 7px rgba(61, 39, 19, .24);
-      transform: translate(-50%, -50%)
-    }
-
-    .now-line::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      border: 1px solid rgba(141, 47, 29, .32);
-      border-radius: 50%;
-      transform: translate(-50%, -50%)
-    }
-
-    .now-year {
-      position: absolute;
-      top: calc(100% + 3px);
-      left: 50%;
-      padding: 0 4px;
-      border-radius: 4px;
-      background: #fff7e7;
-      color: var(--cinnabar);
-      font-size: .68rem;
-      font-weight: 800;
-      line-height: 1.35;
-      transform: translateX(-50%);
-      white-space: nowrap
-    }
-
     .lifeline[data-status="future"] .track,
     .lifeline[data-status="ended"] .track {
       opacity: .48
@@ -1232,7 +1152,7 @@
       display: inline-block;
       margin-top: 5px;
       padding: 1px 7px;
-      border-radius: 999px;
+      border-radius: 5px;
       background: #ead9bc;
       color: #745c42;
       font-size: .76rem;
@@ -1250,6 +1170,8 @@
 
     @media(max-width:720px) {
       .hero {
+        width: 100%;
+        max-width: none;
         min-height: 0;
         display: block;
         background: #cab188
@@ -1257,18 +1179,23 @@
 
       .hero-caption {
         margin-top: 16px;
-        line-height: 1.7
+        font-size: clamp(1.08rem, 4.6vw, 1.15rem);
+        line-height: 1.65
       }
 
       main {
         padding-top: 24px
       }
 
+      .timeline-slot {
+        margin: 16px 0
+      }
+
       .time-panel.is-stuck {
-        grid-template-columns: 1fr;
-        gap: 2px;
-        min-height: 68px;
-        padding: 5px 14px;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 12px;
+        min-height: 64px;
+        padding: 6px 12px;
         border-radius: 0 0 10px 10px
       }
 
@@ -1281,13 +1208,59 @@
         height: 30px
       }
 
+      .quick-years {
+        display: none
+      }
+
+      .map-copy h3 {
+        overflow: hidden;
+        font-size: clamp(.92rem, 4.2vw, 1.08rem);
+        text-overflow: ellipsis;
+        white-space: nowrap
+      }
+
+      .chronicle {
+        gap: var(--chronicle-gap)
+      }
+
+      .chronicle-item,
+      button.chronicle-item {
+        grid-template-columns: 54px 1fr;
+        gap: 8px;
+        padding: 8px 9px
+      }
+
+      .chronicle-item h3 {
+        font-size: .94rem;
+        line-height: 1.35
+      }
+
+      .chronicle-item p {
+        margin-top: 2px;
+        font-size: .84rem;
+        line-height: 1.45
+      }
+
+      .chronicle-distance {
+        margin-top: 3px;
+        padding: 0 4px;
+        font-size: .68rem
+      }
+
+      .event-tags {
+        gap: 3px;
+        margin-top: 3px
+      }
+
+      .event-tags span {
+        padding: 0 5px;
+        font-size: .7rem
+      }
+
       section[id] {
         scroll-margin-top: 82px
       }
 
-      .now-year {
-        font-size: .65rem
-      }
     }
   </style>
 </head>
@@ -1296,50 +1269,44 @@
   <header class="hero"><img src="images/embedded-1.png" alt="宋朝及东亚历史时间线，907年至1279年交互式历史长卷首图"></header>
   <p class="hero-caption">沿时间与地理两条线索，观察宋、辽、西夏、金与蒙古的兴替、交锋、和议与融合。</p>
   <main>
-    <section class="section time-panel" id="timeline" aria-labelledby="timeline-title">
-      <div class="time-readout">
-        <div><span class="section-kicker" id="timeline-title">01 · 时间总览</span>
-          <div class="big-year"><span id="year-number">1141</span><small style="font-size:.28em"> 年</small></div>
+    <div class="timeline-sentinels" aria-hidden="true">
+      <span class="timeline-sentinel timeline-sentinel-enter" id="timeline-sentinel-enter"></span>
+      <span class="timeline-sentinel timeline-sentinel-exit" id="timeline-sentinel-exit"></span>
+    </div>
+    <div class="timeline-slot" id="timeline-slot">
+      <section class="section time-panel" id="timeline" aria-labelledby="timeline-title">
+        <div class="time-readout">
+          <div><span class="section-kicker" id="timeline-title">01 · 时间总览</span>
+            <div class="big-year"><span id="year-number">1141</span><small style="font-size:.28em">年</small></div>
+          </div>
+          <div class="phase" id="phase-text">绍兴和议前后：宋金南北对峙格局形成</div>
         </div>
-        <div class="phase" id="phase-text">绍兴和议前后：宋金南北对峙格局形成</div>
-      </div>
-      <div class="range-wrap"><input id="year-range" type="range" min="907" max="1279" value="1141" step="1"
-          aria-label="选择查看年份">
-        <div class="range-labels"><span>907 五代开端</span><span>1279 南宋覆亡</span></div>
-        <div class="quick-years" aria-label="关键年份"><button data-year="960">960 建宋</button><button data-year="1005">1005
-            澶渊之盟</button><button data-year="1127">1127 靖康之变</button><button data-year="1141">1141 绍兴和议</button><button
-            data-year="1206">1206 蒙古建国</button><button data-year="1279">1279 崖山</button></div>
-      </div>
-    </section>
+        <div class="range-wrap"><input id="year-range" type="range" min="907" max="1279" value="1141" step="1"
+            aria-label="选择查看年份">
+          <div class="range-labels"><span>907 五代开端</span><span>1279 南宋覆亡</span></div>
+          <div class="quick-years" aria-label="关键年份"><button data-year="960">960 建宋</button><button data-year="1005">1005
+              澶渊之盟</button><button data-year="1127">1127 靖康之变</button><button data-year="1141">1141 绍兴和议</button><button
+              data-year="1206">1206 蒙古建国</button><button data-year="1279">1279 崖山</button></div>
+        </div>
+      </section>
+    </div>
 
     <section class="section" id="lifecycles">
       <div class="section-head">
         <div><span class="section-kicker">02 · 政权生命周期</span>
           <h2 class="section-title">兴起、延续与退场</h2>
         </div>
-        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
       </div>
       <div class="legend"><span><i class="active"></i>当前在场</span><span><i class="future"></i>尚未建立</span><span><i
             class="ended"></i>已经灭亡</span></div>
       <div class="lifelines" id="lifelines"></div>
     </section>
 
-    <section class="section" id="powers">
-      <div class="section-head">
-        <div><span class="section-kicker">03 · 这一年，谁在场？</span>
-          <h2 class="section-title">同时代政权与核心事件</h2>
-        </div>
-        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
-      </div>
-      <div class="power-grid" id="power-grid"></div>
-    </section>
-
     <section class="section" id="map">
       <div class="section-head">
-        <div><span class="section-kicker">04 · 地理空间</span>
+        <div><span class="section-kicker">03 · 地理空间</span>
           <h2 class="section-title">势力格局概览</h2>
         </div>
-        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
       </div>
       <div class="map-stage"><img id="mapImg" alt="随当前年份切换的历史地图" decoding="async" draggable="false">
         <div class="map-copy">
@@ -1352,26 +1319,24 @@
 
     <section class="section" id="events">
       <div class="section-head">
-        <div><span class="section-kicker">05 · 大事记</span>
+        <div><span class="section-kicker">04 · 大事记</span>
           <h2 class="section-title">按时间顺序浏览大事</h2>
         </div>
-        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
       </div>
       <div class="event-tools">
         <div class="event-filter-buttons" id="event-filter-buttons" aria-label="按政权筛选大事记"></div>
-        <div class="event-scroll-hint">↕ 上下滑动查看更多事件</div>
       </div>
-      <div class="chronicle-scroll" id="chronicle-scroll">
+      <p class="chronicle-context-note" id="chronicle-context-note" hidden></p>
+      <div class="chronicle-scroll" id="chronicle-scroll" tabindex="0" aria-label="历史事件列表，每次显示五条完整事件">
         <div class="chronicle" id="chronicle"></div>
       </div>
     </section>
 
     <section class="section" id="archive">
       <div class="section-head">
-        <div><span class="section-kicker">06 · 政权档案</span>
+        <div><span class="section-kicker">05 · 政权档案</span>
           <h2 class="section-title">起源、发展与结局</h2>
         </div>
-        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
       </div>
       <div class="archive-tabs" id="archive-tabs" role="tablist"></div>
       <div class="archive-content" id="archive-content"></div>
@@ -1424,7 +1389,7 @@
     const eventTags = {
       907: [], 916: ['liao'], 918: ['goryeo'], 937: ['dali'], 938: ['liao'], 960: ['song'], 979: ['song'], 986: ['song', 'liao'], 1005: ['song', 'liao'], 1038: ['xia'], 1044: ['song', 'xia'], 1069: ['song'], 1085: ['song'], 1115: ['jin'], 1120: ['song', 'jin', 'liao'], 1125: ['liao', 'jin'], 1127: ['song', 'jin'], 1130: ['song', 'jin'], 1140: ['song', 'jin'], 1141: ['song', 'jin'], 1161: ['song', 'jin'], 1206: ['mongol'], 1209: ['mongol', 'xia'], 1215: ['mongol', 'jin'], 1218: ['mongol', 'xiliao'], 1219: ['mongol'], 1227: ['mongol', 'xia'], 1234: ['mongol', 'jin', 'song'], 1253: ['mongol', 'dali'], 1259: ['mongol', 'song'], 1260: ['mongol'], 1267: ['mongol', 'song'], 1271: ['mongol'], 1273: ['mongol', 'song'], 1276: ['mongol', 'song'], 1279: ['mongol', 'song']
     };
-    const state = {currentYear: 1141, selectedEventPolity: 'all', selectedArchive: 'song'}; const phases = [[959, '五代十国：多政权并立'], [1004, '北宋建立并推进统一'], [1037, '宋辽澶渊之盟后的和平期'], [1114, '宋、辽、西夏三足并立'], [1126, '金兴起并灭辽'], [1140, '靖康之变后，南宋立国'], [1160, '绍兴和议前后：宋金南北对峙格局形成'], [1205, '宋金对峙延续，蒙古诸部渐趋统一'], [1226, '蒙古崛起，东亚秩序重组'], [1233, '蒙古灭夏进程'], [1258, '蒙古与南宋夹击金朝'], [1270, '蒙古南征与襄樊攻防'], [1278, '元军推进，南宋残局'], [1279, '崖山海战：南宋覆亡']];
+    const state = {currentYear: 1141, selectedEventPolity: 'all', selectedArchive: 'song', selectedArchiveEvent: null}; const phases = [[959, '五代十国：多政权并立'], [1004, '北宋建立并推进统一'], [1037, '宋辽澶渊之盟后的和平期'], [1114, '宋、辽、西夏三足并立'], [1126, '金兴起并灭辽'], [1140, '靖康之变后，南宋立国'], [1160, '绍兴和议前后：宋金南北对峙格局形成'], [1205, '宋金对峙延续，蒙古诸部渐趋统一'], [1226, '蒙古崛起，东亚秩序重组'], [1233, '蒙古灭夏进程'], [1258, '蒙古与南宋夹击金朝'], [1270, '蒙古南征与襄樊攻防'], [1278, '元军推进，南宋残局'], [1279, '崖山海战：南宋覆亡']];
     const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
     const markerDescriptions = {
       song: {960: '赵匡胤建宋，定都开封', 1005: '宋辽议和，边境长期稳定', 1127: '北宋灭亡，南宋在江南重建', 1141: '宋金议和，形成南北对峙', 1279: '崖山战败，南宋最终灭亡'},
@@ -1435,21 +1400,11 @@
       dali: {937: '段思平建立大理国', 1094: '高升泰取代段氏政权', 1096: '段氏复国，进入后理时期', 1253: '蒙古军越金沙江攻入云南', 1254: '大理国主降服蒙古'},
       goryeo: {918: '王建建立高丽王朝', 936: '高丽完成后三国统一', 1019: '龟州大捷击退契丹军', 1231: '蒙古首次大举进攻高丽', 1259: '高丽与蒙古议和结束长期战争'},
       xiliao: {1124: '耶律大石西迁建立新政权', 1132: '西辽称帝并确立中亚统治', 1141: '卡特万大胜，西辽达到鼎盛', 1211: '屈出律夺取西辽实权', 1218: '蒙古击败屈出律，西辽灭亡'}
-    }; const lifecycleMarkerYears = {
-      song: [960, 1005, 1127, 1141, 1279],
-      liao: [916, 938, 1005, 1114, 1125],
-      xia: [1038, 1044, 1209, 1226, 1227],
-      jin: [1115, 1125, 1127, 1141, 1234],
-      mongol: [1206, 1215, 1227, 1271, 1279],
-      dali: [937, 1094, 1096, 1253, 1254],
-      goryeo: [918, 936, 1019, 1231, 1259],
-      xiliao: [1124, 1132, 1141, 1211, 1218]
     }; const pct = y => Math.max(0, Math.min(100, (y - MIN) / (MAX - MIN) * 100));
     const status = (p, y) => y < p.start ? 'future' : y > p.end ? 'ended' : 'active';
     const statusText = s => s === 'active' ? '当前在场' : s === 'future' ? '尚未建立' : '已经灭亡';
-    function renderLifelines(y) {$('#lifelines').innerHTML = polities.map(p => {const s = status(p, y); const keyYears = lifecycleMarkerYears[p.id] || []; const markers = p.events.filter(e => e[0] >= MIN && e[0] <= MAX && keyYears.includes(e[0])).slice(0, 5).map(e => {const brief = markerDescriptions[p.id]?.[e[0]] || e[1]; return `<button class="event-marker" style="left:${pct(e[0])}%" aria-label="${e[0]}年 · ${e[1]} · ${brief}" data-note="${p.name}｜${e[0]}年 · ${e[1]}：${brief}"></button>`}).join(''); return `<article class="lifeline" data-status="${s}" style="--tone:${s === 'active' ? p.color : s === 'future' ? '#748093' : '#9a7a72'}"><div class="life-name"><strong>${p.name}</strong><span class="life-years">${p.start}—${p.end}</span><br><span class="status-tag">${statusText(s)}</span></div><div class="track" aria-label="${p.name} 生命周期"><span class="track-fill" style="left:${pct(p.start)}%;width:${pct(Math.min(p.end, MAX)) - pct(p.start)}%"></span><span class="now-line" style="left:${pct(y)}%"><span class="now-year">${y}</span></span>${markers}</div><div class="marker-note" aria-live="polite"></div></article>`}).join(''); $$('.event-marker').forEach(b => b.addEventListener('click', () => {b.closest('.lifeline').querySelector('.marker-note').textContent = b.dataset.note}))}
-    function nearby(p, y, n = 4) {return [...p.events].sort((a, b) => Math.abs(a[0] - y) - Math.abs(b[0] - y) || a[0] - b[0]).slice(0, n).sort((a, b) => a[0] - b[0])}
-    function renderPowers(y) {const active = polities.filter(p => status(p, y) === 'active'); $('#power-grid').innerHTML = active.length ? active.map(p => `<article class="power-card" style="--tone:${p.color}"><h3>${p.name}</h3><div class="power-meta">${p.start}—${p.end}</div><span class="state">${p.id === 'song' ? (y < 1127 ? '北宋' : '南宋') : '当前在场'}</span><ul>${nearby(p, y).map(e => `<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join('')}</ul></article>`).join('') : '<div class="empty">这一年暂无本网页收录的在场政权。</div>'}
+    const statusShort = s => s === 'active' ? '在场' : s === 'future' ? '未建立' : '已灭亡';
+    function renderLifelines(y) {$('#lifelines').innerHTML = polities.map(p => {const s = status(p, y); const currentMarker = s === 'active' ? `<span class="now-marker" style="left:${pct(y)}%" aria-hidden="true"></span>` : ''; return `<article class="lifeline" data-status="${s}" style="--tone:${s === 'active' ? p.color : s === 'future' ? '#748093' : '#9a7a72'}"><div class="life-name"><strong title="${p.name}">${p.name}</strong></div><span class="life-boundary">${p.start}</span><div class="track" aria-label="${p.name}，${p.start}年至${p.end}年，${statusText(s)}"><span class="track-fill" style="left:${pct(p.start)}%;width:${pct(Math.min(p.end, MAX)) - pct(p.start)}%"></span>${currentMarker}</div><span class="life-boundary">${p.end}</span><span class="status-tag" data-short="${statusShort(s)}">${statusText(s)}</span></article>`}).join('')}
     function renderMap(y) {const m = maps.find(x => y >= x.from && y <= x.to) || maps.at(-1); const s = snapshots.find(x => y <= x.to) || snapshots.at(-1); const img = $('#mapImg'); if (img.src !== m.src) img.src = m.src; $('#map-title').textContent = m.badge; $('#map-desc').textContent = m.caption; $('#map-powers').innerHTML = s.powers.map(x => `<span>${x}</span>`).join('')}
     function buildEventRecords() {
       const records = events.map(([year, title, description], index) => ({id: `event-${year}-${index}`, year, title, description, polities: [...(eventTags[year] || [])], tags: [], importance: 2}));
@@ -1461,29 +1416,31 @@
       return records.sort((a, b) => a.year - b.year || b.importance - a.importance || a.title.localeCompare(b.title, 'zh-CN'));
     }
     const eventRecords = buildEventRecords();
-    function getContextEvents(currentYear, selectedPolity, limit = 8) {
-      const pool = eventRecords.filter(event => selectedPolity === 'all' || event.polities.includes(selectedPolity));
-      const exact = pool.filter(event => event.year === currentYear);
-      const before = pool.filter(event => event.year < currentYear).slice(-3);
-      const after = pool.filter(event => event.year > currentYear).slice(0, 3);
-      const chosen = [...before, ...exact, ...after];
-      const chosenIds = new Set(chosen.map(event => event.id));
-      pool.filter(event => !chosenIds.has(event.id)).sort((a, b) => Math.abs(a.year - currentYear) - Math.abs(b.year - currentYear) || a.year - b.year).slice(0, Math.max(0, limit - chosen.length)).forEach(event => chosen.push(event));
-      return chosen.sort((a, b) => a.year - b.year || b.importance - a.importance).slice(0, Math.max(limit, exact.length));
+    function getFilteredEvents(selectedPolity) {return eventRecords.filter(event => selectedPolity === 'all' || event.polities.includes(selectedPolity))}
+    function getNearestEventIndex(records, currentYear) {return records.reduce((best, event, index) => Math.abs(event.year - currentYear) < Math.abs(records[best].year - currentYear) ? index : best, 0)}
+    function getChronicleStep() {const box = $('#chronicle-scroll'), styles = getComputedStyle(box); return parseFloat(styles.getPropertyValue('--chronicle-row-height')) + parseFloat(styles.getPropertyValue('--chronicle-gap'))}
+    function positionChronicle(records, currentYear) {
+      const box = $('#chronicle-scroll'), visibleCount = Math.min(5, records.length), nearestIndex = records.length ? getNearestEventIndex(records, currentYear) : 0;
+      const startIndex = Math.min(nearestIndex, Math.max(0, records.length - visibleCount));
+      const step = getChronicleStep(), rowHeight = parseFloat(getComputedStyle(box).getPropertyValue('--chronicle-row-height'));
+      box.style.setProperty('--chronicle-window-height', `${Math.max(1, visibleCount) * rowHeight + Math.max(0, visibleCount - 1) * (step - rowHeight)}px`);
+      box.scrollTop = startIndex * step;
     }
     const distanceLabel = (eventYear, currentYear) => eventYear === currentYear ? '当年' : eventYear < currentYear ? `此前${currentYear - eventYear}年` : `此后${eventYear - currentYear}年`;
     function renderChronicle(y) {
-      const filtered = getContextEvents(y, state.selectedEventPolity);
+      const filtered = getFilteredEvents(state.selectedEventPolity);
       const hasExact = filtered.some(event => event.year === y);
       const nearestDistance = filtered.length ? Math.min(...filtered.map(event => Math.abs(event.year - y))) : Infinity;
       const selectedName = eventFilterPolities.find(p => p.id === state.selectedEventPolity)?.name || '所选政权';
-      const note = hasExact ? '' : `<p class="chronicle-context-note">${y}年暂无已录入的${state.selectedEventPolity === 'all' ? '' : selectedName}事件，以下展示距该年份最近的重要事件。</p>`;
+      const note = $('#chronicle-context-note');
+      note.hidden = hasExact;
+      note.textContent = hasExact ? '' : `${y}年暂无已录入的${state.selectedEventPolity === 'all' ? '' : selectedName}事件，已将距离该年份最近的事件置于窗口起点。`;
       const item = event => {const tags = event.polities.map(id => polities.find(p => p.id === id)?.name).filter(Boolean), isExact = event.year === y, isNear = Math.abs(event.year - y) === nearestDistance; return `<button class="chronicle-item${isNear ? ' near' : ''}${isExact ? ' exact' : ''}" type="button" data-year="${event.year}"${isNear ? ' data-nearest="true"' : ''} aria-label="跳转到${event.year}年：${event.title}"><div class="chronicle-year">${event.year}年<div class="chronicle-distance">${distanceLabel(event.year, y)}</div></div><div><h3>${event.title}</h3><p>${event.description}</p>${tags.length ? `<div class="event-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}</div></button>`};
-      $('#chronicle').innerHTML = note + filtered.map(item).join('');
+      $('#chronicle').innerHTML = filtered.length ? filtered.map(item).join('') : '<div class="empty">当前筛选下暂无事件。</div>';
       $('#event-filter-buttons').innerHTML = eventFilterPolities.map(p => `<button aria-pressed="${p.id === state.selectedEventPolity}" data-id="${p.id}">${p.name}</button>`).join('');
       $$('#event-filter-buttons button').forEach(b => b.addEventListener('click', () => {state.selectedEventPolity = b.dataset.id; renderChronicle(state.currentYear)}));
       $$('#chronicle .chronicle-item').forEach(item => item.addEventListener('click', () => setCurrentYear(+item.dataset.year)));
-      requestAnimationFrame(() => {const box = $('#chronicle-scroll'), near = $('#chronicle .chronicle-item.near'); if (box && near) box.scrollTop = Math.max(0, near.offsetTop - (box.clientHeight - near.offsetHeight) / 2)});
+      positionChronicle(filtered, y);
     }
     const archiveNarratives = {
       song: {lead: '宋朝自960年建立，历北宋与南宋两个阶段，前后延续三百余年。它在强邻环伺中发展出高度成熟的文官政治、财政体系、城市经济与士人文化，是这一时期东亚秩序的核心参与者。', chapters: [['建立与统一', '赵匡胤由后周将领登上帝位后，以加强中央禁军、分散地方军政权力和逐步兼并割据政权的方式重建统一秩序。至979年北汉灭亡，中原与南方大部分地区重新归于中央王朝，但燕云地区始终未能收复。'], ['北宋的发展', '北宋以文官体系和科举制度扩大治理基础，农业、手工业、商业和城市生活显著发展。面对辽与西夏，朝廷在战争、岁币、边贸之间寻求平衡；1005年澶渊之盟和1044年庆历和议带来阶段性稳定。王安石变法则反映了财政、军事与社会治理上的深层压力。'], ['南渡与重建', '1127年金军攻陷开封，徽、钦二帝被俘，北宋结束。赵构在南方建立南宋，最终以临安为都。南宋依托江南经济、长江防线和海上贸易恢复国力，1141年绍兴和议后与金形成长期南北对峙，1161年采石之战又阻止了金军渡江。'], ['灭亡与影响', '蒙古灭西夏、金后转而集中攻宋。襄阳、樊城于1273年陷落，临安于1276年投降，宋室余部继续沿海抵抗，至1279年崖山海战失败而亡。宋代在制度、理学、文学、印刷、火药应用和商业网络方面的积累，对此后中国与东亚影响深远。']]},
@@ -1495,19 +1452,197 @@
       goryeo: {lead: '高丽由王建于918年建立，936年统一朝鲜半岛大部，延续至1392年。宋辽金元相继兴替时，高丽不断调整外交与军事策略，是东北亚秩序变化的重要参与者。', chapters: [['建立与统一', '王建在后高句丽政权中崛起，于918年建立高丽，936年完成后三国统一。王朝以开京为中心发展中央官制、土地制度和贵族政治，并与中国各王朝保持册封、贸易与文化往来。'], ['契丹战争', '辽朝扩张后，高丽经历多次契丹战争。993年后双方通过谈判调整边界；1019年高丽在龟州取得重要胜利。此后高丽与辽维持关系，同时继续吸收宋朝文化与物质成果。'], ['女真金与内部变化', '12世纪初高丽曾向东北女真地区扩张，金朝建立并强盛后又向金称臣。国内贵族政治矛盾加深，1170年武臣政变后进入武臣掌权时期，但王室仍继续存在。'], ['蒙古入侵与元朝关系', '蒙古自1231年起多次入侵，高丽迁都江华岛长期抵抗。1259年双方议和，1270年三别抄继续反抗。此后高丽与元朝形成紧密政治关系，但保持本国王朝与制度，最终于1392年由朝鲜王朝取代。']]},
       xiliao: {lead: '西辽是辽朝宗室耶律大石西迁后在中亚建立的契丹政权，约1124年至1218年延续近百年。它把辽朝政治传统带入河中地区，并在伊斯兰世界与草原诸势力之间形成新的霸权。', chapters: [['西迁建国', '辽朝面临金军进攻时，耶律大石率部离开故地向西发展。1124年前后他建立独立政权，后控制七河与河中地区，并以虎思斡耳朵为中心建立统治。'], ['中亚霸权', '西辽统治契丹、突厥与伊朗语族等多种人口，对地方属国通常保留原有统治者和宗教。它使用汉式年号、官号和辽朝制度传统，同时适应中亚的贡赋与城市网络。'], ['卡特万之战', '1141年耶律大石在卡特万之战击败塞尔柱势力，西辽威望达到高峰，花剌子模等政权一度向其纳贡。其存在改变了中亚力量平衡，也扩大了契丹名称在欧亚西部的影响。'], ['屈出律夺权与灭亡', '西辽后期内外矛盾加剧，乃蛮王子屈出律于1211年夺取实权。其宗教政策与地方冲突削弱统治，蒙古军于1218年进入中亚并击败屈出律，西辽政权结束。']]}
     };
+    const archiveEventDetails = {
+      song: {
+        960: ['赵匡胤在陈桥驿受军士拥立，随后代后周称帝，定都开封，建立宋朝，并逐步展开结束割据局面的统一战争。', '此事开启宋代，也奠定了强化中央、约束地方军权的基本政治方向。'],
+        979: ['宋军攻灭北汉，五代十国以来中原与南方的主要割据政权至此大体归入宋朝版图，但燕云地区仍在辽朝控制之下。', '长期分裂局面基本结束，宋辽围绕北方边界的竞争由此更加突出。'],
+        1005: ['宋辽在澶州对峙后达成和议，双方维持既有边界，宋向辽提供岁币，并恢复使节、贸易与边境往来。', '此后宋辽总体保持百余年和平，为北宋内部治理和经济发展提供了稳定环境。'],
+        1044: ['宋夏长期交战后达成庆历和议，西夏接受宋的册封关系，双方以岁赐、互市等安排结束大规模军事对抗。', '和议确立了宋夏关系的基本框架，使西北边境进入以外交和贸易为主的阶段。'],
+        1069: ['宋神宗任用王安石主持变法，陆续推行青苗、免役、保甲等措施，试图改善财政、整顿军政并增强国家治理能力。', '变法回应了北宋积累的财政与边防压力，也引发长期而深刻的政治分歧。'],
+        1085: ['宋神宗去世后，幼主即位，高太后主政，司马光等旧党人物重新执政，多项新法被废止或调整，朝廷路线发生转折。', '新旧政策反复加深党争，对北宋后期政治稳定与改革延续产生重要影响。'],
+        1127: ['金军攻破开封，俘虏徽、钦二帝，北宋灭亡；赵构随后在南方即位，重建朝廷，宋朝进入南宋阶段。', '这一巨变使政治和经济重心进一步南移，并开启宋金长期南北对峙。'],
+        1141: ['宋金经过多年战争后订立绍兴和议，确定阶段性边界与双方政治关系，南宋以临安为中心的统治格局趋于稳定。', '和议结束持续大战，形成此后数十年的南北对峙秩序，也限制了南宋北进空间。'],
+        1161: ['金帝完颜亮大举南征，宋军在采石一带阻止金军渡江，金军攻势受挫，完颜亮不久在军中被杀。', '战役稳定了长江防线，证明南宋具有抵御大规模南侵的能力。'],
+        1208: ['开禧北伐失败后，南宋与金达成嘉定和议，停止战争并重新调整岁币与双方名分，边境恢复相对平静。', '和议暴露南宋军事准备不足，也使朝廷再次转向维持既有边界的策略。'],
+        1234: ['南宋与蒙古联合进攻金朝，蔡州失守后金亡，宋军随后试图收复部分故地，却很快与蒙古发生新的冲突。', '传统北方强敌虽被消灭，南宋却直接面对扩张能力更强的蒙古，战略环境更加危险。'],
+        1259: ['蒙哥汗率军攻宋，在合州钓鱼城一线受阻并于军中去世，蒙古南征暂时中断，内部随即出现汗位竞争。', '战事延缓了蒙古灭宋进程，为南宋争取了时间，也改变了蒙古帝国的权力格局。'],
+        1273: ['蒙古军经过长期围攻攻陷襄阳、樊城，南宋经营多年的长江中游防御枢纽被突破，元军得以沿江东进。', '襄樊失守使南宋核心地区门户洞开，统一战争由相持转入快速推进阶段。'],
+        1276: ['元军逼近临安，南宋朝廷奉幼帝出降，首都和中央政权基本瓦解，但部分官员与军民继续沿海抵抗。', '临安投降标志南宋主体统治结束，战争此后转为残余政权的流动抗争。'],
+        1279: ['宋元水军在崖山决战，南宋残余力量失败，陆秀夫负帝投海，延续三百余年的宋朝至此终结。', '崖山之战完成元朝统一进程，也结束了宋代在中国历史上的政治统治。']
+      },
+      liao: {
+        916: ['耶律阿保机统一契丹主要部落后称帝，建立新的草原王朝，并逐步设置官制、城镇和稳定的继承秩序。', '契丹由部落联盟转向王朝国家，为后来经营草原、东北和汉地奠定基础。'],
+        938: ['后晋将燕云十六州割让给契丹，辽由此控制长城沿线的重要州县、农业人口和南下中原的战略通道。', '燕云成为辽朝南部屏障，也成为此后宋辽长期竞争的核心地区。'],
+        947: ['契丹太宗南下进入开封，一度控制中原，并将国号改为辽；虽然很快北撤，但王朝定位发生明显变化。', '改号显示其从契丹部族政权向多民族帝国发展的政治追求。'],
+        979: ['北宋灭北汉后继续北进，在高梁河附近与辽军交战失利，宋军撤退，首次大规模收复燕云的行动失败。', '辽守住南京地区，宋辽边界对峙由此延续，并影响此后北宋的北伐战略。'],
+        1004: ['辽圣宗与萧太后率军深入宋境，推进至澶州附近，与宋军隔河对峙，双方都面临继续作战的风险。', '这次南征直接促成次年的澶渊之盟，使宋辽关系从战争转向长期协商。'],
+        1005: ['辽与北宋订立澶渊之盟，双方约为兄弟之国，维持边界并以岁币和互市安排缓和长期军事冲突。', '盟约带来百余年总体和平，促进北方边境贸易、使节往来和文化交流。'],
+        1042: ['辽利用宋夏战争造成的压力与北宋交涉，宋增加对辽的岁币数量，史称重熙增币，双方避免重新开战。', '辽在外交上扩大收益，也显示宋辽和平秩序仍需依靠谈判不断调整。'],
+        1066: ['辽道宗时期重新使用“辽”作为正式国号，结束此前恢复“契丹”国号的阶段，继续强调王朝的帝国身份。', '国号变化反映契丹传统与汉式王朝制度长期并存、不断调适的特点。'],
+        1114: ['女真首领完颜阿骨打起兵反辽，接连攻取东北要地，辽朝地方控制和军事体系迅速暴露出严重危机。', '女真崛起打破北方力量平衡，辽朝由盛转衰并进入最后十余年的崩解阶段。'],
+        1125: ['金军俘获辽天祚帝，辽朝在故地的统治终结；部分契丹贵族随耶律大石西迁，后来建立西辽。', '辽亡使金取代其成为北方强权，并直接改变宋朝及整个东北亚格局。']
+      },
+      xia: {
+        982: ['李继迁反对宋朝控制，在夏州周边联合党项部众自立，并借助宋辽之间的竞争逐步扩大西北势力。', '他的经营为李德明、李元昊建立独立的西夏国家准备了军事与地域基础。'],
+        1038: ['李元昊在兴庆府称帝建国，建立本国年号、官制和礼仪，并以党项力量控制河套及河西走廊。', '西夏正式成为宋辽之间的重要政权，东亚北部由此形成多国并立格局。'],
+        1040: ['宋夏在三川口交战，西夏军利用地形与机动优势击败宋军，北宋西北防线受到明显震动。', '战役增强了西夏新政权的威望，也迫使北宋重新评估西北军事部署。'],
+        1041: ['西夏军在好水川设伏击败宋军，北宋将士伤亡较大，连续失利使双方继续战争的成本迅速上升。', '此战巩固西夏的军事地位，并推动宋朝转向以谈判结束长期消耗。'],
+        1044: ['宋夏达成庆历和议，西夏接受宋朝册封，宋给予岁赐并恢复边境互市，大规模战争暂告结束。', '和议使西夏获得稳定外部环境和经济来源，其国家体制得以继续发展。'],
+        1099: ['宋军修筑并控制平夏城，在西北前线取得重要进展，西夏对宋边境的军事压力受到一定遏制。', '战役显示宋朝边防策略逐渐转向城寨推进，也削弱了西夏向东扩张的空间。'],
+        1119: ['辽朝衰落、金朝兴起之际，西夏开始与金建立联系，重新选择外交依托以维持西北地区的安全。', '这次转向体现西夏善于在强邻之间调整关系，也预示北方旧秩序正在瓦解。'],
+        1206: ['李安全在西夏内部政局变化中即位，此时蒙古诸部正在统一，西夏所处的外部环境迅速恶化。', '他的统治处于蒙古崛起的关键阶段，西夏随后被迫面对持续而强大的军事压力。'],
+        1209: ['蒙古大军进攻西夏并迫近都城，西夏求援无果后接受蒙古条件，称臣纳贡并承担军事义务。', '西夏从独立周旋转为受蒙古制约，其战略自主性和国力均受到严重削弱。'],
+        1226: ['成吉思汗再次发动大规模灭夏战争，蒙古军连续攻取西夏城镇，压缩其统治核心和抵抗空间。', '这次进攻是西夏亡国的直接前奏，也反映蒙古清除西北后顾之忧的战略。'],
+        1227: ['西夏都城在长期围攻后失守，末帝投降，延续近两百年的党项王朝灭亡，河西地区归入蒙古控制。', '西夏亡后蒙古得以集中力量对付金朝，西北政治与文化格局随之改变。']
+      },
+      jin: {
+        1114: ['完颜阿骨打率女真诸部在宁江州一带起兵反辽，以较小兵力连续获胜，迅速吸引更多部众加入。', '这场起兵开启女真建国和灭辽进程，辽朝东北统治由此开始崩溃。'],
+        1115: ['完颜阿骨打称帝建立金朝，确立年号和王朝制度，并继续整合女真诸部、扩大对辽战争。', '金由反辽联盟转变为正式王朝，成为此后一个多世纪北方格局的主导力量。'],
+        1120: ['北宋与金通过海路联系，约定共同夹击辽朝并分配燕云地区，史称海上之盟，双方暂时结成同盟。', '盟约加速辽亡，却也让金军直接认识宋朝虚实，为随后冲突埋下隐患。'],
+        1125: ['金军攻破辽朝最后防线并俘获天祚帝，完成灭辽，迅速接管东北、草原南缘和燕云地区。', '金取代辽成为北方霸主，宋金同盟随即转化为围绕领土和秩序的对抗。'],
+        1127: ['金军第二次攻入开封，俘虏宋徽宗、宋钦宗及大批宗室官员，北宋灭亡，宋室被迫南迁。', '金取得华北统治权，也由此与重建后的南宋进入长期战争和南北对峙。'],
+        1141: ['金与南宋订立绍兴和议，划定阶段性边界并确立双方政治关系，金朝对北方的统治趋于稳定。', '和议使金获得休整和治理华北的条件，宋金长期对峙格局正式形成。'],
+        1161: ['金帝完颜亮发动大规模南征，在采石渡江受阻，军中随后发生兵变，完颜亮被杀，南征失败。', '失败终止金朝迅速灭宋的企图，并促成金世宗即位和内部政策调整。'],
+        1189: ['金章宗即位后延续中原制度和文治政策，推动礼制、科举与文化建设，但贵族和财政矛盾也逐渐加深。', '章宗时期代表金朝汉制化的重要阶段，同时埋下后期统治压力。'],
+        1214: ['蒙古持续进攻使金朝北方防线崩溃，金宣宗将都城由中都迁往汴京，政治中心转移到黄河以南。', '迁都暂避蒙古锋芒，却放弃大片北方地区，并进一步削弱军心和统治基础。'],
+        1232: ['蒙古军在三峰山击败金军主力，金朝精锐遭受决定性损失，此后已难组织有效的大规模抵抗。', '战役使金朝灭亡进入倒计时，蒙古对河南核心地区的包围迅速收紧。'],
+        1234: ['蒙古与南宋军队合围蔡州，金哀宗退位后自尽，末帝旋即战死，延续一百余年的金朝灭亡。', '金亡结束宋金南北对峙，却使南宋直接面对蒙古，东亚统一战争进入新阶段。']
+      },
+      mongol: {
+        1206: ['铁木真统一蒙古草原主要部族，在斡难河大会上被推举为成吉思汗，并重组军政和分封体系。', '蒙古国由部族联盟转为统一政权，为此后跨越欧亚大陆的扩张奠定基础。'],
+        1209: ['蒙古多次进攻西夏后迫使其称臣纳贡，取得物资和军事配合，并打开进入河西与中原西北的通道。', '西夏被纳入蒙古战略体系，蒙古南下攻金时的侧翼威胁因此减轻。'],
+        1215: ['蒙古军攻占金朝中都，掠取人口与物资，金朝此前已迁都汴京，北方大片地区逐渐脱离其控制。', '中都失守标志金朝北方统治遭到重创，蒙古开始长期经营中原地区。'],
+        1219: ['成吉思汗因商队与使者事件发动西征，蒙古军进入花剌子模，连续攻取中亚重要城市并向更西方推进。', '西征把蒙古扩张推向欧亚腹地，形成连接东西方的巨大军事与交通网络。'],
+        1227: ['蒙古在最后一次攻夏战争中迫使西夏灭亡，成吉思汗也在战事期间去世，汗位随后由继承者接续。', '西夏被清除后，蒙古得以集中资源进攻金朝，并完全控制西北战略走廊。'],
+        1234: ['蒙古与南宋联合攻破蔡州，消灭金朝，取得中国北方的主要统治区域，随后与南宋因领土问题发生冲突。', '灭金完成蒙古南下的重要阶段，宋蒙由暂时合作转向长期战争。'],
+        1251: ['蒙哥在宗王支持下即大汗位，重新整顿帝国财政与军政，并部署对南宋、大理及西亚的多路扩张。', '他的即位恢复中央权威，也把征服南宋重新提升为蒙古帝国的重要目标。'],
+        1259: ['蒙哥亲率军队进攻南宋，在合州前线去世，南征停止，忽必烈与阿里不哥随后争夺汗位。', '大汗去世改变征宋节奏，并推动蒙古帝国从统一扩张转向内部权力分化。'],
+        1260: ['忽必烈在开平即位，与阿里不哥展开汗位战争，同时依靠中原财赋和汉地官僚巩固自己的统治。', '此事确立后来元朝的政治核心，也使蒙古统治重心进一步转向中国北方。'],
+        1267: ['蒙古军开始长期围攻襄阳、樊城，通过水陆封锁和攻城技术逐步切断南宋长江中游防线。', '襄樊攻防成为灭宋战争的关键，胜负直接关系元军能否沿长江深入江南。'],
+        1271: ['忽必烈采用“大元”国号，按照中原王朝形式完善中央制度，并以大都为政治中心推进统一战争。', '国号确立标志蒙古统治进一步王朝化，为统治多区域社会建立制度框架。'],
+        1276: ['元军沿长江推进并占领临安，南宋朝廷出降，大批州县相继归附，但宋室残余仍转移到东南沿海。', '临安陷落使南宋主体政权终结，元朝统一只剩最后的沿海抵抗。'],
+        1279: ['元军在崖山海战中击败南宋残余水师，宋帝与大臣殉亡，持续多年的灭宋战争至此结束。', '元朝完成全国统一，并开始以统一王朝形式整合此前长期分裂的南北地区。']
+      },
+      dali: {
+        937: ['段思平在云南地方势力支持下建立大理国，以洱海地区为中心重建秩序，并统合高原上的多族群区域。', '大理结束南诏灭亡后的长期政权更替，形成延续三百余年的区域王朝。'],
+        1094: ['权臣高升泰取代段氏建立大中国，段氏王权一度中断，但新政权仍依赖云南地方大族的支持。', '此次改朝显示大理王权受到地方贵族制约，也促成随后“后理”阶段的制度调整。'],
+        1096: ['高升泰去世后，其子依遗命归政段氏，段正淳复国，大理进入通常所称的后理时期。', '段氏恢复王位，但地方高氏继续掌握重要权力，王权与大族共治特征更加明显。'],
+        1253: ['忽必烈率蒙古军绕道进入云南，渡过金沙江并攻向大理都城，突破了大理依靠高原地形建立的防线。', '这次远征从侧翼扩大蒙古对南宋的包围，也开启云南纳入帝国治理的过程。'],
+        1254: ['大理国主段兴智向蒙古投降，段氏王朝结束独立统治，原有地方官族随后部分被保留和利用。', '蒙古以较低破坏方式接管云南，为后来建立行省和经营西南奠定基础。']
+      },
+      goryeo: {
+        918: ['王建在后高句丽内部政变后即位，建立高丽，以开京为中心争取地方豪族并继续推进半岛统一。', '高丽王朝由此开始，其国号和政治传统深刻影响此后朝鲜半岛历史。'],
+        936: ['高丽先后兼并新罗、击败后百济，完成后三国统一，将朝鲜半岛大部纳入同一王朝统治。', '统一扩大中央治理基础，也为高丽发展官制、佛教和对外关系创造条件。'],
+        993: ['辽军第一次大举进攻高丽，高丽通过军事防守与外交谈判缓和危机，并调整西北边界和对辽关系。', '战争显示高丽在强邻之间兼用抵抗与谈判，奠定此后处理契丹压力的基本策略。'],
+        1019: ['辽军再次深入高丽后撤退，高丽军在龟州一带取得决定性胜利，契丹的大规模进攻遭到挫败。', '胜利稳定了高丽北部安全，此后高丽与辽进入较长期的和平交往阶段。'],
+        1107: ['尹瓘率高丽军北伐女真，在东北地区修筑九城，但因持续抵抗和补给压力，后来将部分地区归还。', '行动反映高丽试图向北扩张，也显示女真崛起已开始改变东北亚力量平衡。'],
+        1126: ['金朝灭辽并迅速强盛后，高丽接受向金称臣，以调整外交关系、避免直接战争并维持王朝安全。', '高丽由依附辽的秩序转入金朝体系，体现其面对北方强权的现实外交选择。'],
+        1231: ['蒙古第一次大举入侵高丽，攻取多处城镇并迫使高丽议和、接受监督，双方冲突随后仍持续发生。', '此次入侵开启数十年的蒙丽战争，高丽国内政治和社会承受长期军事压力。'],
+        1232: ['高丽权臣将朝廷迁往江华岛，利用海峡阻挡蒙古骑兵，并以此为中心继续长期抵抗。', '迁都保存了王朝中枢，却使本土百姓持续遭受战争，也延长了双方对峙。'],
+        1259: ['高丽王室与蒙古达成议和，结束长期全面战争，王太子入蒙古交涉，双方关系逐步转向政治控制与联姻。', '议和保留了高丽王朝名义和部分制度，但其外交与王位继承受到元朝深刻影响。'],
+        1270: ['高丽朝廷准备迁回开京并解散三别抄，部分军队拒绝服从，在珍岛、济州等地继续抗元。', '三别抄抗争是长期战争的最后阶段，其失败标志高丽中央正式进入元朝主导的秩序。']
+      },
+      xiliao: {
+        1124: ['辽朝遭金军进攻时，耶律大石率契丹部众向西发展，在草原和中亚边缘建立独立政治力量。', '西迁保存了部分辽朝制度与人口，为西辽在中亚建立统治奠定基础。'],
+        1132: ['耶律大石称帝并以虎思斡耳朵为中心建立政权，吸收当地城市和部族势力，形成中亚新的强权。', '西辽由流动集团转为稳定王朝，契丹政治传统由东亚延伸到中亚。'],
+        1141: ['西辽军在卡特万之战击败塞尔柱势力，花剌子模等政权受到震动，耶律大石威望达到高峰。', '胜利确立西辽在河中地区的霸权，并改变了中亚各国之间的力量平衡。'],
+        1211: ['乃蛮王子屈出律利用西辽内部矛盾夺取实权，保留王朝名义却改变统治方式，并加剧地方冲突。', '夺权削弱西辽原有政治基础，使其面对蒙古扩张时失去广泛支持。'],
+        1218: ['蒙古军进入中亚追击屈出律，西辽各地迅速瓦解，屈出律被捕杀，契丹人在中亚的王朝统治结束。', '西辽灭亡为蒙古进一步西征扫清道路，中亚力量格局由此重新组合。']
+      }
+    };
+    function getArchiveEventDetail(p, event) {
+      const [year, title] = event, detail = archiveEventDetails[p.id]?.[year];
+      if (detail) return {overview: detail[0], significance: detail[1]};
+      const record = eventRecords.find(item => item.year === year && item.title === title) || eventRecords.find(item => item.year === year && item.polities.includes(p.id));
+      return {overview: record?.description || title, significance: markerDescriptions[p.id]?.[year] || `${p.name}历史进程中的重要节点。`};
+    }
     function renderArchive() {
       $('#archive-tabs').innerHTML = polities.map(p => `<button role="tab" aria-selected="${p.id === state.selectedArchive}" data-id="${p.id}">${p.name}</button>`).join('');
       const p = polities.find(x => x.id === state.selectedArchive), story = archiveNarratives[p.id];
-      $('#archive-content').innerHTML = `<article class="archive-overview"><h3>${p.name}</h3><p class="archive-lead">${story.lead}</p><div class="archive-story">${story.chapters.map(ch => `<section class="archive-chapter"><h4>${ch[0]}</h4><p>${ch[1]}</p></section>`).join('')}</div><div class="archive-dates"><h4>完整关键节点</h4><div class="archive-date-list">${p.events.map(e => `<span><strong>${e[0]}</strong> · ${e[1]}</span>`).join('')}</div></div></article>`;
-      $$('#archive-tabs button').forEach(b => b.addEventListener('click', () => {state.selectedArchive = b.dataset.id; renderArchive()}));
+      const selectedEvent = Number.isInteger(state.selectedArchiveEvent) ? p.events[state.selectedArchiveEvent] : null;
+      const eventDetail = selectedEvent ? getArchiveEventDetail(p, selectedEvent) : null;
+      const detail = selectedEvent ? `<div class="archive-event-detail" id="archive-event-detail"><h5>${selectedEvent[0]} · ${selectedEvent[1]}</h5><div class="archive-event-section"><h6>事件概述</h6><p>${eventDetail.overview}</p></div><div class="archive-event-section"><h6>历史意义</h6><p>${eventDetail.significance}</p></div><button type="button" data-view-year="${selectedEvent[0]}">查看${selectedEvent[0]}年</button></div>` : '';
+      $('#archive-content').innerHTML = `<article class="archive-overview"><h3>${p.name}</h3><p class="archive-lead">${story.lead}</p><div class="archive-story">${story.chapters.map(ch => `<section class="archive-chapter"><h4>${ch[0]}</h4><p>${ch[1]}</p></section>`).join('')}</div><div class="archive-dates"><h4>完整关键节点</h4><div class="archive-date-list">${p.events.map((e, index) => `<button type="button" data-event-index="${index}" aria-expanded="${index === state.selectedArchiveEvent}"${index === state.selectedArchiveEvent ? ' aria-controls="archive-event-detail"' : ''}><strong>${e[0]}</strong> · ${e[1]}</button>`).join('')}</div>${detail}</div></article>`;
+      $$('#archive-tabs button').forEach(b => b.addEventListener('click', () => {state.selectedArchive = b.dataset.id; state.selectedArchiveEvent = null; renderArchive()}));
+      $$('.archive-date-list button').forEach(b => b.addEventListener('click', () => {const index = +b.dataset.eventIndex; state.selectedArchiveEvent = state.selectedArchiveEvent === index ? null : index; renderArchive()}));
+      $('[data-view-year]')?.addEventListener('click', e => setCurrentYear(+e.currentTarget.dataset.viewYear));
     }
-    function render() {const y = state.currentYear; $('#year-number').textContent = y; $$('.year-sync').forEach(el => el.textContent = y); $('#phase-text').textContent = (phases.find(x => y <= x[0]) || phases.at(-1))[1]; renderLifelines(y); renderPowers(y); renderMap(y); renderChronicle(y); renderArchive()}
+    function render() {const y = state.currentYear; $('#year-number').textContent = y; $('#phase-text').textContent = (phases.find(x => y <= x[0]) || phases.at(-1))[1]; renderLifelines(y); renderMap(y); renderChronicle(y)}
     function setCurrentYear(year) {state.currentYear = Math.max(MIN, Math.min(MAX, +year)); $('#year-range').value = state.currentYear; render()}
-    $('#year-range').addEventListener('input', e => setCurrentYear(e.target.value)); $$('.quick-years button').forEach(b => b.addEventListener('click', () => setCurrentYear(b.dataset.year)));
+    const yearRange = $('#year-range');
+    yearRange.addEventListener('input', e => setCurrentYear(e.target.value));
+    let activeRangePointer = null;
+    function setYearFromPointer(event) {const rect = yearRange.getBoundingClientRect(); if (!rect.width) return; const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)); setCurrentYear(Math.round(MIN + ratio * (MAX - MIN)))}
+    yearRange.addEventListener('pointerdown', event => {if (event.pointerType === 'mouse' && event.button !== 0) return; event.preventDefault(); activeRangePointer = event.pointerId; yearRange.focus({preventScroll: true}); yearRange.setPointerCapture?.(event.pointerId); setYearFromPointer(event)});
+    yearRange.addEventListener('pointermove', event => {if (event.pointerId !== activeRangePointer) return; event.preventDefault(); setYearFromPointer(event)});
+    function releaseRangePointer(event) {if (event.pointerId !== activeRangePointer) return; if (yearRange.hasPointerCapture?.(event.pointerId)) yearRange.releasePointerCapture(event.pointerId); activeRangePointer = null}
+    yearRange.addEventListener('pointerup', releaseRangePointer); yearRange.addEventListener('pointercancel', releaseRangePointer); yearRange.addEventListener('lostpointercapture', () => {activeRangePointer = null});
+    $$('.quick-years button').forEach(b => b.addEventListener('click', () => setCurrentYear(b.dataset.year)));
+    const chronicleBox = $('#chronicle-scroll');
+    let chronicleWheelLocked = false, chronicleSnapTimer = 0;
+    const chronicleMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    function snapChronicle(behavior = chronicleMotion()) {
+      const step = getChronicleStep(), target = Math.round(chronicleBox.scrollTop / step) * step;
+      if (Math.abs(chronicleBox.scrollTop - target) > 1) chronicleBox.scrollTo({top: target, behavior});
+    }
+    function moveChronicleRows(rows) {
+      const step = getChronicleStep(), itemCount = $$('#chronicle .chronicle-item').length, visibleCount = Math.min(5, itemCount);
+      const currentIndex = Math.round(chronicleBox.scrollTop / step), maxIndex = Math.max(0, itemCount - visibleCount);
+      chronicleBox.scrollTo({top: Math.max(0, Math.min(maxIndex, currentIndex + rows)) * step, behavior: chronicleMotion()});
+    }
+    chronicleBox.addEventListener('wheel', event => {event.preventDefault(); if (chronicleWheelLocked || !event.deltaY) return; chronicleWheelLocked = true; moveChronicleRows(event.deltaY > 0 ? 1 : -1); setTimeout(() => {chronicleWheelLocked = false}, 170)}, {passive: false});
+    chronicleBox.addEventListener('keydown', event => {const rows = event.key === 'ArrowDown' ? 1 : event.key === 'ArrowUp' ? -1 : event.key === 'PageDown' ? 5 : event.key === 'PageUp' ? -5 : 0; if (!rows) return; event.preventDefault(); moveChronicleRows(rows)});
+    if ('onscrollend' in chronicleBox) chronicleBox.addEventListener('scrollend', () => snapChronicle());
+    else chronicleBox.addEventListener('scroll', () => {clearTimeout(chronicleSnapTimer); chronicleSnapTimer = setTimeout(() => snapChronicle(), 120)}, {passive: true});
     const timeline = $('#timeline');
-    function syncStickyState() {timeline.classList.toggle('is-stuck', window.scrollY > 0 && timeline.getBoundingClientRect().top <= 11)}
-    addEventListener('scroll', syncStickyState, {passive: true}); addEventListener('resize', syncStickyState, {passive: true});
-    setCurrentYear(state.currentYear); syncStickyState();
+    const timelineSlot = $('#timeline-slot'), timelineEnter = $('#timeline-sentinel-enter'), timelineExit = $('#timeline-sentinel-exit');
+    let timelineStuck = false, timelineSettling = false, timelineSettleTimer = 0, timelineScrollFrame = 0, lastScrollY = scrollY, scrollDirection = 'down';
+    function updateTimelineFixedMetrics() {const rect = timelineSlot.getBoundingClientRect(); timelineSlot.style.setProperty('--timeline-left', `${rect.left}px`); timelineSlot.style.setProperty('--timeline-width', `${rect.width}px`)}
+    function measureTimelineExpandedHeight() {
+      const restoreSticky = timelineStuck;
+      timelineSlot.classList.add('is-measuring');
+      if (restoreSticky) {timelineSlot.classList.remove('is-stuck'); timeline.classList.remove('is-stuck')}
+      timelineSlot.style.height = `${Math.ceil(timeline.getBoundingClientRect().height)}px`;
+      if (restoreSticky) {timelineSlot.classList.add('is-stuck'); timeline.classList.add('is-stuck')}
+      timelineSlot.classList.remove('is-measuring');
+      updateTimelineFixedMetrics();
+    }
+    function setTimelineStuck(next) {
+      if (next === timelineStuck) return;
+      clearTimeout(timelineSettleTimer);
+      if (next) {
+        measureTimelineExpandedHeight();
+        timelineStuck = true;
+        timelineSlot.classList.add('is-stuck');
+        timeline.classList.add('is-stuck');
+      } else {
+        timelineStuck = false;
+        timelineSettling = true;
+        timelineSlot.classList.remove('is-stuck');
+        timeline.classList.remove('is-stuck');
+        timelineSettleTimer = setTimeout(() => {timelineSettling = false; measureTimelineExpandedHeight()}, 230);
+      }
+    }
+    function reconcileTimelineSticky() {
+      timelineScrollFrame = 0;
+      const enterTop = timelineEnter.getBoundingClientRect().top, exitTop = timelineExit.getBoundingClientRect().top;
+      if (scrollDirection === 'down' && enterTop < 0) setTimelineStuck(true);
+      else if (scrollDirection === 'up' && exitTop >= 0) setTimelineStuck(false);
+    }
+    function scheduleTimelineSticky() {if (!timelineScrollFrame) timelineScrollFrame = requestAnimationFrame(reconcileTimelineSticky)}
+    addEventListener('scroll', () => {
+      const nextY = scrollY;
+      if (Math.abs(nextY - lastScrollY) > 1) scrollDirection = nextY > lastScrollY ? 'down' : 'up';
+      lastScrollY = nextY;
+      scheduleTimelineSticky();
+    }, {passive: true});
+    const enterObserver = new IntersectionObserver(scheduleTimelineSticky, {threshold: 0});
+    const exitObserver = new IntersectionObserver(scheduleTimelineSticky, {threshold: 0});
+    enterObserver.observe(timelineEnter); exitObserver.observe(timelineExit);
+    const timelineResizeObserver = new ResizeObserver(() => {if (!timelineStuck && !timelineSettling) timelineSlot.style.height = `${Math.ceil(timeline.getBoundingClientRect().height)}px`});
+    timelineResizeObserver.observe(timeline);
+    addEventListener('resize', measureTimelineExpandedHeight, {passive: true});
+    setCurrentYear(state.currentYear); renderArchive(); measureTimelineExpandedHeight();
   </script>
 </body>
 
