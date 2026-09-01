@@ -51,7 +51,8 @@ jobs:
             -i "$TENCENT_SECRET_ID" \
             -k "$TENCENT_SECRET_KEY" \
             --skip-dir=true \
-            --fail-output-path /tmp/coscli_output \
+            --fail-output-path /tmp/coscli_fail_output \
+            --process-log-path /tmp/coscli_process_log \
             --exclude "^\\.git/.*" \
             --exclude "^\\.github/.*" \
             --exclude "^coscli$"
