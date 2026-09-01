@@ -41,7 +41,7 @@ jobs:
           chmod +x coscli
           ./coscli --version
 
-            - name: Sync website files to COS
+      - name: Sync website files to COS
         env:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
