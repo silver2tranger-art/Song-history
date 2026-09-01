@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "index.html"
-      - ".github/workflows/deploy-tencent.yml"
+paths:
+  - "index.html"
+  - "*.png"
+  - "*.jpg"
+  - "*.jpeg"
+  - "*.webp"
+  - "*.gif"
+  - ".github/workflows/deploy-tencent.yml"
 
   workflow_dispatch:
 
@@ -35,7 +40,7 @@ jobs:
           chmod +x coscli
           ./coscli --version
 
-      - name: Upload index.html to COS
+           - name: Upload website files to COS
         env:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
@@ -43,6 +48,24 @@ jobs:
           ./coscli cp \
             ./index.html \
             cos://web-static-1474623368/history/song/index.html \
+            --init-skip=true \
+            -e cos.ap-nanjing.myqcloud.com \
+            -i "$TENCENT_SECRET_ID" \
+            -k "$TENCENT_SECRET_KEY" \
+            --forbid-overwrite=false
+
+          ./coscli cp \
+            ./embedded-1.png \
+            cos://web-static-1474623368/history/song/embedded-1.png \
+            --init-skip=true \
+            -e cos.ap-nanjing.myqcloud.com \
+            -i "$TENCENT_SECRET_ID" \
+            -k "$TENCENT_SECRET_KEY" \
+            --forbid-overwrite=false
+
+          ./coscli cp \
+            ./embedded-4.jpg \
+            cos://web-static-1474623368/history/song/embedded-4.jpg \
             --init-skip=true \
             -e cos.ap-nanjing.myqcloud.com \
             -i "$TENCENT_SECRET_ID" \
