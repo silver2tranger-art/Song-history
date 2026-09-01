@@ -41,7 +41,7 @@ jobs:
           chmod +x coscli
           ./coscli --version
 
-      - name: Sync website files to COS
+            - name: Sync website files to COS
         env:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
@@ -49,6 +49,7 @@ jobs:
           ./coscli sync \
             ./ \
             cos://web-static-1474623368/history/song/ \
+            -r \
             --init-skip=true \
             -e cos.ap-nanjing.myqcloud.com \
             -i "$TENCENT_SECRET_ID" \
