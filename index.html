@@ -1,277 +1,1514 @@
 <!doctype html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="description" content="宋朝及同时代东亚政权互动历史时间线">
   <title>宋朝及东亚历史时间线</title>
   <style>
-    :root{--paper:#f5ead3;--paper-deep:#e8d4ad;--ink:#2d2118;--muted:#786650;--cinnabar:#8d2f1d;--gold:#aa7d35;--line:rgba(85,57,31,.22);--shadow:0 18px 50px rgba(61,39,19,.14);--active:#4e6d51;--future:#748093;--ended:#9a7a72}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif SC","Songti SC","STSong",serif;line-height:1.75;background-image:radial-gradient(circle at 15% 10%,rgba(255,255,255,.65),transparent 35%),repeating-linear-gradient(0deg,rgba(92,58,20,.025) 0,rgba(92,58,20,.025) 1px,transparent 1px,transparent 5px)}
-    a{color:var(--cinnabar);text-underline-offset:3px}button,input{font:inherit}
-    .hero{overflow:hidden;background:#cab188}
-    .hero img{display:block;width:100%;height:auto;object-fit:contain}
-    main{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:44px 0 72px}
-    .section{margin:26px 0;padding:clamp(20px,4vw,40px);border:1px solid var(--line);border-radius:18px;background:rgba(255,250,238,.68);box-shadow:var(--shadow)}
-    .section-head{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;margin-bottom:24px}.section-title{margin:0;font-size:clamp(1.35rem,3vw,2rem);line-height:1.25}.section-kicker{display:block;color:var(--cinnabar);font-size:.74rem;letter-spacing:.14em;margin-bottom:4px}.year-badge{flex:none;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid rgba(141,47,29,.34);border-radius:999px;color:var(--cinnabar);background:#fff8e8;font-weight:700;white-space:nowrap}.year-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-    .time-panel{position:sticky;top:10px;z-index:20;background:rgba(247,236,214,.94);backdrop-filter:blur(12px)}.time-readout{display:flex;justify-content:space-between;align-items:end;gap:18px}.big-year{font-size:clamp(3.2rem,9vw,6.7rem);font-weight:800;line-height:.9;color:var(--cinnabar);font-variant-numeric:tabular-nums}.phase{font-size:1.05rem;color:var(--muted);text-align:right}.range-wrap{margin-top:26px}.range-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:.82rem}input[type=range]{width:100%;accent-color:var(--cinnabar);cursor:pointer}.quick-years{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.quick-years button{border:1px solid var(--line);border-radius:999px;background:#fff9ec;padding:6px 12px;color:var(--ink);cursor:pointer}.quick-years button:hover,.quick-years button:focus-visible{border-color:var(--cinnabar);color:var(--cinnabar)}
-    .legend{display:flex;gap:14px;flex-wrap:wrap;margin:-8px 0 18px;color:var(--muted);font-size:.86rem}.legend i{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}.legend .active{background:var(--active)}.legend .future{background:var(--future)}.legend .ended{background:var(--ended)}
-    .lifelines{display:grid;gap:15px}.lifeline{--tone:#6f604c;display:grid;grid-template-columns:142px 1fr;gap:16px;align-items:center;padding:12px;border-radius:12px;transition:.2s;background:rgba(255,255,255,.35)}.lifeline[data-status="active"]{--tone:var(--active);background:rgba(78,109,81,.09)}.lifeline[data-status="future"]{--tone:var(--future);background:rgba(116,128,147,.1)}.lifeline[data-status="ended"]{--tone:var(--ended);background:rgba(154,122,114,.1)}.life-name strong{display:block;font-size:1.05rem}.life-years{color:var(--muted);font-size:.8rem}.status-tag{display:inline-block;margin-top:3px;padding:2px 8px;border-radius:999px;background:var(--tone);color:#fff;font-size:.75rem}.track{position:relative;height:18px;border-radius:999px;background:rgba(73,55,36,.11);box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.track-fill{position:absolute;top:0;height:100%;border-radius:999px;background:var(--tone);opacity:.8}.now-line{position:absolute;top:-7px;bottom:-7px;width:2px;background:var(--cinnabar);z-index:3}.now-line::before{content:"";position:absolute;top:-4px;left:-4px;width:10px;height:10px;background:var(--cinnabar);transform:rotate(45deg)}.event-marker{position:absolute;top:50%;width:11px;height:28px;padding:0;transform:translate(-50%,-50%);border:0;border-left:2px solid #39291e;background:transparent;cursor:pointer;z-index:4}.event-marker::after{content:"";position:absolute;top:0;left:-5px;width:8px;height:8px;border-radius:50%;background:#fff5df;border:2px solid #39291e}.event-marker:hover::before,.event-marker:focus-visible::before{content:attr(aria-label);position:absolute;bottom:31px;left:0;transform:translateX(-50%);width:max-content;max-width:220px;padding:5px 8px;border-radius:6px;background:#2f241c;color:#fff;font-size:.75rem;line-height:1.4;white-space:normal;box-shadow:0 5px 18px rgba(0,0,0,.22)}.marker-note{grid-column:2;color:var(--cinnabar);font-size:.84rem;min-height:1.5em}
-    .power-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.power-card{border:1px solid var(--line);border-top:4px solid var(--tone,#7b6448);border-radius:12px;padding:16px;background:#fffaf0}.power-card h3{margin:0 0 3px}.power-meta{color:var(--muted);font-size:.82rem}.power-card .state{display:inline-block;margin:8px 0;padding:2px 8px;border-radius:4px;background:var(--tone,#7b6448);color:white;font-size:.75rem}.power-card ul{margin:6px 0 0;padding-left:1.2em}.power-card li{margin:5px 0;font-size:.9rem}.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
-    .map-stage{position:relative;min-height:430px;overflow:hidden;border-radius:14px;background-image:linear-gradient(90deg,rgba(31,22,14,.78),rgba(31,22,14,.2)),url("assets/embedded-1.png");background-size:cover;background-position:70% center;color:#fff}.map-copy{position:relative;z-index:2;width:min(480px,90%);padding:42px}.map-copy h3{font-size:clamp(1.5rem,4vw,2.5rem);margin:.1em 0}.map-copy p{color:#f4e8d2}.map-powers{display:flex;flex-wrap:wrap;gap:8px}.map-powers span{padding:4px 10px;border:1px solid rgba(255,255,255,.5);border-radius:999px;background:rgba(15,10,6,.32);backdrop-filter:blur(5px)}
-    .chronicle{display:grid;gap:10px}.chronicle-item{display:grid;grid-template-columns:74px 1fr;gap:14px;padding:12px 14px;border-left:3px solid var(--gold);background:rgba(255,255,255,.44)}.chronicle-year{font-weight:800;color:var(--cinnabar);font-variant-numeric:tabular-nums}.chronicle-item h3{margin:0;font-size:1rem}.chronicle-item p{margin:3px 0 0;color:var(--muted);font-size:.88rem}
-    .archive-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.archive-tabs button{padding:7px 14px;border:1px solid var(--line);border-radius:8px;background:#fffaf0;cursor:pointer}.archive-tabs button[aria-selected="true"]{background:var(--cinnabar);color:#fff}.archive-content{display:grid;grid-template-columns:1fr 1.35fr;gap:26px}.archive-content h3{font-size:1.5rem;margin:0}.archive-content p{color:var(--muted)}.archive-facts{display:grid;gap:10px}.fact{padding:11px;border-bottom:1px solid var(--line)}.fact strong{color:var(--cinnabar)}
-    .sources{font-size:.92rem;color:var(--muted)}footer{border-top:1px solid var(--line);padding:34px 16px 46px;text-align:center;color:var(--muted);font-size:.88rem}footer p{margin:5px}
-    @media(max-width:720px){.section{padding:18px;margin:16px 0;border-radius:14px}.section-head{display:block}.year-badge{margin-top:10px}.time-panel{top:4px}.time-readout{display:block}.phase{text-align:left;margin-top:8px}.lifeline{grid-template-columns:1fr;gap:9px;border-left:5px solid var(--tone)}.marker-note{grid-column:1}.track{height:22px}.event-marker{height:32px}.map-stage{min-height:390px;background-position:72% center}.map-copy{padding:28px 22px}.archive-content{grid-template-columns:1fr}.chronicle-item{grid-template-columns:58px 1fr}.status-tag{font-size:.8rem;font-weight:700}.section-title{font-size:1.35rem}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-  
+    :root {
+      --paper: #f5ead3;
+      --paper-deep: #e8d4ad;
+      --ink: #2d2118;
+      --muted: #786650;
+      --cinnabar: #8d2f1d;
+      --gold: #aa7d35;
+      --line: rgba(85, 57, 31, .22);
+      --shadow: 0 18px 50px rgba(61, 39, 19, .14);
+      --active: #4e6d51;
+      --future: #748093;
+      --ended: #9a7a72
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+      line-height: 1.75;
+      background-image: radial-gradient(circle at 15% 10%, rgba(255, 255, 255, .65), transparent 35%), repeating-linear-gradient(0deg, rgba(92, 58, 20, .025) 0, rgba(92, 58, 20, .025) 1px, transparent 1px, transparent 5px)
+    }
+
+    a {
+      color: var(--cinnabar);
+      text-underline-offset: 3px
+    }
+
+    button,
+    input {
+      font: inherit
+    }
+
+    .hero {
+      overflow: hidden;
+      background: #cab188
+    }
+
+    .hero img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 44px 0 72px
+    }
+
+    .section {
+      margin: 26px 0;
+      padding: clamp(20px, 4vw, 40px);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 250, 238, .68);
+      box-shadow: var(--shadow)
+    }
+
+    .section-head {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.25
+    }
+
+    .section-kicker {
+      display: block;
+      color: var(--cinnabar);
+      font-size: .74rem;
+      letter-spacing: .14em;
+      margin-bottom: 4px
+    }
+
+    .year-badge {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border: 1px solid rgba(141, 47, 29, .34);
+      border-radius: 999px;
+      color: var(--cinnabar);
+      background: #fff8e8;
+      font-weight: 700;
+      white-space: nowrap
+    }
+
+    .year-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor
+    }
+
+    .time-panel {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      background: rgba(247, 236, 214, .94);
+      backdrop-filter: blur(12px)
+    }
+
+    .time-readout {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px
+    }
+
+    .big-year {
+      font-size: clamp(3.2rem, 9vw, 6.7rem);
+      font-weight: 800;
+      line-height: .9;
+      color: var(--cinnabar);
+      font-variant-numeric: tabular-nums
+    }
+
+    .phase {
+      font-size: 1.05rem;
+      color: var(--muted);
+      text-align: right
+    }
+
+    .range-wrap {
+      margin-top: 26px
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: .82rem
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--cinnabar);
+      cursor: pointer
+    }
+
+    .quick-years {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px
+    }
+
+    .quick-years button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff9ec;
+      padding: 6px 12px;
+      color: var(--ink);
+      cursor: pointer
+    }
+
+    .quick-years button:hover,
+    .quick-years button:focus-visible {
+      border-color: var(--cinnabar);
+      color: var(--cinnabar)
+    }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: -8px 0 18px;
+      color: var(--muted);
+      font-size: .86rem
+    }
+
+    .legend i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px
+    }
+
+    .legend .active {
+      background: var(--active)
+    }
+
+    .legend .future {
+      background: var(--future)
+    }
+
+    .legend .ended {
+      background: var(--ended)
+    }
+
+    .lifelines {
+      display: grid;
+      gap: 15px
+    }
+
+    .lifeline {
+      --tone: #6f604c;
+      display: grid;
+      grid-template-columns: 142px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      transition: .2s;
+      background: rgba(255, 255, 255, .35)
+    }
+
+    .lifeline[data-status="active"] {
+      --tone: var(--active);
+      background: rgba(78, 109, 81, .09)
+    }
+
+    .lifeline[data-status="future"] {
+      --tone: var(--future);
+      background: rgba(116, 128, 147, .1)
+    }
+
+    .lifeline[data-status="ended"] {
+      --tone: var(--ended);
+      background: rgba(154, 122, 114, .1)
+    }
+
+    .life-name strong {
+      display: block;
+      font-size: 1.05rem
+    }
+
+    .life-years {
+      color: var(--muted);
+      font-size: .8rem
+    }
+
+    .status-tag {
+      display: inline-block;
+      margin-top: 3px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--tone);
+      color: #fff;
+      font-size: .75rem
+    }
+
+    .track {
+      position: relative;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(73, 55, 36, .11);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, .12)
+    }
+
+    .track-fill {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--tone);
+      opacity: .8
+    }
+
+    .now-line {
+      position: absolute;
+      top: -7px;
+      bottom: -7px;
+      width: 2px;
+      background: var(--cinnabar);
+      z-index: 3
+    }
+
+    .now-line::before {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      width: 10px;
+      height: 10px;
+      background: var(--cinnabar);
+      transform: rotate(45deg)
+    }
+
+    .event-marker {
+      position: absolute;
+      top: 50%;
+      width: 11px;
+      height: 28px;
+      padding: 0;
+      transform: translate(-50%, -50%);
+      border: 0;
+      border-left: 2px solid #39291e;
+      background: transparent;
+      cursor: pointer;
+      z-index: 4
+    }
+
+    .event-marker::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff5df;
+      border: 2px solid #39291e
+    }
+
+    .event-marker:hover::before,
+    .event-marker:focus-visible::before {
+      content: attr(aria-label);
+      position: absolute;
+      bottom: 31px;
+      left: 0;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: 220px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: #2f241c;
+      color: #fff;
+      font-size: .75rem;
+      line-height: 1.4;
+      white-space: normal;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, .22)
+    }
+
+    .marker-note {
+      grid-column: 2;
+      color: var(--cinnabar);
+      font-size: .84rem;
+      min-height: 1.5em
+    }
+
+    .power-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px
+    }
+
+    .power-card {
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--tone, #7b6448);
+      border-radius: 12px;
+      padding: 16px;
+      background: #fffaf0
+    }
+
+    .power-card h3 {
+      margin: 0 0 3px
+    }
+
+    .power-meta {
+      color: var(--muted);
+      font-size: .82rem
+    }
+
+    .power-card .state {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--tone, #7b6448);
+      color: white;
+      font-size: .75rem
+    }
+
+    .power-card ul {
+      margin: 6px 0 0;
+      padding-left: 1.2em
+    }
+
+    .power-card li {
+      margin: 5px 0;
+      font-size: .9rem
+    }
+
+    .empty {
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 12px
+    }
+
+    .map-stage {
+      position: relative;
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: 14px;
+      background-image: linear-gradient(90deg, rgba(31, 22, 14, .78), rgba(31, 22, 14, .2)), url("images/embedded-1.png");
+      background-size: cover;
+      background-position: 70% center;
+      color: #fff
+    }
+
+    .map-copy {
+      position: relative;
+      z-index: 2;
+      width: min(480px, 90%);
+      padding: 42px
+    }
+
+    .map-copy h3 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin: .1em 0
+    }
+
+    .map-copy p {
+      color: #f4e8d2
+    }
+
+    .map-powers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .map-powers span {
+      padding: 4px 10px;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 999px;
+      background: rgba(15, 10, 6, .32);
+      backdrop-filter: blur(5px)
+    }
+
+    .chronicle {
+      display: grid;
+      gap: 10px
+    }
+
+    .chronicle-item {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 14px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--gold);
+      background: rgba(255, 255, 255, .44)
+    }
+
+    .chronicle-year {
+      font-weight: 800;
+      color: var(--cinnabar);
+      font-variant-numeric: tabular-nums
+    }
+
+    .chronicle-item h3 {
+      margin: 0;
+      font-size: 1rem
+    }
+
+    .chronicle-item p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: .88rem
+    }
+
+    .archive-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px
+    }
+
+    .archive-tabs button {
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffaf0;
+      cursor: pointer
+    }
+
+    .archive-tabs button[aria-selected="true"] {
+      background: var(--cinnabar);
+      color: #fff
+    }
+
+    .archive-content {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 26px
+    }
+
+    .archive-content h3 {
+      font-size: 1.5rem;
+      margin: 0
+    }
+
+    .archive-content p {
+      color: var(--muted)
+    }
+
+    .archive-facts {
+      display: grid;
+      gap: 10px
+    }
+
+    .fact {
+      padding: 11px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .fact strong {
+      color: var(--cinnabar)
+    }
+
+    .sources {
+      font-size: .92rem;
+      color: var(--muted)
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 34px 16px 46px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .88rem
+    }
+
+    footer p {
+      margin: 5px
+    }
+
+    @media(max-width:720px) {
+      .section {
+        padding: 18px;
+        margin: 16px 0;
+        border-radius: 14px
+      }
+
+      .section-head {
+        display: block
+      }
+
+      .year-badge {
+        margin-top: 10px
+      }
+
+      .time-panel {
+        top: 4px
+      }
+
+      .time-readout {
+        display: block
+      }
+
+      .phase {
+        text-align: left;
+        margin-top: 8px
+      }
+
+      .lifeline {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        border-left: 5px solid var(--tone)
+      }
+
+      .marker-note {
+        grid-column: 1
+      }
+
+      .track {
+        height: 22px
+      }
+
+      .event-marker {
+        height: 32px
+      }
+
+      .map-stage {
+        min-height: 390px;
+        background-position: 72% center
+      }
+
+      .map-copy {
+        padding: 28px 22px
+      }
+
+      .archive-content {
+        grid-template-columns: 1fr
+      }
+
+      .chronicle-item {
+        grid-template-columns: 58px 1fr
+      }
+
+      .status-tag {
+        font-size: .8rem;
+        font-weight: 700
+      }
+
+      .section-title {
+        font-size: 1.35rem
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      * {
+        transition: none !important
+      }
+    }
+
     /* 恢复原版四张历史地图 */
-    .map-stage{min-height:0;background:#292219;background-image:none;isolation:isolate}
-    .map-stage>img{width:100%;display:block;max-height:620px;object-fit:contain;background:#e9eee9}
-    .map-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(25,17,10,.82),rgba(25,17,10,.1) 58%,transparent);pointer-events:none;z-index:1}
-    .map-copy{position:absolute;inset:0 auto 0 0;display:flex;flex-direction:column;justify-content:center;z-index:2;width:min(480px,55%);padding:42px}
-    @media(max-width:720px){.map-stage>img{max-height:68vh}.map-stage::after{display:none}.map-copy{position:static;width:100%;padding:22px;background:#2f271e}.map-copy p{margin-bottom:10px}}
-  
+    .map-stage {
+      min-height: 0;
+      background: #292219;
+      background-image: none;
+      isolation: isolate
+    }
+
+    .map-stage>img {
+      width: 100%;
+      display: block;
+      max-height: 620px;
+      object-fit: contain;
+      background: #e9eee9
+    }
+
+    .map-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(25, 17, 10, .82), rgba(25, 17, 10, .1) 58%, transparent);
+      pointer-events: none;
+      z-index: 1
+    }
+
+    .map-copy {
+      position: absolute;
+      inset: 0 auto 0 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 2;
+      width: min(480px, 55%);
+      padding: 42px
+    }
+
+    @media(max-width:720px) {
+      .map-stage>img {
+        max-height: 68vh
+      }
+
+      .map-stage::after {
+        display: none
+      }
+
+      .map-copy {
+        position: static;
+        width: 100%;
+        padding: 22px;
+        background: #2f271e
+      }
+
+      .map-copy p {
+        margin-bottom: 10px
+      }
+    }
+
     /* V4：提升全局可读性 */
-    body{font-size:18px}
-    .section-kicker{font-size:.84rem}
-    .life-years,.power-meta{font-size:.9rem}
-    .legend,.marker-note,.sources,footer{font-size:.95rem}
-    .power-card li,.chronicle-item p{font-size:.98rem}
-    .year-badge{font-size:1rem}
-    .quick-years button{font-size:.94rem}
+    body {
+      font-size: 18px
+    }
+
+    .section-kicker {
+      font-size: .84rem
+    }
+
+    .life-years,
+    .power-meta {
+      font-size: .9rem
+    }
+
+    .legend,
+    .marker-note,
+    .sources,
+    footer {
+      font-size: .95rem
+    }
+
+    .power-card li,
+    .chronicle-item p {
+      font-size: .98rem
+    }
+
+    .year-badge {
+      font-size: 1rem
+    }
+
+    .quick-years button {
+      font-size: .94rem
+    }
 
     /* 地图完整展示，所有文字移至图片下方 */
-    .map-stage{background:#fffaf0;color:var(--ink)}
-    .map-stage::after{display:none!important}
-    .map-stage>img{width:100%;max-height:none;object-fit:contain;background:#e9eee9}
-    .map-copy{position:static!important;inset:auto!important;width:100%!important;display:block!important;padding:22px 26px!important;background:#fffaf0;color:var(--ink)}
-    .map-copy h3{margin:0 0 5px;color:var(--ink)}
-    .map-copy p{margin:0 0 12px;color:var(--muted)}
-    .map-powers span{border-color:var(--line);background:#f2e4c9;color:var(--ink);backdrop-filter:none}
+    .map-stage {
+      background: #fffaf0;
+      color: var(--ink)
+    }
+
+    .map-stage::after {
+      display: none !important
+    }
+
+    .map-stage>img {
+      width: 100%;
+      max-height: none;
+      object-fit: contain;
+      background: #e9eee9
+    }
+
+    .map-copy {
+      position: static !important;
+      inset: auto !important;
+      width: 100% !important;
+      display: block !important;
+      padding: 22px 26px !important;
+      background: #fffaf0;
+      color: var(--ink)
+    }
+
+    .map-copy h3 {
+      margin: 0 0 5px;
+      color: var(--ink)
+    }
+
+    .map-copy p {
+      margin: 0 0 12px;
+      color: var(--muted)
+    }
+
+    .map-powers span {
+      border-color: var(--line);
+      background: #f2e4c9;
+      color: var(--ink);
+      backdrop-filter: none
+    }
 
     /* 政权档案改为完整史纲 */
-    .archive-content{display:block}
-    .archive-overview{max-width:980px}
-    .archive-overview>h3{font-size:clamp(1.7rem,4vw,2.5rem);margin-bottom:8px}
-    .archive-lead{font-size:1.06rem;color:var(--ink)!important;border-left:4px solid var(--cinnabar);padding:10px 16px;background:rgba(141,47,29,.055)}
-    .archive-story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
-    .archive-chapter{padding:18px;border:1px solid var(--line);border-radius:12px;background:#fffaf0}
-    .archive-chapter h4{margin:0 0 6px;color:var(--cinnabar);font-size:1.08rem}
-    .archive-chapter p{margin:0;color:var(--muted)}
-    .archive-dates{margin-top:18px;padding:18px;border-top:1px solid var(--line)}
-    .archive-dates h4{margin:0 0 8px;color:var(--cinnabar)}
-    .archive-date-list{display:flex;flex-wrap:wrap;gap:8px}
-    .archive-date-list span{padding:5px 9px;border-radius:6px;background:#f2e4c9;font-size:.92rem}
-    @media(max-width:720px){body{font-size:17px}.archive-story{grid-template-columns:1fr}.map-copy{padding:18px!important}.power-card li,.chronicle-item p{font-size:1rem}}
-  
+    .archive-content {
+      display: block
+    }
+
+    .archive-overview {
+      max-width: 980px
+    }
+
+    .archive-overview>h3 {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      margin-bottom: 8px
+    }
+
+    .archive-lead {
+      font-size: 1.06rem;
+      color: var(--ink) !important;
+      border-left: 4px solid var(--cinnabar);
+      padding: 10px 16px;
+      background: rgba(141, 47, 29, .055)
+    }
+
+    .archive-story {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px
+    }
+
+    .archive-chapter {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fffaf0
+    }
+
+    .archive-chapter h4 {
+      margin: 0 0 6px;
+      color: var(--cinnabar);
+      font-size: 1.08rem
+    }
+
+    .archive-chapter p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    .archive-dates {
+      margin-top: 18px;
+      padding: 18px;
+      border-top: 1px solid var(--line)
+    }
+
+    .archive-dates h4 {
+      margin: 0 0 8px;
+      color: var(--cinnabar)
+    }
+
+    .archive-date-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .archive-date-list span {
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #f2e4c9;
+      font-size: .92rem
+    }
+
+    @media(max-width:720px) {
+      body {
+        font-size: 17px
+      }
+
+      .archive-story {
+        grid-template-columns: 1fr
+      }
+
+      .map-copy {
+        padding: 18px !important
+      }
+
+      .power-card li,
+      .chronicle-item p {
+        font-size: 1rem
+      }
+    }
+
     /* V5：进一步提升标题与生命周期可读性 */
-    .section-kicker{font-size:1.1rem;font-weight:800;letter-spacing:.1em;line-height:1.45}
-    .life-name strong{font-size:1.38rem;line-height:1.35}
-    .life-years{font-size:1.16rem;font-weight:700;letter-spacing:.02em}
-    .marker-note{font-size:1.28rem;font-weight:700;line-height:1.65;padding:8px 12px;border-radius:8px;background:#f3e5ca;color:var(--cinnabar);min-height:2.4em}
-    @media(max-width:720px){.section-kicker{font-size:1.05rem}.life-name strong{font-size:1.32rem}.life-years{font-size:1.12rem}.marker-note{font-size:1.2rem}}
+    .section-kicker {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      line-height: 1.45
+    }
+
+    .life-name strong {
+      font-size: 1.38rem;
+      line-height: 1.35
+    }
+
+    .life-years {
+      font-size: 1.16rem;
+      font-weight: 700;
+      letter-spacing: .02em
+    }
+
+    .marker-note {
+      font-size: 1.28rem;
+      font-weight: 700;
+      line-height: 1.65;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #f3e5ca;
+      color: var(--cinnabar);
+      min-height: 2.4em
+    }
+
+    @media(max-width:720px) {
+      .section-kicker {
+        font-size: 1.05rem
+      }
+
+      .life-name strong {
+        font-size: 1.32rem
+      }
+
+      .life-years {
+        font-size: 1.12rem
+      }
+
+      .marker-note {
+        font-size: 1.2rem
+      }
+    }
 
     /* 大事记：政权筛选与纵向浏览 */
-    .event-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-    .event-filter-buttons{display:flex;gap:8px;flex-wrap:wrap}
-    .event-filter-buttons button{padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:#fffaf0;color:var(--ink);cursor:pointer;font-weight:700}
-    .event-filter-buttons button[aria-pressed="true"]{background:var(--cinnabar);border-color:var(--cinnabar);color:#fff}
-    .event-scroll-hint{color:var(--muted);font-size:.94rem;white-space:nowrap}
-    .chronicle-scroll{max-height:720px;overflow-y:scroll;padding-right:10px;scrollbar-color:var(--cinnabar) #eadcc2;scrollbar-width:auto;overscroll-behavior:contain}
-    .chronicle-scroll::-webkit-scrollbar{width:12px}.chronicle-scroll::-webkit-scrollbar-track{background:#eadcc2;border-radius:999px}.chronicle-scroll::-webkit-scrollbar-thumb{background:var(--cinnabar);border:3px solid #eadcc2;border-radius:999px}
-    .chronicle-more{position:sticky;top:0;z-index:2;padding:8px 12px;margin:6px 0;background:#e8d6b5;color:var(--cinnabar);font-weight:800;text-align:center;border-radius:7px;box-shadow:0 4px 12px rgba(61,39,19,.12)}
-    .event-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.event-tags span{padding:1px 7px;border-radius:999px;background:#efe0c4;color:#6f5135;font-size:.78rem}
-    @media(max-width:720px){.chronicle-scroll{max-height:620px;padding-right:6px}.event-scroll-hint{width:100%}.event-filter-buttons button{padding:6px 11px}}
-  
+    .event-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px
+    }
+
+    .event-filter-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .event-filter-buttons button {
+      padding: 7px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fffaf0;
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 700
+    }
+
+    .event-filter-buttons button[aria-pressed="true"] {
+      background: var(--cinnabar);
+      border-color: var(--cinnabar);
+      color: #fff
+    }
+
+    .event-scroll-hint {
+      color: var(--muted);
+      font-size: .94rem;
+      white-space: nowrap
+    }
+
+    .chronicle-scroll {
+      max-height: 720px;
+      overflow-y: scroll;
+      padding-right: 10px;
+      scrollbar-color: var(--cinnabar) #eadcc2;
+      scrollbar-width: auto;
+      overscroll-behavior: contain
+    }
+
+    .chronicle-scroll::-webkit-scrollbar {
+      width: 12px
+    }
+
+    .chronicle-scroll::-webkit-scrollbar-track {
+      background: #eadcc2;
+      border-radius: 999px
+    }
+
+    .chronicle-scroll::-webkit-scrollbar-thumb {
+      background: var(--cinnabar);
+      border: 3px solid #eadcc2;
+      border-radius: 999px
+    }
+
+    .chronicle-more {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 8px 12px;
+      margin: 6px 0;
+      background: #e8d6b5;
+      color: var(--cinnabar);
+      font-weight: 800;
+      text-align: center;
+      border-radius: 7px;
+      box-shadow: 0 4px 12px rgba(61, 39, 19, .12)
+    }
+
+    .event-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: 6px
+    }
+
+    .event-tags span {
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: #efe0c4;
+      color: #6f5135;
+      font-size: .78rem
+    }
+
+    @media(max-width:720px) {
+      .chronicle-scroll {
+        max-height: 620px;
+        padding-right: 6px
+      }
+
+      .event-scroll-hint {
+        width: 100%
+      }
+
+      .event-filter-buttons button {
+        padding: 6px 11px
+      }
+    }
+
     /* V6：关键事件说明进一步放大，未点击时不占位 */
-    .marker-note{font-size:1.55rem;line-height:1.7;padding:10px 14px}
-    .marker-note:empty{display:none}
-    @media(max-width:720px){.marker-note{font-size:1.46rem}}
+    .marker-note {
+      font-size: 1.55rem;
+      line-height: 1.7;
+      padding: 10px 14px
+    }
+
+    .marker-note:empty {
+      display: none
+    }
+
+    @media(max-width:720px) {
+      .marker-note {
+        font-size: 1.46rem
+      }
+    }
 
     /* 大事记保持一条连续时间序列，并突出当前年份附近事件 */
-    .chronicle-item{transition:background-color .2s,border-color .2s,box-shadow .2s}
-    .chronicle-item.near{border-left-color:var(--cinnabar);background:#f5dfbd;box-shadow:inset 0 0 0 1px rgba(141,47,29,.16)}
-    .chronicle-item.near .chronicle-year{font-size:1.08rem}
+    .chronicle-item {
+      transition: background-color .2s, border-color .2s, box-shadow .2s
+    }
+
+    .chronicle-item.near {
+      border-left-color: var(--cinnabar);
+      background: #f5dfbd;
+      box-shadow: inset 0 0 0 1px rgba(141, 47, 29, .16)
+    }
+
+    .chronicle-item.near .chronicle-year {
+      font-size: 1.08rem
+    }
 
     /* V2 交互优化：首图、紧凑时间控制器与上下文大事记 */
-    .hero-caption{width:min(860px,calc(100% - 40px));margin:22px auto 0;text-align:center;color:var(--muted);font-size:clamp(.96rem,2vw,1.08rem)}
-    .time-panel{transition:padding .16s ease,border-radius .16s ease,box-shadow .16s ease;isolation:isolate;scroll-margin-top:96px}
-    .time-panel::before{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(247,236,214,.94);z-index:-1;pointer-events:none}
-    .time-panel.is-stuck{top:0;display:grid;grid-template-columns:auto minmax(260px,1fr);align-items:center;gap:24px;min-height:78px;padding:10px 22px;border-radius:0 0 14px 14px;box-shadow:0 10px 28px rgba(61,39,19,.18)}
-    .time-panel.is-stuck .time-readout{display:block}
-    .time-panel.is-stuck .section-kicker,.time-panel.is-stuck .phase,.time-panel.is-stuck .range-labels,.time-panel.is-stuck .quick-years{display:none}
-    .time-panel.is-stuck .big-year{font-size:2.15rem;line-height:1;white-space:nowrap}
-    .time-panel.is-stuck .range-wrap{margin:0}
-    input[type=range]{position:relative;z-index:3;display:block;width:100%;height:32px;margin:0;padding:0;background:transparent;pointer-events:auto;touch-action:pan-y;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
-    input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:999px;background:linear-gradient(90deg,#9c7250,#d7c09a)}
-    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-12px;border:7px solid #fff6e4;border-radius:50%;background:var(--cinnabar);box-shadow:0 0 0 2px rgba(141,47,29,.48),0 3px 8px rgba(61,39,19,.22)}
-    input[type=range]::-moz-range-track{height:4px;border:0;border-radius:999px;background:linear-gradient(90deg,#9c7250,#d7c09a)}
-    input[type=range]::-moz-range-thumb{width:14px;height:14px;border:7px solid #fff6e4;border-radius:50%;background:var(--cinnabar);box-shadow:0 0 0 2px rgba(141,47,29,.48),0 3px 8px rgba(61,39,19,.22)}
-    .now-line{top:-10px;bottom:-10px;width:1px;background:rgba(141,47,29,.55);transform:translateX(-50%);pointer-events:none}
-    .now-line::before{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;border:3px solid #fff4dc;border-radius:50%;background:var(--cinnabar);box-shadow:0 0 0 2px rgba(141,47,29,.38),0 2px 7px rgba(61,39,19,.24);transform:translate(-50%,-50%)}
-    .now-line::after{content:"";position:absolute;top:50%;left:50%;width:20px;height:20px;border:1px solid rgba(141,47,29,.32);border-radius:50%;transform:translate(-50%,-50%)}
-    .now-year{position:absolute;top:calc(100% + 3px);left:50%;padding:0 4px;border-radius:4px;background:#fff7e7;color:var(--cinnabar);font-size:.68rem;font-weight:800;line-height:1.35;transform:translateX(-50%);white-space:nowrap}
-    .lifeline[data-status="future"] .track,.lifeline[data-status="ended"] .track{opacity:.48}
-    .chronicle-context-note{margin:0 0 10px;padding:9px 12px;border-left:3px solid var(--gold);background:#f3e5ca;color:var(--muted);font-size:.9rem}
-    button.chronicle-item{width:100%;border:0;border-left:3px solid var(--gold);color:inherit;font-family:inherit;text-align:left;cursor:pointer}
-    button.chronicle-item:hover,button.chronicle-item:focus-visible{background:#f1dfbf;outline:2px solid rgba(141,47,29,.28);outline-offset:1px}
-    .chronicle-distance{display:inline-block;margin-top:5px;padding:1px 7px;border-radius:999px;background:#ead9bc;color:#745c42;font-size:.76rem;font-weight:700}
-    .chronicle-item.exact .chronicle-distance{background:var(--cinnabar);color:#fff}
-    section[id]{scroll-margin-top:100px}
-    @media(max-width:720px){
-      .hero{min-height:0;display:block;background:#cab188}
-      .hero-caption{margin-top:16px;line-height:1.7}
-      main{padding-top:24px}
-      .time-panel.is-stuck{grid-template-columns:1fr;gap:2px;min-height:68px;padding:5px 14px;border-radius:0 0 10px 10px}
-      .time-panel.is-stuck .big-year{font-size:1.38rem;line-height:1}
-      .time-panel.is-stuck input[type=range]{height:30px}
-      section[id]{scroll-margin-top:82px}
-      .now-year{font-size:.65rem}
+    .hero-caption {
+      width: min(860px, calc(100% - 40px));
+      margin: 22px auto 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: clamp(.96rem, 2vw, 1.08rem)
+    }
+
+    .time-panel {
+      transition: padding .16s ease, border-radius .16s ease, box-shadow .16s ease;
+      isolation: isolate;
+      scroll-margin-top: 96px
+    }
+
+    .time-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(247, 236, 214, .94);
+      z-index: -1;
+      pointer-events: none
+    }
+
+    .time-panel.is-stuck {
+      top: 0;
+      display: grid;
+      grid-template-columns: auto minmax(260px, 1fr);
+      align-items: center;
+      gap: 24px;
+      min-height: 78px;
+      padding: 10px 22px;
+      border-radius: 0 0 14px 14px;
+      box-shadow: 0 10px 28px rgba(61, 39, 19, .18)
+    }
+
+    .time-panel.is-stuck .time-readout {
+      display: block
+    }
+
+    .time-panel.is-stuck .section-kicker,
+    .time-panel.is-stuck .phase,
+    .time-panel.is-stuck .range-labels,
+    .time-panel.is-stuck .quick-years {
+      display: none
+    }
+
+    .time-panel.is-stuck .big-year {
+      font-size: 2.15rem;
+      line-height: 1;
+      white-space: nowrap
+    }
+
+    .time-panel.is-stuck .range-wrap {
+      margin: 0
+    }
+
+    input[type=range] {
+      position: relative;
+      z-index: 3;
+      display: block;
+      width: 100%;
+      height: 32px;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      pointer-events: auto;
+      touch-action: pan-y;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #9c7250, #d7c09a)
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      margin-top: -12px;
+      border: 7px solid #fff6e4;
+      border-radius: 50%;
+      background: var(--cinnabar);
+      box-shadow: 0 0 0 2px rgba(141, 47, 29, .48), 0 3px 8px rgba(61, 39, 19, .22)
+    }
+
+    input[type=range]::-moz-range-track {
+      height: 4px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #9c7250, #d7c09a)
+    }
+
+    input[type=range]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border: 7px solid #fff6e4;
+      border-radius: 50%;
+      background: var(--cinnabar);
+      box-shadow: 0 0 0 2px rgba(141, 47, 29, .48), 0 3px 8px rgba(61, 39, 19, .22)
+    }
+
+    .now-line {
+      top: -10px;
+      bottom: -10px;
+      width: 1px;
+      background: rgba(141, 47, 29, .55);
+      transform: translateX(-50%);
+      pointer-events: none
+    }
+
+    .now-line::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border: 3px solid #fff4dc;
+      border-radius: 50%;
+      background: var(--cinnabar);
+      box-shadow: 0 0 0 2px rgba(141, 47, 29, .38), 0 2px 7px rgba(61, 39, 19, .24);
+      transform: translate(-50%, -50%)
+    }
+
+    .now-line::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(141, 47, 29, .32);
+      border-radius: 50%;
+      transform: translate(-50%, -50%)
+    }
+
+    .now-year {
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      padding: 0 4px;
+      border-radius: 4px;
+      background: #fff7e7;
+      color: var(--cinnabar);
+      font-size: .68rem;
+      font-weight: 800;
+      line-height: 1.35;
+      transform: translateX(-50%);
+      white-space: nowrap
+    }
+
+    .lifeline[data-status="future"] .track,
+    .lifeline[data-status="ended"] .track {
+      opacity: .48
+    }
+
+    .chronicle-context-note {
+      margin: 0 0 10px;
+      padding: 9px 12px;
+      border-left: 3px solid var(--gold);
+      background: #f3e5ca;
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    button.chronicle-item {
+      width: 100%;
+      border: 0;
+      border-left: 3px solid var(--gold);
+      color: inherit;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer
+    }
+
+    button.chronicle-item:hover,
+    button.chronicle-item:focus-visible {
+      background: #f1dfbf;
+      outline: 2px solid rgba(141, 47, 29, .28);
+      outline-offset: 1px
+    }
+
+    .chronicle-distance {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: #ead9bc;
+      color: #745c42;
+      font-size: .76rem;
+      font-weight: 700
+    }
+
+    .chronicle-item.exact .chronicle-distance {
+      background: var(--cinnabar);
+      color: #fff
+    }
+
+    section[id] {
+      scroll-margin-top: 100px
+    }
+
+    @media(max-width:720px) {
+      .hero {
+        min-height: 0;
+        display: block;
+        background: #cab188
+      }
+
+      .hero-caption {
+        margin-top: 16px;
+        line-height: 1.7
+      }
+
+      main {
+        padding-top: 24px
+      }
+
+      .time-panel.is-stuck {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        min-height: 68px;
+        padding: 5px 14px;
+        border-radius: 0 0 10px 10px
+      }
+
+      .time-panel.is-stuck .big-year {
+        font-size: 1.38rem;
+        line-height: 1
+      }
+
+      .time-panel.is-stuck input[type=range] {
+        height: 30px
+      }
+
+      section[id] {
+        scroll-margin-top: 82px
+      }
+
+      .now-year {
+        font-size: .65rem
+      }
     }
   </style>
 </head>
+
 <body>
-  <header class="hero"><img src="assets/embedded-1.png" alt="宋朝及东亚历史时间线，907年至1279年交互式历史长卷首图"></header>
+  <header class="hero"><img src="images/embedded-1.png" alt="宋朝及东亚历史时间线，907年至1279年交互式历史长卷首图"></header>
   <p class="hero-caption">沿时间与地理两条线索，观察宋、辽、西夏、金与蒙古的兴替、交锋、和议与融合。</p>
   <main>
     <section class="section time-panel" id="timeline" aria-labelledby="timeline-title">
-      <div class="time-readout"><div><span class="section-kicker" id="timeline-title">01 · 时间总览</span><div class="big-year"><span id="year-number">1141</span><small style="font-size:.28em"> 年</small></div></div><div class="phase" id="phase-text">绍兴和议前后：宋金南北对峙格局形成</div></div>
-      <div class="range-wrap"><input id="year-range" type="range" min="907" max="1279" value="1141" step="1" aria-label="选择查看年份"><div class="range-labels"><span>907 五代开端</span><span>1279 南宋覆亡</span></div><div class="quick-years" aria-label="关键年份"><button data-year="960">960 建宋</button><button data-year="1005">1005 澶渊之盟</button><button data-year="1127">1127 靖康之变</button><button data-year="1141">1141 绍兴和议</button><button data-year="1206">1206 蒙古建国</button><button data-year="1279">1279 崖山</button></div></div>
+      <div class="time-readout">
+        <div><span class="section-kicker" id="timeline-title">01 · 时间总览</span>
+          <div class="big-year"><span id="year-number">1141</span><small style="font-size:.28em"> 年</small></div>
+        </div>
+        <div class="phase" id="phase-text">绍兴和议前后：宋金南北对峙格局形成</div>
+      </div>
+      <div class="range-wrap"><input id="year-range" type="range" min="907" max="1279" value="1141" step="1"
+          aria-label="选择查看年份">
+        <div class="range-labels"><span>907 五代开端</span><span>1279 南宋覆亡</span></div>
+        <div class="quick-years" aria-label="关键年份"><button data-year="960">960 建宋</button><button data-year="1005">1005
+            澶渊之盟</button><button data-year="1127">1127 靖康之变</button><button data-year="1141">1141 绍兴和议</button><button
+            data-year="1206">1206 蒙古建国</button><button data-year="1279">1279 崖山</button></div>
+      </div>
     </section>
 
-    <section class="section" id="lifecycles"><div class="section-head"><div><span class="section-kicker">02 · 政权生命周期</span><h2 class="section-title">兴起、延续与退场</h2></div><div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div></div><div class="legend"><span><i class="active"></i>当前在场</span><span><i class="future"></i>尚未建立</span><span><i class="ended"></i>已经灭亡</span></div><div class="lifelines" id="lifelines"></div></section>
+    <section class="section" id="lifecycles">
+      <div class="section-head">
+        <div><span class="section-kicker">02 · 政权生命周期</span>
+          <h2 class="section-title">兴起、延续与退场</h2>
+        </div>
+        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
+      </div>
+      <div class="legend"><span><i class="active"></i>当前在场</span><span><i class="future"></i>尚未建立</span><span><i
+            class="ended"></i>已经灭亡</span></div>
+      <div class="lifelines" id="lifelines"></div>
+    </section>
 
-    <section class="section" id="powers"><div class="section-head"><div><span class="section-kicker">03 · 这一年，谁在场？</span><h2 class="section-title">同时代政权与核心事件</h2></div><div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div></div><div class="power-grid" id="power-grid"></div></section>
+    <section class="section" id="powers">
+      <div class="section-head">
+        <div><span class="section-kicker">03 · 这一年，谁在场？</span>
+          <h2 class="section-title">同时代政权与核心事件</h2>
+        </div>
+        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
+      </div>
+      <div class="power-grid" id="power-grid"></div>
+    </section>
 
-    <section class="section" id="map"><div class="section-head"><div><span class="section-kicker">04 · 地理空间</span><h2 class="section-title">势力格局概览</h2></div><div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div></div><div class="map-stage"><img id="mapImg" alt="随当前年份切换的历史地图" decoding="async" draggable="false"><div class="map-copy"><h3 id="map-title"></h3><p id="map-desc"></p><div class="map-powers" id="map-powers"></div></div></div></section>
+    <section class="section" id="map">
+      <div class="section-head">
+        <div><span class="section-kicker">04 · 地理空间</span>
+          <h2 class="section-title">势力格局概览</h2>
+        </div>
+        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
+      </div>
+      <div class="map-stage"><img id="mapImg" alt="随当前年份切换的历史地图" decoding="async" draggable="false">
+        <div class="map-copy">
+          <h3 id="map-title"></h3>
+          <p id="map-desc"></p>
+          <div class="map-powers" id="map-powers"></div>
+        </div>
+      </div>
+    </section>
 
-    <section class="section" id="events"><div class="section-head"><div><span class="section-kicker">05 · 大事记</span><h2 class="section-title">按时间顺序浏览大事</h2></div><div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div></div><div class="event-tools"><div class="event-filter-buttons" id="event-filter-buttons" aria-label="按政权筛选大事记"></div><div class="event-scroll-hint">↕ 上下滑动查看更多事件</div></div><div class="chronicle-scroll" id="chronicle-scroll"><div class="chronicle" id="chronicle"></div></div></section>
+    <section class="section" id="events">
+      <div class="section-head">
+        <div><span class="section-kicker">05 · 大事记</span>
+          <h2 class="section-title">按时间顺序浏览大事</h2>
+        </div>
+        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
+      </div>
+      <div class="event-tools">
+        <div class="event-filter-buttons" id="event-filter-buttons" aria-label="按政权筛选大事记"></div>
+        <div class="event-scroll-hint">↕ 上下滑动查看更多事件</div>
+      </div>
+      <div class="chronicle-scroll" id="chronicle-scroll">
+        <div class="chronicle" id="chronicle"></div>
+      </div>
+    </section>
 
-    <section class="section" id="archive"><div class="section-head"><div><span class="section-kicker">06 · 政权档案</span><h2 class="section-title">起源、发展与结局</h2></div><div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div></div><div class="archive-tabs" id="archive-tabs" role="tablist"></div><div class="archive-content" id="archive-content"></div></section>
+    <section class="section" id="archive">
+      <div class="section-head">
+        <div><span class="section-kicker">06 · 政权档案</span>
+          <h2 class="section-title">起源、发展与结局</h2>
+        </div>
+        <div class="year-badge">当前查看：<span class="year-sync">1141</span>年</div>
+      </div>
+      <div class="archive-tabs" id="archive-tabs" role="tablist"></div>
+      <div class="archive-content" id="archive-content"></div>
+    </section>
 
-    <section class="section sources"><span class="section-kicker">资料说明</span><h2 class="section-title">关于图像与内容</h2><p>本网页图片来源为 <a href="https://www.dituji.com/" target="_blank" rel="noopener noreferrer">中国历史地图集（dituji.com）</a>。地图用于辅助理解历史空间关系；政权疆域随时间变化，页面中的概览不应替代专业历史地图与学术研究。</p><p>年代与事件说明综合常见历史纪年编排，重点呈现政权关系和时间脉络。不同史料对个别事件时间、政权起止界定可能存在差异。</p></section>
+    <section class="section sources"><span class="section-kicker">资料说明</span>
+      <h2 class="section-title">关于图像与内容</h2>
+      <p>本网页图片来源为 <a href="https://www.dituji.com/" target="_blank"
+          rel="noopener noreferrer">中国历史地图集（dituji.com）</a>。地图用于辅助理解历史空间关系；政权疆域随时间变化，页面中的概览不应替代专业历史地图与学术研究。</p>
+      <p>年代与事件说明综合常见历史纪年编排，重点呈现政权关系和时间脉络。不同史料对个别事件时间、政权起止界定可能存在差异。</p>
+    </section>
   </main>
-  <footer><p>本网站仅为个人兴趣爱好展示，非商业用途。</p><p>ICP 备案号：鄂ICP备2026046851号-1</p><p>宋朝及东亚历史时间线 · 907—1279</p></footer>
+  <footer>
+    <p>本网站仅为个人兴趣爱好展示，非商业用途。</p>
+    <p>ICP 备案号：鄂ICP备2026046851号-1</p>
+    <p>宋朝及东亚历史时间线 · 907—1279</p>
+  </footer>
 
   <script>
-  const MIN=907,MAX=1279;
-  const polities=[
-    {id:'song',name:'宋',start:960,end:1279,color:'#9d4934',origin:'赵匡胤发动陈桥兵变，代后周建立宋朝。1127年后由北宋转为南宋，政统延续至1279年。',development:'重文治、兴科举，商品经济、城市文化与技术高度发展；长期与辽、夏、金、蒙古并立。',ending:'1279年崖山海战后南宋覆亡。',events:[[960,'陈桥兵变，北宋建立'],[979,'北汉灭亡，基本结束五代十国分裂'],[1005,'澶渊之盟'],[1044,'庆历和议，宋夏议和'],[1069,'王安石变法开始'],[1085,'新法政局转折'],[1127,'靖康之变；南宋建立'],[1141,'绍兴和议'],[1161,'采石之战'],[1208,'嘉定和议'],[1234,'联蒙灭金'],[1259,'钓鱼城之战'],[1273,'襄阳樊城陷落'],[1276,'临安降元'],[1279,'崖山海战']]},
-    {id:'liao',name:'辽（契丹）',start:916,end:1125,color:'#547354',origin:'契丹首领耶律阿保机统一诸部，916年称帝。',development:'实行因俗而治的南北面官制度，与宋长期对峙并维持边境贸易。',ending:'1125年为金所灭，部分贵族西迁建立西辽。',events:[[916,'耶律阿保机称帝'],[938,'取得燕云十六州'],[947,'改国号辽'],[979,'高梁河之战击退北宋'],[1004,'辽军南下澶州'],[1005,'与宋订立澶渊之盟'],[1042,'重熙增币'],[1066,'复国号辽'],[1114,'女真起兵反辽'],[1125,'天祚帝被俘，辽亡']]},
-    {id:'xia',name:'西夏',start:1038,end:1227,color:'#735a82',origin:'党项拓跋部长期经营西北，李元昊于1038年称帝。',development:'据河西走廊与宋、辽、金周旋，形成独特文字、制度与佛教文化。',ending:'1227年在蒙古持续进攻下灭亡。',events:[[982,'李继迁反宋自立'],[1038,'李元昊称帝建夏'],[1040,'三川口之战'],[1041,'好水川之战'],[1044,'宋夏庆历和议'],[1099,'平夏城之战'],[1119,'与金建立联系'],[1206,'李安全即位'],[1209,'蒙古迫夏臣服'],[1226,'蒙古大举攻夏'],[1227,'西夏灭亡']]},
-    {id:'jin',name:'金',start:1115,end:1234,color:'#aa7731',origin:'女真完颜部崛起，完颜阿骨打于1115年建国。',development:'灭辽、灭北宋后统治北方，推动猛安谋克与汉制并行。',ending:'1234年在蒙古与南宋夹击下灭亡。',events:[[1114,'宁江州起兵'],[1115,'完颜阿骨打称帝'],[1120,'宋金海上之盟'],[1125,'灭辽'],[1127,'攻陷开封，北宋亡'],[1141,'与南宋绍兴和议'],[1161,'完颜亮南征失败'],[1189,'金章宗即位'],[1214,'迁都汴京'],[1232,'三峰山之战'],[1234,'蔡州城破，金亡']]},
-    {id:'mongol',name:'蒙古／元',start:1206,end:1368,color:'#8c4b2c',origin:'铁木真统一蒙古诸部，1206年获尊号成吉思汗。',development:'向西、向南迅速扩张；忽必烈于1271年定国号元，逐步统一中国。',ending:'页面时间范围至1279年完成对南宋征服；元朝延续至1368年。',events:[[1206,'蒙古国建立'],[1209,'西夏臣服'],[1215,'攻占金中都'],[1219,'西征花剌子模'],[1227,'灭西夏'],[1234,'灭金'],[1251,'蒙哥即位'],[1259,'蒙哥死于合州前线'],[1260,'忽必烈即位'],[1267,'围攻襄阳樊城'],[1271,'定国号元'],[1276,'占领临安'],[1279,'崖山海战，南宋亡']]},
-    {id:'dali',name:'大理',start:937,end:1254,color:'#537383',origin:'段思平于937年建立大理国。',development:'以洱海地区为中心，与宋保持贸易与文化交流。',ending:'1253年蒙古攻入大理，次年国主降服。',events:[[937,'段思平建国'],[1094,'高升泰代段氏称帝'],[1096,'段氏复国，史称后理'],[1253,'蒙古军越金沙江攻大理'],[1254,'大理国降服']]},
-    {id:'goryeo',name:'高丽',start:918,end:1392,color:'#506e75',origin:'王建于918年建高丽，936年统一后三国。',development:'在辽、金、蒙古压力下维持王朝，吸收宋文化并发展印刷与佛教。',ending:'本时间线内仍延续；1392年由朝鲜王朝取代。',events:[[918,'王建建高丽'],[936,'统一后三国'],[993,'第一次高丽契丹战争'],[1019,'龟州大捷'],[1107,'尹瓘北伐女真'],[1126,'向金称臣'],[1231,'蒙古首次侵高丽'],[1232,'迁都江华岛'],[1259,'与蒙古议和'],[1270,'三别抄抗争']]},
-    {id:'xiliao',name:'西辽',start:1124,end:1218,color:'#6e6653',origin:'耶律大石率契丹部众西迁，于中亚建立政权。',development:'控制河中地区，延续辽朝制度并统治多族群社会。',ending:'1218年乃蛮屈出律政权被蒙古消灭。',events:[[1124,'耶律大石西行称王'],[1132,'称帝并定都虎思斡耳朵'],[1141,'卡特万之战大胜'],[1211,'屈出律夺权'],[1218,'蒙古灭西辽']]}
-  ];
-  const events=[
-    [907,'后梁建立','唐亡，五代十国时期开始。'],[916,'契丹建国','耶律阿保机称帝。'],[918,'高丽建立','王建建立高丽王朝。'],[937,'大理建立','段思平建立大理国。'],[938,'燕云十六州入辽','后晋割让幽云地区。'],[960,'北宋建立','赵匡胤陈桥兵变。'],[979,'北宋统一中原','北汉灭亡，分裂局面大体结束。'],[986,'雍熙北伐','北宋伐辽失利。'],[1005,'澶渊之盟','宋辽形成长期和平格局。'],[1038,'西夏建国','李元昊称帝。'],[1044,'庆历和议','宋夏议和。'],[1069,'王安石变法','北宋启动系统改革。'],[1085,'元丰政局转折','神宗去世后新法受挫。'],[1115,'金建立','完颜阿骨打称帝。'],[1120,'海上之盟','宋金约定夹攻辽。'],[1125,'辽灭亡','金俘辽天祚帝。'],[1127,'靖康之变','北宋亡，南宋建立。'],[1130,'黄天荡之战','韩世忠阻击金军。'],[1140,'郾城之战','岳飞军击败金军。'],[1141,'绍兴和议','宋金划定长期对峙秩序。'],[1161,'采石之战','南宋挫败完颜亮南侵。'],[1206,'蒙古国建立','铁木真获尊号成吉思汗。'],[1209,'蒙古攻夏','西夏被迫臣服。'],[1215,'蒙古占中都','金朝北方统治受重创。'],[1218,'西辽灭亡','蒙古进入中亚。'],[1219,'蒙古西征','花剌子模战争开始。'],[1227,'西夏灭亡','蒙古灭夏。'],[1234,'金灭亡','蒙古与南宋合击蔡州。'],[1253,'蒙古取大理','兀良合台攻入大理。'],[1259,'钓鱼城之战','蒙哥汗在南征中去世。'],[1260,'忽必烈即位','蒙古帝位争夺加剧。'],[1267,'襄樊之战开始','南宋防线进入长期攻防。'],[1271,'元朝建立','忽必烈定国号元。'],[1273,'襄阳樊城陷落','长江中游门户洞开。'],[1276,'临安降元','南宋朝廷南迁。'],[1279,'崖山海战','南宋覆亡，元完成统一。']
-  ];
-  const maps=[
-{from:907,to:959,badge:"943年：五代十国与契丹",src:"assets/embedded-2.jpg",caption:"五代十国中期的典型格局。可观察契丹、后晋及南方诸国并立，以及宋建立前中原政权频繁更替的空间背景。"},
-{from:960,to:1126,badge:"1111年：辽—北宋—西夏",src:"assets/embedded-3.jpg",caption:"辽天庆元年、北宋政和元年的典型格局。燕云、河西与宋辽夏三角关系在图中清晰可见。"},
-{from:1127,to:1207,badge:"1142年：金—南宋—西夏",src:"assets/embedded-4.jpg",caption:"绍兴和议后的典型格局。金控制华北，南宋立足江南，西夏仍据西北，南北对峙结构基本定型。"},
-{from:1208,to:1279,badge:"1208年：蒙古冲击前夕",src:"assets/embedded-5.jpg",caption:"金泰和八年、南宋嘉定元年的格局，适合作为蒙古全面改变东亚版图前的参照；此后西夏、金、南宋相继被蒙古／元征服。"}
-];
-  const snapshots=[
-    {to:959,title:'五代十国与契丹并起',desc:'中原王朝频繁更替，契丹在北方建立强权；高丽、大理等政权也在周边形成。',powers:['五代诸朝','辽（契丹）','高丽','大理']},
-    {to:1126,title:'宋、辽、西夏三角格局',desc:'北宋据中原与江南，辽控北方，西夏占据西北河套与河西走廊，和战与贸易并行。',powers:['北宋','辽','西夏','高丽','大理']},
-    {to:1205,title:'金与南宋南北对峙',desc:'金取代辽并占据北方，南宋立足江南；西夏、西辽分处西北和中亚。',powers:['南宋','金','西夏','西辽','高丽','大理']},
-    {to:1270,title:'蒙古扩张与旧秩序瓦解',desc:'蒙古先后灭西辽、西夏与金，并取大理；南宋成为统一战争的主要目标。',powers:['蒙古／元','南宋','高丽']},
-    {to:1279,title:'元朝统一进程完成',desc:'临安失守后南宋残余势力继续抵抗，1279年崖山海战标志南宋覆亡。',powers:['元','南宋残余','高丽']}
-  ];
-  const eventFilterPolities=[
-    {id:'all',name:'全部政权'},{id:'song',name:'宋'},{id:'liao',name:'辽'},{id:'xia',name:'西夏'},{id:'jin',name:'金'},{id:'mongol',name:'蒙古／元'},{id:'dali',name:'大理'},{id:'goryeo',name:'高丽'},{id:'xiliao',name:'西辽'}
-  ];
-  const eventTags={
-    907:[],916:['liao'],918:['goryeo'],937:['dali'],938:['liao'],960:['song'],979:['song'],986:['song','liao'],1005:['song','liao'],1038:['xia'],1044:['song','xia'],1069:['song'],1085:['song'],1115:['jin'],1120:['song','jin','liao'],1125:['liao','jin'],1127:['song','jin'],1130:['song','jin'],1140:['song','jin'],1141:['song','jin'],1161:['song','jin'],1206:['mongol'],1209:['mongol','xia'],1215:['mongol','jin'],1218:['mongol','xiliao'],1219:['mongol'],1227:['mongol','xia'],1234:['mongol','jin','song'],1253:['mongol','dali'],1259:['mongol','song'],1260:['mongol'],1267:['mongol','song'],1271:['mongol'],1273:['mongol','song'],1276:['mongol','song'],1279:['mongol','song']
-  };
-  const state={currentYear:1141,selectedEventPolity:'all',selectedArchive:'song'};  const phases=[[959,'五代十国：多政权并立'],[1004,'北宋建立并推进统一'],[1037,'宋辽澶渊之盟后的和平期'],[1114,'宋、辽、西夏三足并立'],[1126,'金兴起并灭辽'],[1140,'靖康之变后，南宋立国'],[1160,'绍兴和议前后：宋金南北对峙格局形成'],[1205,'宋金对峙延续，蒙古诸部渐趋统一'],[1226,'蒙古崛起，东亚秩序重组'],[1233,'蒙古灭夏进程'],[1258,'蒙古与南宋夹击金朝'],[1270,'蒙古南征与襄樊攻防'],[1278,'元军推进，南宋残局'],[1279,'崖山海战：南宋覆亡']];
-  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-  const markerDescriptions={
-    song:{960:'赵匡胤建宋，定都开封',1005:'宋辽议和，边境长期稳定',1127:'北宋灭亡，南宋在江南重建',1141:'宋金议和，形成南北对峙',1279:'崖山战败，南宋最终灭亡'},
-    liao:{916:'契丹完成统一并建立王朝',938:'燕云地区成为辽南部屏障',1005:'宋辽议和，百余年总体和平',1114:'女真起兵，辽朝统治动摇',1125:'天祚帝被俘，辽朝灭亡'},
-    xia:{1038:'李元昊称帝，西夏正式建国',1044:'宋夏停战，确立岁赐互市',1209:'蒙古迫使西夏臣服纳贡',1226:'蒙古发动最后一次灭夏战争',1227:'都城失守，西夏政权终结'},
-    jin:{1115:'完颜阿骨打称帝建金',1125:'金军灭辽，控制北方大片地区',1127:'开封陷落，北宋覆亡',1141:'宋金议和，南北格局形成',1234:'蔡州失守，金朝灭亡'},
-    mongol:{1206:'铁木真统一草原建立蒙古国',1215:'蒙古攻占金朝中都',1227:'西夏灭亡，蒙古西北威胁解除',1271:'忽必烈定国号为元',1279:'元灭南宋，统一进程完成'},
-    dali:{937:'段思平建立大理国',1094:'高升泰取代段氏政权',1096:'段氏复国，进入后理时期',1253:'蒙古军越金沙江攻入云南',1254:'大理国主降服蒙古'},
-    goryeo:{918:'王建建立高丽王朝',936:'高丽完成后三国统一',1019:'龟州大捷击退契丹军',1231:'蒙古首次大举进攻高丽',1259:'高丽与蒙古议和结束长期战争'},
-    xiliao:{1124:'耶律大石西迁建立新政权',1132:'西辽称帝并确立中亚统治',1141:'卡特万大胜，西辽达到鼎盛',1211:'屈出律夺取西辽实权',1218:'蒙古击败屈出律，西辽灭亡'}
-  };  const lifecycleMarkerYears={
-    song:[960,1005,1127,1141,1279],
-    liao:[916,938,1005,1114,1125],
-    xia:[1038,1044,1209,1226,1227],
-    jin:[1115,1125,1127,1141,1234],
-    mongol:[1206,1215,1227,1271,1279],
-    dali:[937,1094,1096,1253,1254],
-    goryeo:[918,936,1019,1231,1259],
-    xiliao:[1124,1132,1141,1211,1218]
-  };  const pct=y=>Math.max(0,Math.min(100,(y-MIN)/(MAX-MIN)*100));
-  const status=(p,y)=>y<p.start?'future':y>p.end?'ended':'active';
-  const statusText=s=>s==='active'?'当前在场':s==='future'?'尚未建立':'已经灭亡';
-  function renderLifelines(y){$('#lifelines').innerHTML=polities.map(p=>{const s=status(p,y);const keyYears=lifecycleMarkerYears[p.id]||[];const markers=p.events.filter(e=>e[0]>=MIN&&e[0]<=MAX&&keyYears.includes(e[0])).slice(0,5).map(e=>{const brief=markerDescriptions[p.id]?.[e[0]]||e[1];return `<button class="event-marker" style="left:${pct(e[0])}%" aria-label="${e[0]}年 · ${e[1]} · ${brief}" data-note="${p.name}｜${e[0]}年 · ${e[1]}：${brief}"></button>`}).join('');return `<article class="lifeline" data-status="${s}" style="--tone:${s==='active'?p.color:s==='future'?'#748093':'#9a7a72'}"><div class="life-name"><strong>${p.name}</strong><span class="life-years">${p.start}—${p.end}</span><br><span class="status-tag">${statusText(s)}</span></div><div class="track" aria-label="${p.name} 生命周期"><span class="track-fill" style="left:${pct(p.start)}%;width:${pct(Math.min(p.end,MAX))-pct(p.start)}%"></span><span class="now-line" style="left:${pct(y)}%"><span class="now-year">${y}</span></span>${markers}</div><div class="marker-note" aria-live="polite"></div></article>`}).join('');$$('.event-marker').forEach(b=>b.addEventListener('click',()=>{b.closest('.lifeline').querySelector('.marker-note').textContent=b.dataset.note}))}
-  function nearby(p,y,n=4){return [...p.events].sort((a,b)=>Math.abs(a[0]-y)-Math.abs(b[0]-y)||a[0]-b[0]).slice(0,n).sort((a,b)=>a[0]-b[0])}
-  function renderPowers(y){const active=polities.filter(p=>status(p,y)==='active');$('#power-grid').innerHTML=active.length?active.map(p=>`<article class="power-card" style="--tone:${p.color}"><h3>${p.name}</h3><div class="power-meta">${p.start}—${p.end}</div><span class="state">${p.id==='song'?(y<1127?'北宋':'南宋'):'当前在场'}</span><ul>${nearby(p,y).map(e=>`<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join('')}</ul></article>`).join(''):'<div class="empty">这一年暂无本网页收录的在场政权。</div>'}
-  function renderMap(y){const m=maps.find(x=>y>=x.from&&y<=x.to)||maps.at(-1);const s=snapshots.find(x=>y<=x.to)||snapshots.at(-1);const img=$('#mapImg');if(img.src!==m.src)img.src=m.src;$('#map-title').textContent=m.badge;$('#map-desc').textContent=m.caption;$('#map-powers').innerHTML=s.powers.map(x=>`<span>${x}</span>`).join('')}
-  function buildEventRecords(){
-    const records=events.map(([year,title,description],index)=>({id:`event-${year}-${index}`,year,title,description,polities:[...(eventTags[year]||[])],tags:[],importance:2}));
-    polities.forEach(p=>p.events.forEach(([year,title],index)=>{
-      const existing=records.find(event=>event.year===year&&(event.title===title||event.polities.includes(p.id)));
-      if(existing){if(!existing.polities.includes(p.id))existing.polities.push(p.id);return}
-      records.push({id:`${p.id}-${year}-${index}`,year,title,description:markerDescriptions[p.id]?.[year]||`${p.name}历史年表中的关键节点。`,polities:[p.id],tags:[],importance:1});
-    }));
-    return records.sort((a,b)=>a.year-b.year||b.importance-a.importance||a.title.localeCompare(b.title,'zh-CN'));
-  }
-  const eventRecords=buildEventRecords();
-  function getContextEvents(currentYear,selectedPolity,limit=8){
-    const pool=eventRecords.filter(event=>selectedPolity==='all'||event.polities.includes(selectedPolity));
-    const exact=pool.filter(event=>event.year===currentYear);
-    const before=pool.filter(event=>event.year<currentYear).slice(-3);
-    const after=pool.filter(event=>event.year>currentYear).slice(0,3);
-    const chosen=[...before,...exact,...after];
-    const chosenIds=new Set(chosen.map(event=>event.id));
-    pool.filter(event=>!chosenIds.has(event.id)).sort((a,b)=>Math.abs(a.year-currentYear)-Math.abs(b.year-currentYear)||a.year-b.year).slice(0,Math.max(0,limit-chosen.length)).forEach(event=>chosen.push(event));
-    return chosen.sort((a,b)=>a.year-b.year||b.importance-a.importance).slice(0,Math.max(limit,exact.length));
-  }
-  const distanceLabel=(eventYear,currentYear)=>eventYear===currentYear?'当年':eventYear<currentYear?`此前${currentYear-eventYear}年`:`此后${eventYear-currentYear}年`;
-  function renderChronicle(y){
-    const filtered=getContextEvents(y,state.selectedEventPolity);
-    const hasExact=filtered.some(event=>event.year===y);
-    const nearestDistance=filtered.length?Math.min(...filtered.map(event=>Math.abs(event.year-y))):Infinity;
-    const selectedName=eventFilterPolities.find(p=>p.id===state.selectedEventPolity)?.name||'所选政权';
-    const note=hasExact?'':`<p class="chronicle-context-note">${y}年暂无已录入的${state.selectedEventPolity==='all'?'':selectedName}事件，以下展示距该年份最近的重要事件。</p>`;
-    const item=event=>{const tags=event.polities.map(id=>polities.find(p=>p.id===id)?.name).filter(Boolean),isExact=event.year===y,isNear=Math.abs(event.year-y)===nearestDistance;return `<button class="chronicle-item${isNear?' near':''}${isExact?' exact':''}" type="button" data-year="${event.year}"${isNear?' data-nearest="true"':''} aria-label="跳转到${event.year}年：${event.title}"><div class="chronicle-year">${event.year}年<div class="chronicle-distance">${distanceLabel(event.year,y)}</div></div><div><h3>${event.title}</h3><p>${event.description}</p>${tags.length?`<div class="event-tags">${tags.map(t=>`<span>${t}</span>`).join('')}</div>`:''}</div></button>`};
-    $('#chronicle').innerHTML=note+filtered.map(item).join('');
-    $('#event-filter-buttons').innerHTML=eventFilterPolities.map(p=>`<button aria-pressed="${p.id===state.selectedEventPolity}" data-id="${p.id}">${p.name}</button>`).join('');
-    $$('#event-filter-buttons button').forEach(b=>b.addEventListener('click',()=>{state.selectedEventPolity=b.dataset.id;renderChronicle(state.currentYear)}));
-    $$('#chronicle .chronicle-item').forEach(item=>item.addEventListener('click',()=>setCurrentYear(+item.dataset.year)));
-    requestAnimationFrame(()=>{const box=$('#chronicle-scroll'),near=$('#chronicle .chronicle-item.near');if(box&&near)box.scrollTop=Math.max(0,near.offsetTop-(box.clientHeight-near.offsetHeight)/2)});
-  }
-  const archiveNarratives={
-    song:{lead:'宋朝自960年建立，历北宋与南宋两个阶段，前后延续三百余年。它在强邻环伺中发展出高度成熟的文官政治、财政体系、城市经济与士人文化，是这一时期东亚秩序的核心参与者。',chapters:[['建立与统一','赵匡胤由后周将领登上帝位后，以加强中央禁军、分散地方军政权力和逐步兼并割据政权的方式重建统一秩序。至979年北汉灭亡，中原与南方大部分地区重新归于中央王朝，但燕云地区始终未能收复。'],['北宋的发展','北宋以文官体系和科举制度扩大治理基础，农业、手工业、商业和城市生活显著发展。面对辽与西夏，朝廷在战争、岁币、边贸之间寻求平衡；1005年澶渊之盟和1044年庆历和议带来阶段性稳定。王安石变法则反映了财政、军事与社会治理上的深层压力。'],['南渡与重建','1127年金军攻陷开封，徽、钦二帝被俘，北宋结束。赵构在南方建立南宋，最终以临安为都。南宋依托江南经济、长江防线和海上贸易恢复国力，1141年绍兴和议后与金形成长期南北对峙，1161年采石之战又阻止了金军渡江。'],['灭亡与影响','蒙古灭西夏、金后转而集中攻宋。襄阳、樊城于1273年陷落，临安于1276年投降，宋室余部继续沿海抵抗，至1279年崖山海战失败而亡。宋代在制度、理学、文学、印刷、火药应用和商业网络方面的积累，对此后中国与东亚影响深远。']]},
-    liao:{lead:'辽朝由契丹人建立，916年至1125年统治北方草原、东北与燕云地区。它把游牧传统与农耕地区治理结合起来，是宋代北方最早形成稳定长期秩序的强大政权。',chapters:[['契丹崛起','唐末五代之际，耶律阿保机统一契丹诸部并于916年称帝。此后辽取得燕云十六州，获得农业人口、城镇和南下中原的战略通道，逐渐从部落联盟转变为多区域王朝。'],['制度与社会','辽实行因俗而治，通常以北面官管理契丹及草原事务，以南面官治理汉地人口，同时保留四时捺钵等政治传统。多族群、多经济形态并存，使辽能够同时经营草原交通与农耕财政。'],['宋辽关系','辽与北宋围绕燕云长期交战。1004年辽军南下至澶州，次年双方订立澶渊之盟。此后虽仍有边境摩擦，整体保持百余年相对和平，贸易、使节往来与文化交流持续发展。'],['衰亡与西迁','辽后期统治矛盾加深，女真完颜部于1114年起兵。金军迅速夺取辽的核心区域，1125年天祚帝被俘，辽朝灭亡。耶律大石率部分契丹人西迁，后来在中亚建立西辽，延续了辽的政治传统。']]},
-    xia:{lead:'西夏由党项人建立，1038年至1227年据有河套、宁夏与河西走廊。它处在宋、辽、金以及中亚交通之间，通过军事防御、外交周旋和文化创造维持了近两个世纪。',chapters:[['党项政权形成','党项拓跋部在唐末以来逐渐经营夏州地区。李继迁、李德明扩大势力并在宋辽之间周旋，李元昊继位后整合河西力量，于1038年称帝建国。'],['战争与和议','建国初期西夏与北宋发生三川口、好水川等战争。1044年庆历和议后，双方以册封、岁赐和互市维持关系。西夏也先后与辽、金结盟或对抗，以避免被任何一方完全控制。'],['制度与文化','西夏建立本国年号、官制与军政体系，创制西夏文字，大量翻译佛教经典。其统治结合党项传统与中原制度，并依靠河西走廊的交通、畜牧和绿洲农业维持国家。'],['蒙古征服','13世纪初蒙古多次进攻西夏，1209年迫使其臣服。西夏后来未能充分配合蒙古西征，成吉思汗于1226年再次发动大规模战争，次年西夏都城失守，政权灭亡。']]},
-    jin:{lead:'金朝由女真人建立，1115年至1234年从东北迅速扩张至华北，先后灭辽、北宋，并与南宋形成百余年的南北对峙。其历史也是女真制度与中原王朝治理不断结合的过程。',chapters:[['建国灭辽','女真诸部原受辽控制。完颜阿骨打统一主要力量，于1114年起兵、1115年称帝建金。金与北宋订立海上之盟后连续击败辽军，1125年辽朝灭亡。'],['灭北宋与南北对峙','金军随后两度南下，1127年攻陷开封并掳走徽、钦二帝。南宋建立后双方长期战争，1141年绍兴和议确立阶段性边界。1161年完颜亮南征在采石受挫，金朝内部也发生政权更替。'],['治理与文化转型','金在女真核心地区保留猛安谋克组织，同时在华北采用州县、科举、赋税等中原制度。金世宗、章宗时期政治相对稳定，女真贵族与汉地官僚文化进一步融合，但财政、土地和边防压力逐渐累积。'],['蒙古攻金与灭亡','1211年蒙古大举攻金，金朝失去北方大片土地，1214年迁都汴京。此后又与南宋交战，战略空间日益缩小。1232年三峰山之战后主力受损，1234年蔡州被蒙古与南宋联军攻破，金朝灭亡。']]},
-    mongol:{lead:'蒙古帝国由铁木真统一草原后于1206年建立。它迅速跨越欧亚大陆，并在东亚先后消灭西夏、金、大理和南宋；忽必烈于1271年定国号元，至1279年完成全国统一。',chapters:[['统一草原与扩张','铁木真在长期部族战争中击败主要对手，1206年被推举为成吉思汗。蒙古重组军政体系，先迫使西夏臣服，后进攻金朝，并向中亚花剌子模及更远地区展开大规模征服。'],['征服西夏与金','蒙古于1215年占领金中都，1227年灭西夏。成吉思汗死后，窝阔台继续对金作战，1234年蒙古与南宋联合攻破蔡州，结束金朝统治。蒙古由此控制中国北方。'],['汗位更替与南征','蒙哥即位后发动多路扩张，忽必烈负责攻大理并经略南方。1259年蒙哥在合州前线去世，引发汗位争夺。忽必烈于1260年即位，与阿里不哥竞争后把政治重心进一步转向中原。'],['建立元朝与统一','忽必烈建设大都、采用中原王朝制度，并于1271年定国号“大元”。元军攻陷襄阳樊城后沿江推进，1276年占领临安，1279年崖山海战后南宋灭亡。元朝继续统治至1368年，本网页重点展示其统一过程。']]},
-    dali:{lead:'大理国由段思平于937年建立，以洱海地区为中心统治云南高原，至1254年归附蒙古。它与宋朝少有大规模战争，更多通过贸易、佛教与边疆网络保持联系。',chapters:[['建立与区域基础','南诏灭亡后云南经历数十年政权更替，段思平于937年建立大理国。王朝以洱海、苍山地区为政治核心，统合云南高原上多样的族群与地方势力。'],['政治与佛教','段氏王权与地方大族共同维系统治，佛教在国家政治与社会文化中地位突出，多位国王晚年出家。1094年高升泰一度取代段氏，1096年又恢复段氏政权，通常称为“后理”。'],['与宋及周边交流','大理与宋朝总体保持和平，马匹、药材、金属和边境物资贸易是重要联系。由于地理阻隔和宋朝的边疆政策，双方没有形成类似宋辽、宋夏那样持续的大规模战争。'],['蒙古征服与后续','1253年忽必烈率军越过金沙江进攻大理，次年国主降服。蒙古并未完全摧毁原有地方结构，段氏及地方势力在新的统治体系下继续发挥作用，云南逐渐纳入元朝行省治理。']]},
-    goryeo:{lead:'高丽由王建于918年建立，936年统一朝鲜半岛大部，延续至1392年。宋辽金元相继兴替时，高丽不断调整外交与军事策略，是东北亚秩序变化的重要参与者。',chapters:[['建立与统一','王建在后高句丽政权中崛起，于918年建立高丽，936年完成后三国统一。王朝以开京为中心发展中央官制、土地制度和贵族政治，并与中国各王朝保持册封、贸易与文化往来。'],['契丹战争','辽朝扩张后，高丽经历多次契丹战争。993年后双方通过谈判调整边界；1019年高丽在龟州取得重要胜利。此后高丽与辽维持关系，同时继续吸收宋朝文化与物质成果。'],['女真金与内部变化','12世纪初高丽曾向东北女真地区扩张，金朝建立并强盛后又向金称臣。国内贵族政治矛盾加深，1170年武臣政变后进入武臣掌权时期，但王室仍继续存在。'],['蒙古入侵与元朝关系','蒙古自1231年起多次入侵，高丽迁都江华岛长期抵抗。1259年双方议和，1270年三别抄继续反抗。此后高丽与元朝形成紧密政治关系，但保持本国王朝与制度，最终于1392年由朝鲜王朝取代。']]},
-    xiliao:{lead:'西辽是辽朝宗室耶律大石西迁后在中亚建立的契丹政权，约1124年至1218年延续近百年。它把辽朝政治传统带入河中地区，并在伊斯兰世界与草原诸势力之间形成新的霸权。',chapters:[['西迁建国','辽朝面临金军进攻时，耶律大石率部离开故地向西发展。1124年前后他建立独立政权，后控制七河与河中地区，并以虎思斡耳朵为中心建立统治。'],['中亚霸权','西辽统治契丹、突厥与伊朗语族等多种人口，对地方属国通常保留原有统治者和宗教。它使用汉式年号、官号和辽朝制度传统，同时适应中亚的贡赋与城市网络。'],['卡特万之战','1141年耶律大石在卡特万之战击败塞尔柱势力，西辽威望达到高峰，花剌子模等政权一度向其纳贡。其存在改变了中亚力量平衡，也扩大了契丹名称在欧亚西部的影响。'],['屈出律夺权与灭亡','西辽后期内外矛盾加剧，乃蛮王子屈出律于1211年夺取实权。其宗教政策与地方冲突削弱统治，蒙古军于1218年进入中亚并击败屈出律，西辽政权结束。']]}
-  };
-  function renderArchive(){
-    $('#archive-tabs').innerHTML=polities.map(p=>`<button role="tab" aria-selected="${p.id===state.selectedArchive}" data-id="${p.id}">${p.name}</button>`).join('');
-    const p=polities.find(x=>x.id===state.selectedArchive),story=archiveNarratives[p.id];
-    $('#archive-content').innerHTML=`<article class="archive-overview"><h3>${p.name}</h3><p class="archive-lead">${story.lead}</p><div class="archive-story">${story.chapters.map(ch=>`<section class="archive-chapter"><h4>${ch[0]}</h4><p>${ch[1]}</p></section>`).join('')}</div><div class="archive-dates"><h4>完整关键节点</h4><div class="archive-date-list">${p.events.map(e=>`<span><strong>${e[0]}</strong> · ${e[1]}</span>`).join('')}</div></div></article>`;
-    $$('#archive-tabs button').forEach(b=>b.addEventListener('click',()=>{state.selectedArchive=b.dataset.id;renderArchive()}));
-  }
-  function render(){const y=state.currentYear;$('#year-number').textContent=y;$$('.year-sync').forEach(el=>el.textContent=y);$('#phase-text').textContent=(phases.find(x=>y<=x[0])||phases.at(-1))[1];renderLifelines(y);renderPowers(y);renderMap(y);renderChronicle(y);renderArchive()}
-  function setCurrentYear(year){state.currentYear=Math.max(MIN,Math.min(MAX,+year));$('#year-range').value=state.currentYear;render()}
-  $('#year-range').addEventListener('input',e=>setCurrentYear(e.target.value));$$('.quick-years button').forEach(b=>b.addEventListener('click',()=>setCurrentYear(b.dataset.year)));
-  const timeline=$('#timeline');
-  function syncStickyState(){timeline.classList.toggle('is-stuck',window.scrollY>0&&timeline.getBoundingClientRect().top<=11)}
-  addEventListener('scroll',syncStickyState,{passive:true});addEventListener('resize',syncStickyState,{passive:true});
-  setCurrentYear(state.currentYear);syncStickyState();
+    const MIN = 907, MAX = 1279;
+    const polities = [
+      {id: 'song', name: '宋', start: 960, end: 1279, color: '#9d4934', origin: '赵匡胤发动陈桥兵变，代后周建立宋朝。1127年后由北宋转为南宋，政统延续至1279年。', development: '重文治、兴科举，商品经济、城市文化与技术高度发展；长期与辽、夏、金、蒙古并立。', ending: '1279年崖山海战后南宋覆亡。', events: [[960, '陈桥兵变，北宋建立'], [979, '北汉灭亡，基本结束五代十国分裂'], [1005, '澶渊之盟'], [1044, '庆历和议，宋夏议和'], [1069, '王安石变法开始'], [1085, '新法政局转折'], [1127, '靖康之变；南宋建立'], [1141, '绍兴和议'], [1161, '采石之战'], [1208, '嘉定和议'], [1234, '联蒙灭金'], [1259, '钓鱼城之战'], [1273, '襄阳樊城陷落'], [1276, '临安降元'], [1279, '崖山海战']]},
+      {id: 'liao', name: '辽（契丹）', start: 916, end: 1125, color: '#547354', origin: '契丹首领耶律阿保机统一诸部，916年称帝。', development: '实行因俗而治的南北面官制度，与宋长期对峙并维持边境贸易。', ending: '1125年为金所灭，部分贵族西迁建立西辽。', events: [[916, '耶律阿保机称帝'], [938, '取得燕云十六州'], [947, '改国号辽'], [979, '高梁河之战击退北宋'], [1004, '辽军南下澶州'], [1005, '与宋订立澶渊之盟'], [1042, '重熙增币'], [1066, '复国号辽'], [1114, '女真起兵反辽'], [1125, '天祚帝被俘，辽亡']]},
+      {id: 'xia', name: '西夏', start: 1038, end: 1227, color: '#735a82', origin: '党项拓跋部长期经营西北，李元昊于1038年称帝。', development: '据河西走廊与宋、辽、金周旋，形成独特文字、制度与佛教文化。', ending: '1227年在蒙古持续进攻下灭亡。', events: [[982, '李继迁反宋自立'], [1038, '李元昊称帝建夏'], [1040, '三川口之战'], [1041, '好水川之战'], [1044, '宋夏庆历和议'], [1099, '平夏城之战'], [1119, '与金建立联系'], [1206, '李安全即位'], [1209, '蒙古迫夏臣服'], [1226, '蒙古大举攻夏'], [1227, '西夏灭亡']]},
+      {id: 'jin', name: '金', start: 1115, end: 1234, color: '#aa7731', origin: '女真完颜部崛起，完颜阿骨打于1115年建国。', development: '灭辽、灭北宋后统治北方，推动猛安谋克与汉制并行。', ending: '1234年在蒙古与南宋夹击下灭亡。', events: [[1114, '宁江州起兵'], [1115, '完颜阿骨打称帝'], [1120, '宋金海上之盟'], [1125, '灭辽'], [1127, '攻陷开封，北宋亡'], [1141, '与南宋绍兴和议'], [1161, '完颜亮南征失败'], [1189, '金章宗即位'], [1214, '迁都汴京'], [1232, '三峰山之战'], [1234, '蔡州城破，金亡']]},
+      {id: 'mongol', name: '蒙古／元', start: 1206, end: 1368, color: '#8c4b2c', origin: '铁木真统一蒙古诸部，1206年获尊号成吉思汗。', development: '向西、向南迅速扩张；忽必烈于1271年定国号元，逐步统一中国。', ending: '页面时间范围至1279年完成对南宋征服；元朝延续至1368年。', events: [[1206, '蒙古国建立'], [1209, '西夏臣服'], [1215, '攻占金中都'], [1219, '西征花剌子模'], [1227, '灭西夏'], [1234, '灭金'], [1251, '蒙哥即位'], [1259, '蒙哥死于合州前线'], [1260, '忽必烈即位'], [1267, '围攻襄阳樊城'], [1271, '定国号元'], [1276, '占领临安'], [1279, '崖山海战，南宋亡']]},
+      {id: 'dali', name: '大理', start: 937, end: 1254, color: '#537383', origin: '段思平于937年建立大理国。', development: '以洱海地区为中心，与宋保持贸易与文化交流。', ending: '1253年蒙古攻入大理，次年国主降服。', events: [[937, '段思平建国'], [1094, '高升泰代段氏称帝'], [1096, '段氏复国，史称后理'], [1253, '蒙古军越金沙江攻大理'], [1254, '大理国降服']]},
+      {id: 'goryeo', name: '高丽', start: 918, end: 1392, color: '#506e75', origin: '王建于918年建高丽，936年统一后三国。', development: '在辽、金、蒙古压力下维持王朝，吸收宋文化并发展印刷与佛教。', ending: '本时间线内仍延续；1392年由朝鲜王朝取代。', events: [[918, '王建建高丽'], [936, '统一后三国'], [993, '第一次高丽契丹战争'], [1019, '龟州大捷'], [1107, '尹瓘北伐女真'], [1126, '向金称臣'], [1231, '蒙古首次侵高丽'], [1232, '迁都江华岛'], [1259, '与蒙古议和'], [1270, '三别抄抗争']]},
+      {id: 'xiliao', name: '西辽', start: 1124, end: 1218, color: '#6e6653', origin: '耶律大石率契丹部众西迁，于中亚建立政权。', development: '控制河中地区，延续辽朝制度并统治多族群社会。', ending: '1218年乃蛮屈出律政权被蒙古消灭。', events: [[1124, '耶律大石西行称王'], [1132, '称帝并定都虎思斡耳朵'], [1141, '卡特万之战大胜'], [1211, '屈出律夺权'], [1218, '蒙古灭西辽']]}
+    ];
+    const events = [
+      [907, '后梁建立', '唐亡，五代十国时期开始。'], [916, '契丹建国', '耶律阿保机称帝。'], [918, '高丽建立', '王建建立高丽王朝。'], [937, '大理建立', '段思平建立大理国。'], [938, '燕云十六州入辽', '后晋割让幽云地区。'], [960, '北宋建立', '赵匡胤陈桥兵变。'], [979, '北宋统一中原', '北汉灭亡，分裂局面大体结束。'], [986, '雍熙北伐', '北宋伐辽失利。'], [1005, '澶渊之盟', '宋辽形成长期和平格局。'], [1038, '西夏建国', '李元昊称帝。'], [1044, '庆历和议', '宋夏议和。'], [1069, '王安石变法', '北宋启动系统改革。'], [1085, '元丰政局转折', '神宗去世后新法受挫。'], [1115, '金建立', '完颜阿骨打称帝。'], [1120, '海上之盟', '宋金约定夹攻辽。'], [1125, '辽灭亡', '金俘辽天祚帝。'], [1127, '靖康之变', '北宋亡，南宋建立。'], [1130, '黄天荡之战', '韩世忠阻击金军。'], [1140, '郾城之战', '岳飞军击败金军。'], [1141, '绍兴和议', '宋金划定长期对峙秩序。'], [1161, '采石之战', '南宋挫败完颜亮南侵。'], [1206, '蒙古国建立', '铁木真获尊号成吉思汗。'], [1209, '蒙古攻夏', '西夏被迫臣服。'], [1215, '蒙古占中都', '金朝北方统治受重创。'], [1218, '西辽灭亡', '蒙古进入中亚。'], [1219, '蒙古西征', '花剌子模战争开始。'], [1227, '西夏灭亡', '蒙古灭夏。'], [1234, '金灭亡', '蒙古与南宋合击蔡州。'], [1253, '蒙古取大理', '兀良合台攻入大理。'], [1259, '钓鱼城之战', '蒙哥汗在南征中去世。'], [1260, '忽必烈即位', '蒙古帝位争夺加剧。'], [1267, '襄樊之战开始', '南宋防线进入长期攻防。'], [1271, '元朝建立', '忽必烈定国号元。'], [1273, '襄阳樊城陷落', '长江中游门户洞开。'], [1276, '临安降元', '南宋朝廷南迁。'], [1279, '崖山海战', '南宋覆亡，元完成统一。']
+    ];
+    const maps = [
+      {from: 907, to: 959, badge: "943年：五代十国与契丹", src: "images/embedded-2.jpg", caption: "五代十国中期的典型格局。可观察契丹、后晋及南方诸国并立，以及宋建立前中原政权频繁更替的空间背景。"},
+      {from: 960, to: 1126, badge: "1111年：辽—北宋—西夏", src: "images/embedded-3.jpg", caption: "辽天庆元年、北宋政和元年的典型格局。燕云、河西与宋辽夏三角关系在图中清晰可见。"},
+      {from: 1127, to: 1207, badge: "1142年：金—南宋—西夏", src: "images/embedded-4.jpg", caption: "绍兴和议后的典型格局。金控制华北，南宋立足江南，西夏仍据西北，南北对峙结构基本定型。"},
+      {from: 1208, to: 1279, badge: "1208年：蒙古冲击前夕", src: "images/embedded-5.jpg", caption: "金泰和八年、南宋嘉定元年的格局，适合作为蒙古全面改变东亚版图前的参照；此后西夏、金、南宋相继被蒙古／元征服。"}
+    ];
+    const snapshots = [
+      {to: 959, title: '五代十国与契丹并起', desc: '中原王朝频繁更替，契丹在北方建立强权；高丽、大理等政权也在周边形成。', powers: ['五代诸朝', '辽（契丹）', '高丽', '大理']},
+      {to: 1126, title: '宋、辽、西夏三角格局', desc: '北宋据中原与江南，辽控北方，西夏占据西北河套与河西走廊，和战与贸易并行。', powers: ['北宋', '辽', '西夏', '高丽', '大理']},
+      {to: 1205, title: '金与南宋南北对峙', desc: '金取代辽并占据北方，南宋立足江南；西夏、西辽分处西北和中亚。', powers: ['南宋', '金', '西夏', '西辽', '高丽', '大理']},
+      {to: 1270, title: '蒙古扩张与旧秩序瓦解', desc: '蒙古先后灭西辽、西夏与金，并取大理；南宋成为统一战争的主要目标。', powers: ['蒙古／元', '南宋', '高丽']},
+      {to: 1279, title: '元朝统一进程完成', desc: '临安失守后南宋残余势力继续抵抗，1279年崖山海战标志南宋覆亡。', powers: ['元', '南宋残余', '高丽']}
+    ];
+    const eventFilterPolities = [
+      {id: 'all', name: '全部政权'}, {id: 'song', name: '宋'}, {id: 'liao', name: '辽'}, {id: 'xia', name: '西夏'}, {id: 'jin', name: '金'}, {id: 'mongol', name: '蒙古／元'}, {id: 'dali', name: '大理'}, {id: 'goryeo', name: '高丽'}, {id: 'xiliao', name: '西辽'}
+    ];
+    const eventTags = {
+      907: [], 916: ['liao'], 918: ['goryeo'], 937: ['dali'], 938: ['liao'], 960: ['song'], 979: ['song'], 986: ['song', 'liao'], 1005: ['song', 'liao'], 1038: ['xia'], 1044: ['song', 'xia'], 1069: ['song'], 1085: ['song'], 1115: ['jin'], 1120: ['song', 'jin', 'liao'], 1125: ['liao', 'jin'], 1127: ['song', 'jin'], 1130: ['song', 'jin'], 1140: ['song', 'jin'], 1141: ['song', 'jin'], 1161: ['song', 'jin'], 1206: ['mongol'], 1209: ['mongol', 'xia'], 1215: ['mongol', 'jin'], 1218: ['mongol', 'xiliao'], 1219: ['mongol'], 1227: ['mongol', 'xia'], 1234: ['mongol', 'jin', 'song'], 1253: ['mongol', 'dali'], 1259: ['mongol', 'song'], 1260: ['mongol'], 1267: ['mongol', 'song'], 1271: ['mongol'], 1273: ['mongol', 'song'], 1276: ['mongol', 'song'], 1279: ['mongol', 'song']
+    };
+    const state = {currentYear: 1141, selectedEventPolity: 'all', selectedArchive: 'song'}; const phases = [[959, '五代十国：多政权并立'], [1004, '北宋建立并推进统一'], [1037, '宋辽澶渊之盟后的和平期'], [1114, '宋、辽、西夏三足并立'], [1126, '金兴起并灭辽'], [1140, '靖康之变后，南宋立国'], [1160, '绍兴和议前后：宋金南北对峙格局形成'], [1205, '宋金对峙延续，蒙古诸部渐趋统一'], [1226, '蒙古崛起，东亚秩序重组'], [1233, '蒙古灭夏进程'], [1258, '蒙古与南宋夹击金朝'], [1270, '蒙古南征与襄樊攻防'], [1278, '元军推进，南宋残局'], [1279, '崖山海战：南宋覆亡']];
+    const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+    const markerDescriptions = {
+      song: {960: '赵匡胤建宋，定都开封', 1005: '宋辽议和，边境长期稳定', 1127: '北宋灭亡，南宋在江南重建', 1141: '宋金议和，形成南北对峙', 1279: '崖山战败，南宋最终灭亡'},
+      liao: {916: '契丹完成统一并建立王朝', 938: '燕云地区成为辽南部屏障', 1005: '宋辽议和，百余年总体和平', 1114: '女真起兵，辽朝统治动摇', 1125: '天祚帝被俘，辽朝灭亡'},
+      xia: {1038: '李元昊称帝，西夏正式建国', 1044: '宋夏停战，确立岁赐互市', 1209: '蒙古迫使西夏臣服纳贡', 1226: '蒙古发动最后一次灭夏战争', 1227: '都城失守，西夏政权终结'},
+      jin: {1115: '完颜阿骨打称帝建金', 1125: '金军灭辽，控制北方大片地区', 1127: '开封陷落，北宋覆亡', 1141: '宋金议和，南北格局形成', 1234: '蔡州失守，金朝灭亡'},
+      mongol: {1206: '铁木真统一草原建立蒙古国', 1215: '蒙古攻占金朝中都', 1227: '西夏灭亡，蒙古西北威胁解除', 1271: '忽必烈定国号为元', 1279: '元灭南宋，统一进程完成'},
+      dali: {937: '段思平建立大理国', 1094: '高升泰取代段氏政权', 1096: '段氏复国，进入后理时期', 1253: '蒙古军越金沙江攻入云南', 1254: '大理国主降服蒙古'},
+      goryeo: {918: '王建建立高丽王朝', 936: '高丽完成后三国统一', 1019: '龟州大捷击退契丹军', 1231: '蒙古首次大举进攻高丽', 1259: '高丽与蒙古议和结束长期战争'},
+      xiliao: {1124: '耶律大石西迁建立新政权', 1132: '西辽称帝并确立中亚统治', 1141: '卡特万大胜，西辽达到鼎盛', 1211: '屈出律夺取西辽实权', 1218: '蒙古击败屈出律，西辽灭亡'}
+    }; const lifecycleMarkerYears = {
+      song: [960, 1005, 1127, 1141, 1279],
+      liao: [916, 938, 1005, 1114, 1125],
+      xia: [1038, 1044, 1209, 1226, 1227],
+      jin: [1115, 1125, 1127, 1141, 1234],
+      mongol: [1206, 1215, 1227, 1271, 1279],
+      dali: [937, 1094, 1096, 1253, 1254],
+      goryeo: [918, 936, 1019, 1231, 1259],
+      xiliao: [1124, 1132, 1141, 1211, 1218]
+    }; const pct = y => Math.max(0, Math.min(100, (y - MIN) / (MAX - MIN) * 100));
+    const status = (p, y) => y < p.start ? 'future' : y > p.end ? 'ended' : 'active';
+    const statusText = s => s === 'active' ? '当前在场' : s === 'future' ? '尚未建立' : '已经灭亡';
+    function renderLifelines(y) {$('#lifelines').innerHTML = polities.map(p => {const s = status(p, y); const keyYears = lifecycleMarkerYears[p.id] || []; const markers = p.events.filter(e => e[0] >= MIN && e[0] <= MAX && keyYears.includes(e[0])).slice(0, 5).map(e => {const brief = markerDescriptions[p.id]?.[e[0]] || e[1]; return `<button class="event-marker" style="left:${pct(e[0])}%" aria-label="${e[0]}年 · ${e[1]} · ${brief}" data-note="${p.name}｜${e[0]}年 · ${e[1]}：${brief}"></button>`}).join(''); return `<article class="lifeline" data-status="${s}" style="--tone:${s === 'active' ? p.color : s === 'future' ? '#748093' : '#9a7a72'}"><div class="life-name"><strong>${p.name}</strong><span class="life-years">${p.start}—${p.end}</span><br><span class="status-tag">${statusText(s)}</span></div><div class="track" aria-label="${p.name} 生命周期"><span class="track-fill" style="left:${pct(p.start)}%;width:${pct(Math.min(p.end, MAX)) - pct(p.start)}%"></span><span class="now-line" style="left:${pct(y)}%"><span class="now-year">${y}</span></span>${markers}</div><div class="marker-note" aria-live="polite"></div></article>`}).join(''); $$('.event-marker').forEach(b => b.addEventListener('click', () => {b.closest('.lifeline').querySelector('.marker-note').textContent = b.dataset.note}))}
+    function nearby(p, y, n = 4) {return [...p.events].sort((a, b) => Math.abs(a[0] - y) - Math.abs(b[0] - y) || a[0] - b[0]).slice(0, n).sort((a, b) => a[0] - b[0])}
+    function renderPowers(y) {const active = polities.filter(p => status(p, y) === 'active'); $('#power-grid').innerHTML = active.length ? active.map(p => `<article class="power-card" style="--tone:${p.color}"><h3>${p.name}</h3><div class="power-meta">${p.start}—${p.end}</div><span class="state">${p.id === 'song' ? (y < 1127 ? '北宋' : '南宋') : '当前在场'}</span><ul>${nearby(p, y).map(e => `<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join('')}</ul></article>`).join('') : '<div class="empty">这一年暂无本网页收录的在场政权。</div>'}
+    function renderMap(y) {const m = maps.find(x => y >= x.from && y <= x.to) || maps.at(-1); const s = snapshots.find(x => y <= x.to) || snapshots.at(-1); const img = $('#mapImg'); if (img.src !== m.src) img.src = m.src; $('#map-title').textContent = m.badge; $('#map-desc').textContent = m.caption; $('#map-powers').innerHTML = s.powers.map(x => `<span>${x}</span>`).join('')}
+    function buildEventRecords() {
+      const records = events.map(([year, title, description], index) => ({id: `event-${year}-${index}`, year, title, description, polities: [...(eventTags[year] || [])], tags: [], importance: 2}));
+      polities.forEach(p => p.events.forEach(([year, title], index) => {
+        const existing = records.find(event => event.year === year && (event.title === title || event.polities.includes(p.id)));
+        if (existing) {if (!existing.polities.includes(p.id)) existing.polities.push(p.id); return }
+        records.push({id: `${p.id}-${year}-${index}`, year, title, description: markerDescriptions[p.id]?.[year] || `${p.name}历史年表中的关键节点。`, polities: [p.id], tags: [], importance: 1});
+      }));
+      return records.sort((a, b) => a.year - b.year || b.importance - a.importance || a.title.localeCompare(b.title, 'zh-CN'));
+    }
+    const eventRecords = buildEventRecords();
+    function getContextEvents(currentYear, selectedPolity, limit = 8) {
+      const pool = eventRecords.filter(event => selectedPolity === 'all' || event.polities.includes(selectedPolity));
+      const exact = pool.filter(event => event.year === currentYear);
+      const before = pool.filter(event => event.year < currentYear).slice(-3);
+      const after = pool.filter(event => event.year > currentYear).slice(0, 3);
+      const chosen = [...before, ...exact, ...after];
+      const chosenIds = new Set(chosen.map(event => event.id));
+      pool.filter(event => !chosenIds.has(event.id)).sort((a, b) => Math.abs(a.year - currentYear) - Math.abs(b.year - currentYear) || a.year - b.year).slice(0, Math.max(0, limit - chosen.length)).forEach(event => chosen.push(event));
+      return chosen.sort((a, b) => a.year - b.year || b.importance - a.importance).slice(0, Math.max(limit, exact.length));
+    }
+    const distanceLabel = (eventYear, currentYear) => eventYear === currentYear ? '当年' : eventYear < currentYear ? `此前${currentYear - eventYear}年` : `此后${eventYear - currentYear}年`;
+    function renderChronicle(y) {
+      const filtered = getContextEvents(y, state.selectedEventPolity);
+      const hasExact = filtered.some(event => event.year === y);
+      const nearestDistance = filtered.length ? Math.min(...filtered.map(event => Math.abs(event.year - y))) : Infinity;
+      const selectedName = eventFilterPolities.find(p => p.id === state.selectedEventPolity)?.name || '所选政权';
+      const note = hasExact ? '' : `<p class="chronicle-context-note">${y}年暂无已录入的${state.selectedEventPolity === 'all' ? '' : selectedName}事件，以下展示距该年份最近的重要事件。</p>`;
+      const item = event => {const tags = event.polities.map(id => polities.find(p => p.id === id)?.name).filter(Boolean), isExact = event.year === y, isNear = Math.abs(event.year - y) === nearestDistance; return `<button class="chronicle-item${isNear ? ' near' : ''}${isExact ? ' exact' : ''}" type="button" data-year="${event.year}"${isNear ? ' data-nearest="true"' : ''} aria-label="跳转到${event.year}年：${event.title}"><div class="chronicle-year">${event.year}年<div class="chronicle-distance">${distanceLabel(event.year, y)}</div></div><div><h3>${event.title}</h3><p>${event.description}</p>${tags.length ? `<div class="event-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}</div></button>`};
+      $('#chronicle').innerHTML = note + filtered.map(item).join('');
+      $('#event-filter-buttons').innerHTML = eventFilterPolities.map(p => `<button aria-pressed="${p.id === state.selectedEventPolity}" data-id="${p.id}">${p.name}</button>`).join('');
+      $$('#event-filter-buttons button').forEach(b => b.addEventListener('click', () => {state.selectedEventPolity = b.dataset.id; renderChronicle(state.currentYear)}));
+      $$('#chronicle .chronicle-item').forEach(item => item.addEventListener('click', () => setCurrentYear(+item.dataset.year)));
+      requestAnimationFrame(() => {const box = $('#chronicle-scroll'), near = $('#chronicle .chronicle-item.near'); if (box && near) box.scrollTop = Math.max(0, near.offsetTop - (box.clientHeight - near.offsetHeight) / 2)});
+    }
+    const archiveNarratives = {
+      song: {lead: '宋朝自960年建立，历北宋与南宋两个阶段，前后延续三百余年。它在强邻环伺中发展出高度成熟的文官政治、财政体系、城市经济与士人文化，是这一时期东亚秩序的核心参与者。', chapters: [['建立与统一', '赵匡胤由后周将领登上帝位后，以加强中央禁军、分散地方军政权力和逐步兼并割据政权的方式重建统一秩序。至979年北汉灭亡，中原与南方大部分地区重新归于中央王朝，但燕云地区始终未能收复。'], ['北宋的发展', '北宋以文官体系和科举制度扩大治理基础，农业、手工业、商业和城市生活显著发展。面对辽与西夏，朝廷在战争、岁币、边贸之间寻求平衡；1005年澶渊之盟和1044年庆历和议带来阶段性稳定。王安石变法则反映了财政、军事与社会治理上的深层压力。'], ['南渡与重建', '1127年金军攻陷开封，徽、钦二帝被俘，北宋结束。赵构在南方建立南宋，最终以临安为都。南宋依托江南经济、长江防线和海上贸易恢复国力，1141年绍兴和议后与金形成长期南北对峙，1161年采石之战又阻止了金军渡江。'], ['灭亡与影响', '蒙古灭西夏、金后转而集中攻宋。襄阳、樊城于1273年陷落，临安于1276年投降，宋室余部继续沿海抵抗，至1279年崖山海战失败而亡。宋代在制度、理学、文学、印刷、火药应用和商业网络方面的积累，对此后中国与东亚影响深远。']]},
+      liao: {lead: '辽朝由契丹人建立，916年至1125年统治北方草原、东北与燕云地区。它把游牧传统与农耕地区治理结合起来，是宋代北方最早形成稳定长期秩序的强大政权。', chapters: [['契丹崛起', '唐末五代之际，耶律阿保机统一契丹诸部并于916年称帝。此后辽取得燕云十六州，获得农业人口、城镇和南下中原的战略通道，逐渐从部落联盟转变为多区域王朝。'], ['制度与社会', '辽实行因俗而治，通常以北面官管理契丹及草原事务，以南面官治理汉地人口，同时保留四时捺钵等政治传统。多族群、多经济形态并存，使辽能够同时经营草原交通与农耕财政。'], ['宋辽关系', '辽与北宋围绕燕云长期交战。1004年辽军南下至澶州，次年双方订立澶渊之盟。此后虽仍有边境摩擦，整体保持百余年相对和平，贸易、使节往来与文化交流持续发展。'], ['衰亡与西迁', '辽后期统治矛盾加深，女真完颜部于1114年起兵。金军迅速夺取辽的核心区域，1125年天祚帝被俘，辽朝灭亡。耶律大石率部分契丹人西迁，后来在中亚建立西辽，延续了辽的政治传统。']]},
+      xia: {lead: '西夏由党项人建立，1038年至1227年据有河套、宁夏与河西走廊。它处在宋、辽、金以及中亚交通之间，通过军事防御、外交周旋和文化创造维持了近两个世纪。', chapters: [['党项政权形成', '党项拓跋部在唐末以来逐渐经营夏州地区。李继迁、李德明扩大势力并在宋辽之间周旋，李元昊继位后整合河西力量，于1038年称帝建国。'], ['战争与和议', '建国初期西夏与北宋发生三川口、好水川等战争。1044年庆历和议后，双方以册封、岁赐和互市维持关系。西夏也先后与辽、金结盟或对抗，以避免被任何一方完全控制。'], ['制度与文化', '西夏建立本国年号、官制与军政体系，创制西夏文字，大量翻译佛教经典。其统治结合党项传统与中原制度，并依靠河西走廊的交通、畜牧和绿洲农业维持国家。'], ['蒙古征服', '13世纪初蒙古多次进攻西夏，1209年迫使其臣服。西夏后来未能充分配合蒙古西征，成吉思汗于1226年再次发动大规模战争，次年西夏都城失守，政权灭亡。']]},
+      jin: {lead: '金朝由女真人建立，1115年至1234年从东北迅速扩张至华北，先后灭辽、北宋，并与南宋形成百余年的南北对峙。其历史也是女真制度与中原王朝治理不断结合的过程。', chapters: [['建国灭辽', '女真诸部原受辽控制。完颜阿骨打统一主要力量，于1114年起兵、1115年称帝建金。金与北宋订立海上之盟后连续击败辽军，1125年辽朝灭亡。'], ['灭北宋与南北对峙', '金军随后两度南下，1127年攻陷开封并掳走徽、钦二帝。南宋建立后双方长期战争，1141年绍兴和议确立阶段性边界。1161年完颜亮南征在采石受挫，金朝内部也发生政权更替。'], ['治理与文化转型', '金在女真核心地区保留猛安谋克组织，同时在华北采用州县、科举、赋税等中原制度。金世宗、章宗时期政治相对稳定，女真贵族与汉地官僚文化进一步融合，但财政、土地和边防压力逐渐累积。'], ['蒙古攻金与灭亡', '1211年蒙古大举攻金，金朝失去北方大片土地，1214年迁都汴京。此后又与南宋交战，战略空间日益缩小。1232年三峰山之战后主力受损，1234年蔡州被蒙古与南宋联军攻破，金朝灭亡。']]},
+      mongol: {lead: '蒙古帝国由铁木真统一草原后于1206年建立。它迅速跨越欧亚大陆，并在东亚先后消灭西夏、金、大理和南宋；忽必烈于1271年定国号元，至1279年完成全国统一。', chapters: [['统一草原与扩张', '铁木真在长期部族战争中击败主要对手，1206年被推举为成吉思汗。蒙古重组军政体系，先迫使西夏臣服，后进攻金朝，并向中亚花剌子模及更远地区展开大规模征服。'], ['征服西夏与金', '蒙古于1215年占领金中都，1227年灭西夏。成吉思汗死后，窝阔台继续对金作战，1234年蒙古与南宋联合攻破蔡州，结束金朝统治。蒙古由此控制中国北方。'], ['汗位更替与南征', '蒙哥即位后发动多路扩张，忽必烈负责攻大理并经略南方。1259年蒙哥在合州前线去世，引发汗位争夺。忽必烈于1260年即位，与阿里不哥竞争后把政治重心进一步转向中原。'], ['建立元朝与统一', '忽必烈建设大都、采用中原王朝制度，并于1271年定国号“大元”。元军攻陷襄阳樊城后沿江推进，1276年占领临安，1279年崖山海战后南宋灭亡。元朝继续统治至1368年，本网页重点展示其统一过程。']]},
+      dali: {lead: '大理国由段思平于937年建立，以洱海地区为中心统治云南高原，至1254年归附蒙古。它与宋朝少有大规模战争，更多通过贸易、佛教与边疆网络保持联系。', chapters: [['建立与区域基础', '南诏灭亡后云南经历数十年政权更替，段思平于937年建立大理国。王朝以洱海、苍山地区为政治核心，统合云南高原上多样的族群与地方势力。'], ['政治与佛教', '段氏王权与地方大族共同维系统治，佛教在国家政治与社会文化中地位突出，多位国王晚年出家。1094年高升泰一度取代段氏，1096年又恢复段氏政权，通常称为“后理”。'], ['与宋及周边交流', '大理与宋朝总体保持和平，马匹、药材、金属和边境物资贸易是重要联系。由于地理阻隔和宋朝的边疆政策，双方没有形成类似宋辽、宋夏那样持续的大规模战争。'], ['蒙古征服与后续', '1253年忽必烈率军越过金沙江进攻大理，次年国主降服。蒙古并未完全摧毁原有地方结构，段氏及地方势力在新的统治体系下继续发挥作用，云南逐渐纳入元朝行省治理。']]},
+      goryeo: {lead: '高丽由王建于918年建立，936年统一朝鲜半岛大部，延续至1392年。宋辽金元相继兴替时，高丽不断调整外交与军事策略，是东北亚秩序变化的重要参与者。', chapters: [['建立与统一', '王建在后高句丽政权中崛起，于918年建立高丽，936年完成后三国统一。王朝以开京为中心发展中央官制、土地制度和贵族政治，并与中国各王朝保持册封、贸易与文化往来。'], ['契丹战争', '辽朝扩张后，高丽经历多次契丹战争。993年后双方通过谈判调整边界；1019年高丽在龟州取得重要胜利。此后高丽与辽维持关系，同时继续吸收宋朝文化与物质成果。'], ['女真金与内部变化', '12世纪初高丽曾向东北女真地区扩张，金朝建立并强盛后又向金称臣。国内贵族政治矛盾加深，1170年武臣政变后进入武臣掌权时期，但王室仍继续存在。'], ['蒙古入侵与元朝关系', '蒙古自1231年起多次入侵，高丽迁都江华岛长期抵抗。1259年双方议和，1270年三别抄继续反抗。此后高丽与元朝形成紧密政治关系，但保持本国王朝与制度，最终于1392年由朝鲜王朝取代。']]},
+      xiliao: {lead: '西辽是辽朝宗室耶律大石西迁后在中亚建立的契丹政权，约1124年至1218年延续近百年。它把辽朝政治传统带入河中地区，并在伊斯兰世界与草原诸势力之间形成新的霸权。', chapters: [['西迁建国', '辽朝面临金军进攻时，耶律大石率部离开故地向西发展。1124年前后他建立独立政权，后控制七河与河中地区，并以虎思斡耳朵为中心建立统治。'], ['中亚霸权', '西辽统治契丹、突厥与伊朗语族等多种人口，对地方属国通常保留原有统治者和宗教。它使用汉式年号、官号和辽朝制度传统，同时适应中亚的贡赋与城市网络。'], ['卡特万之战', '1141年耶律大石在卡特万之战击败塞尔柱势力，西辽威望达到高峰，花剌子模等政权一度向其纳贡。其存在改变了中亚力量平衡，也扩大了契丹名称在欧亚西部的影响。'], ['屈出律夺权与灭亡', '西辽后期内外矛盾加剧，乃蛮王子屈出律于1211年夺取实权。其宗教政策与地方冲突削弱统治，蒙古军于1218年进入中亚并击败屈出律，西辽政权结束。']]}
+    };
+    function renderArchive() {
+      $('#archive-tabs').innerHTML = polities.map(p => `<button role="tab" aria-selected="${p.id === state.selectedArchive}" data-id="${p.id}">${p.name}</button>`).join('');
+      const p = polities.find(x => x.id === state.selectedArchive), story = archiveNarratives[p.id];
+      $('#archive-content').innerHTML = `<article class="archive-overview"><h3>${p.name}</h3><p class="archive-lead">${story.lead}</p><div class="archive-story">${story.chapters.map(ch => `<section class="archive-chapter"><h4>${ch[0]}</h4><p>${ch[1]}</p></section>`).join('')}</div><div class="archive-dates"><h4>完整关键节点</h4><div class="archive-date-list">${p.events.map(e => `<span><strong>${e[0]}</strong> · ${e[1]}</span>`).join('')}</div></div></article>`;
+      $$('#archive-tabs button').forEach(b => b.addEventListener('click', () => {state.selectedArchive = b.dataset.id; renderArchive()}));
+    }
+    function render() {const y = state.currentYear; $('#year-number').textContent = y; $$('.year-sync').forEach(el => el.textContent = y); $('#phase-text').textContent = (phases.find(x => y <= x[0]) || phases.at(-1))[1]; renderLifelines(y); renderPowers(y); renderMap(y); renderChronicle(y); renderArchive()}
+    function setCurrentYear(year) {state.currentYear = Math.max(MIN, Math.min(MAX, +year)); $('#year-range').value = state.currentYear; render()}
+    $('#year-range').addEventListener('input', e => setCurrentYear(e.target.value)); $$('.quick-years button').forEach(b => b.addEventListener('click', () => setCurrentYear(b.dataset.year)));
+    const timeline = $('#timeline');
+    function syncStickyState() {timeline.classList.toggle('is-stuck', window.scrollY > 0 && timeline.getBoundingClientRect().top <= 11)}
+    addEventListener('scroll', syncStickyState, {passive: true}); addEventListener('resize', syncStickyState, {passive: true});
+    setCurrentYear(state.currentYear); syncStickyState();
   </script>
 </body>
+
 </html>
