@@ -31,7 +31,10 @@ jobs:
 
       - name: Install Tencent COSCLI
         run: |
-          curl -fsSL \
+          curl -fL \
+            --retry 5 \
+            --retry-delay 5 \
+            --retry-all-errors \
             https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux-amd64 \
             -o coscli
 
