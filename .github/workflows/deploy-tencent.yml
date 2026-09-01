@@ -51,8 +51,10 @@ jobs:
             -i "$TENCENT_SECRET_ID" \
             -k "$TENCENT_SECRET_KEY" \
             --skip-dir=true \
-            --exclude ".git/*" \
-            --exclude ".github/*"
+            --fail-output-path /tmp/coscli_output \
+            --exclude "^\\.git/.*" \
+            --exclude "^\\.github/.*" \
+            --exclude "^coscli$"
 
       - name: Install Tencent Cloud CLI
         run: |
