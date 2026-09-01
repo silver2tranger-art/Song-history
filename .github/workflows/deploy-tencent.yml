@@ -1,0 +1,79 @@
+name: Deploy to Tencent COS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - ".github/workflows/deploy-tencent.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check website file
+        run: |
+          test -f index.html
+          echo "index.html found"
+
+      - name: Install Tencent COSCLI
+        run: |
+          curl -fsSL \
+            https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux-amd64 \
+            -o coscli
+
+          chmod +x coscli
+          ./coscli --version
+
+      - name: Upload index.html to COS
+        env:
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+        run: |
+          ./coscli cp \
+            ./index.html \
+            cos://web-static-1474623368/history/song/index.html \
+            --init-skip=true \
+            -e cos.ap-nanjing.myqcloud.com \
+            -i "$TENCENT_SECRET_ID" \
+            -k "$TENCENT_SECRET_KEY" \
+            --forbid-overwrite=false
+
+      - name: Install Tencent Cloud CLI
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade tccli
+          tccli --version
+
+      - name: Refresh Tencent CDN
+        env:
+          TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+        run: |
+          cat > /tmp/purge.json <<'EOF'
+          {
+            "Urls": [
+              "https://tztzxg.xyz/history/song/",
+              "https://tztzxg.xyz/history/song/index.html"
+            ],
+            "Area": "mainland"
+          }
+          EOF
+
+          tccli cdn PurgeUrlsCache \
+            --cli-input-json file:///tmp/purge.json
+
+      - name: Deployment summary
+        run: |
+          echo "Deployment completed."
+          echo "Website: https://tztzxg.xyz/history/song/"
