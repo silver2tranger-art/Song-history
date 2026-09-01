@@ -4,14 +4,10 @@ on:
   push:
     branches:
       - main
-paths:
-  - "index.html"
-  - "*.png"
-  - "*.jpg"
-  - "*.jpeg"
-  - "*.webp"
-  - "*.gif"
-  - ".github/workflows/deploy-tencent.yml"
+    paths:
+      - "index.html"
+      - "images/**"
+      - ".github/workflows/deploy-tencent.yml"
 
   workflow_dispatch:
 
@@ -26,10 +22,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check website file
+      - name: Check website files
         run: |
           test -f index.html
+          test -d images
           echo "index.html found"
+          echo "images folder found"
 
       - name: Install Tencent COSCLI
         run: |
@@ -40,37 +38,21 @@ jobs:
           chmod +x coscli
           ./coscli --version
 
-           - name: Upload website files to COS
+      - name: Sync website files to COS
         env:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
         run: |
-          ./coscli cp \
-            ./index.html \
-            cos://web-static-1474623368/history/song/index.html \
+          ./coscli sync \
+            ./ \
+            cos://web-static-1474623368/history/song/ \
             --init-skip=true \
             -e cos.ap-nanjing.myqcloud.com \
             -i "$TENCENT_SECRET_ID" \
             -k "$TENCENT_SECRET_KEY" \
-            --forbid-overwrite=false
-
-          ./coscli cp \
-            ./embedded-1.png \
-            cos://web-static-1474623368/history/song/embedded-1.png \
-            --init-skip=true \
-            -e cos.ap-nanjing.myqcloud.com \
-            -i "$TENCENT_SECRET_ID" \
-            -k "$TENCENT_SECRET_KEY" \
-            --forbid-overwrite=false
-
-          ./coscli cp \
-            ./embedded-4.jpg \
-            cos://web-static-1474623368/history/song/embedded-4.jpg \
-            --init-skip=true \
-            -e cos.ap-nanjing.myqcloud.com \
-            -i "$TENCENT_SECRET_ID" \
-            -k "$TENCENT_SECRET_KEY" \
-            --forbid-overwrite=false
+            --skip-dir=true \
+            --exclude ".git/*" \
+            --exclude ".github/*"
 
       - name: Install Tencent Cloud CLI
         run: |
