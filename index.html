@@ -26,7 +26,9 @@
     }
 
     html {
-      scroll-behavior: smooth
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%
     }
 
     body {
@@ -364,7 +366,11 @@
     .chronicle-year {
       font-weight: 800;
       color: var(--cinnabar);
-      font-variant-numeric: tabular-nums;
+      font-variant-numeric: tabular-nums
+    }
+
+    .chronicle-year-value {
+      display: block;
       white-space: nowrap
     }
 
@@ -790,7 +796,7 @@
 
     @media(max-width:720px) {
       body {
-        font-size: 17px
+        font-size: 16px
       }
 
       .archive-story {
@@ -1233,7 +1239,8 @@
     }
 
     .chronicle-distance {
-      display: inline-block;
+      display: block;
+      width: max-content;
       margin-top: 5px;
       padding: 1px 7px;
       border-radius: 5px;
@@ -1529,7 +1536,7 @@
       const note = $('#chronicle-context-note');
       note.hidden = hasExact;
       note.textContent = hasExact ? '' : `${y}年暂无已录入的${state.selectedEventPolity === 'all' ? '' : selectedName}事件，已将距离该年份最近的事件置于窗口起点。`;
-      const item = event => {const tags = event.polities.map(id => polities.find(p => p.id === id)?.name).filter(Boolean), isExact = event.year === y, isNear = Math.abs(event.year - y) === nearestDistance; return `<button class="chronicle-item${isNear ? ' near' : ''}${isExact ? ' exact' : ''}" type="button" data-year="${event.year}"${isNear ? ' data-nearest="true"' : ''} aria-label="跳转到${event.year}年：${event.title}"><div class="chronicle-year">${event.year}年<div class="chronicle-distance">${distanceLabel(event.year, y)}</div></div><div><h3>${event.title}</h3><p>${event.description}</p>${tags.length ? `<div class="event-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}</div></button>`};
+      const item = event => {const tags = event.polities.map(id => polities.find(p => p.id === id)?.name).filter(Boolean), isExact = event.year === y, isNear = Math.abs(event.year - y) === nearestDistance; return `<button class="chronicle-item${isNear ? ' near' : ''}${isExact ? ' exact' : ''}" type="button" data-year="${event.year}"${isNear ? ' data-nearest="true"' : ''} aria-label="跳转到${event.year}年：${event.title}"><div class="chronicle-year"><span class="chronicle-year-value">${event.year}年</span><span class="chronicle-distance">${distanceLabel(event.year, y)}</span></div><div><h3>${event.title}</h3><p>${event.description}</p>${tags.length ? `<div class="event-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}</div></button>`};
       $('#chronicle').innerHTML = filtered.length ? filtered.map(item).join('') : '<div class="empty">当前筛选下暂无事件。</div>';
       $('#event-filter-buttons').innerHTML = eventFilterPolities.map(p => `<button aria-pressed="${p.id === state.selectedEventPolity}" data-id="${p.id}">${p.name}</button>`).join('');
       $$('#event-filter-buttons button').forEach(b => b.addEventListener('click', () => {state.selectedEventPolity = b.dataset.id; renderChronicle(state.currentYear)}));
