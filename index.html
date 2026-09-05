@@ -144,6 +144,16 @@
       cursor: pointer
     }
 
+    input[type=range]:focus {
+      outline: none
+    }
+
+    input[type=range]:focus-visible {
+      outline: 2px solid rgba(141, 47, 29, .42);
+      outline-offset: 3px;
+      border-radius: 999px
+    }
+
     .quick-years {
       display: flex;
       gap: 8px;
@@ -354,7 +364,8 @@
     .chronicle-year {
       font-weight: 800;
       color: var(--cinnabar);
-      font-variant-numeric: tabular-nums
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap
     }
 
     .chronicle-item h3 {
@@ -492,7 +503,7 @@
       }
 
       .chronicle-item {
-        grid-template-columns: 58px 1fr
+        grid-template-columns: 74px 1fr
       }
 
       .status-tag {
@@ -711,7 +722,11 @@
       gap: 8px
     }
 
-    .archive-date-list button {
+    .archive-event-node {
+      display: contents
+    }
+
+    .archive-event-node>button {
       padding: 5px 9px;
       border: 1px solid transparent;
       border-radius: 6px;
@@ -721,15 +736,17 @@
       cursor: pointer
     }
 
-    .archive-date-list button:hover,
-    .archive-date-list button:focus-visible,
-    .archive-date-list button[aria-expanded="true"] {
+    .archive-event-node>button:hover,
+    .archive-event-node>button:focus-visible,
+    .archive-event-node>button[aria-expanded="true"] {
       border-color: rgba(141, 47, 29, .38);
       color: var(--cinnabar);
       outline: none
     }
 
     .archive-event-detail {
+      flex: 1 0 100%;
+      order: 999;
       margin-top: 12px;
       padding: 16px;
       border: 1px solid rgba(141, 47, 29, .28);
@@ -778,6 +795,71 @@
 
       .archive-story {
         grid-template-columns: 1fr
+      }
+
+      .archive-dates {
+        padding: 16px 8px 12px
+      }
+
+      .archive-date-list {
+        position: relative;
+        display: block;
+        padding-left: 24px
+      }
+
+      .archive-date-list::before {
+        content: "";
+        position: absolute;
+        top: 17px;
+        bottom: 17px;
+        left: 8px;
+        width: 2px;
+        border-radius: 999px;
+        background: rgba(141, 47, 29, .24)
+      }
+
+      .archive-event-node {
+        position: relative;
+        display: block;
+        padding: 0 0 12px
+      }
+
+      .archive-event-node::before {
+        content: "";
+        position: absolute;
+        top: 16px;
+        left: -21px;
+        z-index: 1;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #fff8e8;
+        border-radius: 50%;
+        background: var(--cinnabar);
+        box-shadow: 0 0 0 1px rgba(141, 47, 29, .25)
+      }
+
+      .archive-event-node:last-child {
+        padding-bottom: 0
+      }
+
+      .archive-event-node>button {
+        width: 100%;
+        min-height: 44px;
+        padding: 9px 11px;
+        text-align: left
+      }
+
+      .archive-event-node>button[aria-expanded="true"] {
+        background: #f7e4c2;
+        box-shadow: inset 3px 0 0 var(--cinnabar)
+      }
+
+      .archive-event-node>.archive-event-detail {
+        width: auto;
+        margin: 8px 0 0;
+        padding: 14px;
+        flex: none;
+        order: initial
       }
 
       .map-copy {
@@ -914,7 +996,9 @@
       }
 
       .event-filter-buttons button {
-        padding: 6px 11px
+        min-width: 64px;
+        padding: 6px 11px;
+        text-align: center
       }
     }
 
@@ -1156,7 +1240,8 @@
       background: #ead9bc;
       color: #745c42;
       font-size: .76rem;
-      font-weight: 700
+      font-weight: 700;
+      white-space: nowrap
     }
 
     .chronicle-item.exact .chronicle-distance {
@@ -1219,13 +1304,22 @@
         white-space: nowrap
       }
 
+      .map-powers span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 64px;
+        box-sizing: border-box;
+        text-align: center
+      }
+
       .chronicle {
         gap: var(--chronicle-gap)
       }
 
       .chronicle-item,
       button.chronicle-item {
-        grid-template-columns: 54px 1fr;
+        grid-template-columns: 74px 1fr;
         gap: 8px;
         padding: 8px 9px
       }
@@ -1562,10 +1656,19 @@
       const selectedEvent = Number.isInteger(state.selectedArchiveEvent) ? p.events[state.selectedArchiveEvent] : null;
       const eventDetail = selectedEvent ? getArchiveEventDetail(p, selectedEvent) : null;
       const detail = selectedEvent ? `<div class="archive-event-detail" id="archive-event-detail"><h5>${selectedEvent[0]} · ${selectedEvent[1]}</h5><div class="archive-event-section"><h6>事件概述</h6><p>${eventDetail.overview}</p></div><div class="archive-event-section"><h6>历史意义</h6><p>${eventDetail.significance}</p></div><button type="button" data-view-year="${selectedEvent[0]}">查看${selectedEvent[0]}年</button></div>` : '';
-      $('#archive-content').innerHTML = `<article class="archive-overview"><h3>${p.name}</h3><p class="archive-lead">${story.lead}</p><div class="archive-story">${story.chapters.map(ch => `<section class="archive-chapter"><h4>${ch[0]}</h4><p>${ch[1]}</p></section>`).join('')}</div><div class="archive-dates"><h4>完整关键节点</h4><div class="archive-date-list">${p.events.map((e, index) => `<button type="button" data-event-index="${index}" aria-expanded="${index === state.selectedArchiveEvent}"${index === state.selectedArchiveEvent ? ' aria-controls="archive-event-detail"' : ''}><strong>${e[0]}</strong> · ${e[1]}</button>`).join('')}</div>${detail}</div></article>`;
-      $$('#archive-tabs button').forEach(b => b.addEventListener('click', () => {state.selectedArchive = b.dataset.id; state.selectedArchiveEvent = null; renderArchive()}));
-      $$('.archive-date-list button').forEach(b => b.addEventListener('click', () => {const index = +b.dataset.eventIndex; state.selectedArchiveEvent = state.selectedArchiveEvent === index ? null : index; renderArchive()}));
-      $('[data-view-year]')?.addEventListener('click', e => setCurrentYear(+e.currentTarget.dataset.viewYear));
+      const nodes = p.events.map((event, index) => {
+        const expanded = index === state.selectedArchiveEvent;
+        return `<div class="archive-event-node"><button type="button" data-event-index="${index}" aria-expanded="${expanded}"${expanded ? ' aria-controls="archive-event-detail"' : ''}><strong>${event[0]}</strong> · ${event[1]}</button>${expanded ? detail : ''}</div>`;
+      }).join('');
+      $('#archive-content').innerHTML = `<article class="archive-overview"><h3>${p.name}</h3><p class="archive-lead">${story.lead}</p><div class="archive-story">${story.chapters.map(ch => `<section class="archive-chapter"><h4>${ch[0]}</h4><p>${ch[1]}</p></section>`).join('')}</div><div class="archive-dates"><h4>完整关键节点</h4><div class="archive-date-list">${nodes}</div></div></article>`;
+      $$('#archive-tabs button').forEach(button => button.addEventListener('click', () => {state.selectedArchive = button.dataset.id; state.selectedArchiveEvent = null; renderArchive()}));
+      $$('.archive-event-node>button').forEach(button => button.addEventListener('click', () => {
+        const index = +button.dataset.eventIndex, closing = state.selectedArchiveEvent === index;
+        state.selectedArchiveEvent = closing ? null : index;
+        renderArchive();
+        if (!closing && matchMedia('(max-width:720px)').matches) requestAnimationFrame(() => $('#archive-event-detail')?.scrollIntoView({block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}));
+      }));
+      $('[data-view-year]')?.addEventListener('click', event => setCurrentYear(+event.currentTarget.dataset.viewYear));
     }
     function render() {const y = state.currentYear; $('#year-number').textContent = y; $('#phase-text').textContent = (phases.find(x => y <= x[0]) || phases.at(-1))[1]; renderLifelines(y); renderMap(y); renderChronicle(y)}
     function setCurrentYear(year) {state.currentYear = Math.max(MIN, Math.min(MAX, +year)); $('#year-range').value = state.currentYear; render()}
@@ -1573,7 +1676,7 @@
     yearRange.addEventListener('input', e => setCurrentYear(e.target.value));
     let activeRangePointer = null;
     function setYearFromPointer(event) {const rect = yearRange.getBoundingClientRect(); if (!rect.width) return; const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)); setCurrentYear(Math.round(MIN + ratio * (MAX - MIN)))}
-    yearRange.addEventListener('pointerdown', event => {if (event.pointerType === 'mouse' && event.button !== 0) return; event.preventDefault(); activeRangePointer = event.pointerId; yearRange.focus({preventScroll: true}); yearRange.setPointerCapture?.(event.pointerId); setYearFromPointer(event)});
+    yearRange.addEventListener('pointerdown', event => {if (event.pointerType === 'mouse' && event.button !== 0) return; event.preventDefault(); activeRangePointer = event.pointerId; if (event.pointerType === 'mouse') yearRange.focus({preventScroll: true}); yearRange.setPointerCapture?.(event.pointerId); setYearFromPointer(event)});
     yearRange.addEventListener('pointermove', event => {if (event.pointerId !== activeRangePointer) return; event.preventDefault(); setYearFromPointer(event)});
     function releaseRangePointer(event) {if (event.pointerId !== activeRangePointer) return; if (yearRange.hasPointerCapture?.(event.pointerId)) yearRange.releasePointerCapture(event.pointerId); activeRangePointer = null}
     yearRange.addEventListener('pointerup', releaseRangePointer); yearRange.addEventListener('pointercancel', releaseRangePointer); yearRange.addEventListener('lostpointercapture', () => {activeRangePointer = null});
