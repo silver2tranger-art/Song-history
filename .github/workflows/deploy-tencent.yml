@@ -41,7 +41,7 @@ jobs:
           chmod +x coscli
           ./coscli --version
 
-      - name: Sync website files to COS
+            - name: Sync website files to COS
         env:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
@@ -49,17 +49,13 @@ jobs:
           ./coscli sync \
             ./ \
             cos://web-static-1474623368/history/song/ \
-            -r \
             --init-skip=true \
             -e cos.ap-nanjing.myqcloud.com \
             -i "$TENCENT_SECRET_ID" \
             -k "$TENCENT_SECRET_KEY" \
             --skip-dir=true \
-            --fail-output-path /tmp/coscli_fail_output \
-            --process-log-path /tmp/coscli_process_log \
-            --exclude "^\\.git/.*" \
-            --exclude "^\\.github/.*" \
-            --exclude "^coscli$"
+            --exclude ".git/*" \
+            --exclude ".github/*"
 
       - name: Install Tencent Cloud CLI
         run: |
