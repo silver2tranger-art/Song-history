@@ -77,6 +77,7 @@ jobs:
       - name: Upload, remove withdrawn files, refresh and verify CDN
         if: steps.latest.outputs.current == 'true'
         env:
+          PYTHONUNBUFFERED: '1'
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
         run: python library/tools/deploy.py

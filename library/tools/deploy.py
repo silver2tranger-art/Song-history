@@ -79,7 +79,8 @@ def main():
 
     req = models.PurgePathCacheRequest()
     req.from_json_string(json.dumps({'Paths': [f'{scheme}://{d}/' for d in DOMAINS for scheme in ('http', 'https')], 'FlushType': 'delete'}))
-    task_ids = cdn.PurgePathCache(req).TaskIds or []
+    task_id = cdn.PurgePathCache(req).TaskId
+    task_ids = [task_id] if task_id else []
     if not task_ids: raise RuntimeError('CDN 未返回刷新任务 ID')
     print('CDN refresh tasks:', ', '.join(task_ids))
     deadline = time.monotonic() + 600
