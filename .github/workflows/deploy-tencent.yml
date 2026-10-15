@@ -1,91 +1,82 @@
-name: Deploy to Tencent COS
+name: Publish personal library to Tencent
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - "index.html"
-      - "images/**"
-      - ".github/workflows/deploy-tencent.yml"
-
+      - 'index.html'
+      - 'images/**'
+      - 'library/**'
+      - '.github/workflows/deploy-tencent.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'images/**'
+      - 'library/**'
+      - '.github/workflows/deploy-tencent.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: personal-library-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  cancel-in-progress: false
+
 jobs:
-  deploy:
+  validate:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check website files
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test publication boundaries and build public site
         run: |
-          test -f index.html
-          test -d images
-          echo "index.html found"
-          echo "images folder found"
+          node --test library/tests/*.test.mjs
+          python -m unittest discover -s library/tests -p 'test_*.py'
+          node library/tools/build.mjs
+          git diff --check
 
-      - name: Install Tencent COSCLI
+  deploy:
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Skip a superseded queued commit
+        id: latest
         run: |
-          curl -fL \
-            --retry 5 \
-            --retry-delay 5 \
-            --retry-all-errors \
-            https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux-amd64 \
-            -o coscli
-
-          chmod +x coscli
-          ./coscli --version
-
-      - name: Sync website files to COS
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" = "$GITHUB_SHA" ]; then
+            echo 'current=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'current=false' >> "$GITHUB_OUTPUT"
+            echo 'A newer main commit exists; this queued deployment is skipped.'
+          fi
+      - uses: actions/setup-node@v4
+        if: steps.latest.outputs.current == 'true'
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        if: steps.latest.outputs.current == 'true'
+        with:
+          python-version: '3.12'
+      - name: Build only declared public assets
+        if: steps.latest.outputs.current == 'true'
+        run: node library/tools/build.mjs
+      - name: Install official Tencent SDKs
+        if: steps.latest.outputs.current == 'true'
+        run: python -m pip install -r library/requirements-deploy.txt
+      - name: Upload, remove withdrawn files, refresh and verify CDN
+        if: steps.latest.outputs.current == 'true'
         env:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
-        run: |
-          ./coscli sync \
-            ./ \
-            cos://web-static-1474623368/history/song/ \
-            -r \
-            --init-skip=true \
-            -e cos.ap-nanjing.myqcloud.com \
-            -i "$TENCENT_SECRET_ID" \
-            -k "$TENCENT_SECRET_KEY" \
-            --skip-dir=true \
-            --fail-output-path /tmp/coscli_fail_output \
-            --process-log-path /tmp/coscli_process_log \
-            --exclude "^\\.git/.*" \
-            --exclude "^\\.github/.*" \
-            --exclude "^coscli$"
-
-      - name: Install Tencent Cloud CLI
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade tccli
-          tccli --version
-
-      - name: Refresh Tencent CDN
-        env:
-          TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
-          TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
-        run: |
-          cat > /tmp/purge.json <<'EOF'
-          {
-            "Urls": [
-              "https://tztzxg.xyz/history/song/",
-              "https://tztzxg.xyz/history/song/index.html"
-            ],
-            "Area": "mainland"
-          }
-          EOF
-
-          tccli cdn PurgeUrlsCache \
-            --cli-input-json file:///tmp/purge.json
-
-      - name: Deployment summary
-        run: |
-          echo "Deployment completed."
-          echo "Website: https://tztzxg.xyz/history/song/"
+        run: python library/tools/deploy.py

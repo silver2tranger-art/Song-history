@@ -1,0 +1,14 @@
+{
+  "id": "energy-notes",
+  "title": "技术笔记",
+  "description": "完成脱敏和公开审核后才改为 PUBLIC。",
+  "section": "work",
+  "path": "work/energy-notes/",
+  "visibility": "PRIVATE",
+  "status": "PUBLISHED",
+  "version": "1.0.0",
+  "updated": "2026-10-15",
+  "tags": ["技术研究"],
+  "entry": "review.html",
+  "files": ["review.html", "assets/"]
+}

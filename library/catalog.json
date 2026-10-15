@@ -1,0 +1,20 @@
+{
+  "site": "https://tztzxg.xyz",
+  "projects": [
+    {
+      "id": "song",
+      "title": "宋朝及东亚历史时间线",
+      "description": "沿时间与地理两条线索，观察 907—1279 年间宋、辽、西夏、金与蒙古的兴替与互动。",
+      "section": "history",
+      "path": "history/song/",
+      "visibility": "PUBLIC",
+      "status": "PUBLISHED",
+      "version": "2026.09.06",
+      "updated": "2026-09-06",
+      "tags": ["历史", "宋朝", "东亚", "交互时间线"],
+      "entry": "index.html",
+      "files": ["index.html", "images/"],
+      "source": "repository-root"
+    }
+  ]
+}
